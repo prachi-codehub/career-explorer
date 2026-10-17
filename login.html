@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+```
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<title>Login | Career Skill Navigator</title>
+
+<link
+    rel="stylesheet"
+    href="style.css">
+
+<style>
+
+    body {
+        min-height: 100vh;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 30px;
+        box-sizing: border-box;
+    }
+
+    .login-wrapper {
+        width: 100%;
+        max-width: 1050px;
+        min-height: 620px;
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        border-radius: 28px;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(15, 18, 24, 0.94);
+        box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+    }
+
+    .login-intro {
+        padding: 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background:
+            radial-gradient(
+                circle at 20% 20%,
+                rgba(183,255,90,0.12),
+                transparent 35%
+            ),
+            linear-gradient(
+                145deg,
+                #10151d,
+                #090c11
+            );
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 45px;
+    }
+
+    .brand-mark {
+        width: 44px;
+        height: 44px;
+        border-radius: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #b7ff5a;
+        color: #0b0f14;
+        font-weight: 900;
+        font-size: 15px;
+    }
+
+    .brand-name {
+        font-size: 18px;
+        font-weight: 900;
+        color: #ffffff;
+    }
+
+    .brand-subtitle {
+        font-size: 10px;
+        color: #8d96a5;
+        margin-top: 3px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .eyebrow {
+        color: #b7ff5a;
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: 2px;
+        margin-bottom: 15px;
+    }
+
+    .login-intro h1 {
+        margin: 0;
+        font-size: clamp(38px, 5vw, 64px);
+        line-height: 0.98;
+        letter-spacing: -2px;
+        color: #ffffff;
+    }
+
+    .login-intro h1 span {
+        color: #b7ff5a;
+    }
+
+    .intro-text {
+        max-width: 500px;
+        margin-top: 25px;
+        color: #a7afbd;
+        font-size: 15px;
+        line-height: 1.8;
+    }
+
+    .readiness {
+        margin-top: 40px;
+        max-width: 420px;
+    }
+
+    .readiness-top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-size: 12px;
+        color: #a7afbd;
+    }
+
+    .readiness-value {
+        color: #b7ff5a;
+        font-weight: 900;
+    }
+
+    .readiness-bar {
+        height: 7px;
+        border-radius: 20px;
+        background: #202630;
+        overflow: hidden;
+    }
+
+    .readiness-fill {
+        width: 82%;
+        height: 100%;
+        background: #b7ff5a;
+        border-radius: inherit;
+    }
+
+    .login-panel {
+        padding: 55px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: #11151c;
+    }
+
+    .login-panel h2 {
+        margin: 0;
+        color: #ffffff;
+        font-size: 30px;
+    }
+
+    .login-panel-subtitle {
+        margin: 10px 0 30px;
+        color: #8f98a7;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .field {
+        margin-bottom: 20px;
+    }
+
+    .field label {
+        display: block;
+        margin-bottom: 8px;
+        color: #dfe4eb;
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+    .field input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 14px 15px;
+        border-radius: 12px;
+        border: 1px solid #29303a;
+        outline: none;
+        background: #0b0f14;
+        color: #ffffff;
+        font-size: 13px;
+        transition: 0.2s ease;
+    }
+
+    .field input:focus {
+        border-color: #b7ff5a;
+        box-shadow: 0 0 0 3px rgba(183,255,90,0.08);
+    }
+
+    .field input::placeholder {
+        color: #68717f;
+    }
+
+    .password-row {
+        display: flex;
+        gap: 8px;
+    }
+
+    .password-row input {
+        flex: 1;
+    }
+
+    .show-password {
+        border: 1px solid #29303a;
+        background: #1a2029;
+        color: #b7ff5a;
+        border-radius: 12px;
+        padding: 0 14px;
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 800;
+    }
+
+    .show-password:hover {
+        background: #232b35;
+    }
+
+    .forgot-password {
+        text-align: right;
+        margin-top: 8px;
+    }
+
+    .forgot-password a {
+        color: #b7ff5a;
+        font-size: 11px;
+        text-decoration: none;
+        font-weight: 800;
+    }
+
+    .forgot-password a:hover {
+        text-decoration: underline;
+    }
+
+    .login-button {
+        width: 100%;
+        border: none;
+        border-radius: 13px;
+        padding: 15px;
+        margin-top: 10px;
+        background: #b7ff5a;
+        color: #0b0f14;
+        font-size: 13px;
+        font-weight: 900;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .login-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 25px rgba(183,255,90,0.16);
+    }
+
+    .error-message {
+        display: none;
+        margin-top: 15px;
+        padding: 11px 13px;
+        border-radius: 10px;
+        background: rgba(255,80,80,0.08);
+        border: 1px solid rgba(255,80,80,0.2);
+        color: #ff8585;
+        font-size: 11px;
+    }
+
+    .register-text {
+        text-align: center;
+        margin-top: 25px;
+        color: #858e9d;
+        font-size: 12px;
+    }
+
+    .register-text a {
+        color: #b7ff5a;
+        text-decoration: none;
+        font-weight: 900;
+    }
+
+    .register-text a:hover {
+        text-decoration: underline;
+    }
+
+    .security-note {
+        margin-top: 25px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.025);
+        border: 1px solid rgba(255,255,255,0.06);
+        color: #6f7886;
+        font-size: 10px;
+        line-height: 1.6;
+    }
+
+    @media (max-width: 850px) {
+
+        .login-wrapper {
+            grid-template-columns: 1fr;
+        }
+
+        .login-intro {
+            padding: 45px;
+        }
+
+        .login-panel {
+            padding: 45px;
+        }
+
+        .readiness {
+            margin-top: 25px;
+        }
+    }
+
+    @media (max-width: 550px) {
+
+        body {
+            padding: 15px;
+        }
+
+        .login-intro,
+        .login-panel {
+            padding: 30px 25px;
+        }
+
+        .login-intro h1 {
+            font-size: 42px;
+        }
+
+        .login-wrapper {
+            min-height: auto;
+            border-radius: 20px;
+        }
+
+        .brand {
+            margin-bottom: 30px;
+        }
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+<div class="login-wrapper">
+
+```
+<!-- LEFT SIDE -->
+
+<section class="login-intro">
+
+    <div class="brand">
+
+        <div class="brand-mark">
+            CS
+        </div>
+
+        <div>
+            <div class="brand-name">
+                Career Skill Navigator
+            </div>
+
+            <div class="brand-subtitle">
+                Career Intelligence Platform
+            </div>
+        </div>
+
+    </div>
+
+    <div class="eyebrow">
+        WELCOME BACK
+    </div>
+
+    <h1>
+        Build your<br>
+        <span>career.</span>
+    </h1>
+
+    <p class="intro-text">
+        Continue your personalized career journey,
+        track your skills, explore opportunities,
+        and move closer to your professional goals.
+    </p>
+
+    <div class="readiness">
+
+        <div class="readiness-top">
+
+            <span>
+                Career readiness
+            </span>
+
+            <span class="readiness-value">
+                82%
+            </span>
+
+        </div>
+
+        <div class="readiness-bar">
+            <div class="readiness-fill"></div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- RIGHT SIDE -->
+
+<section class="login-panel">
+
+    <h2>
+        Sign in
+    </h2>
+
+    <p class="login-panel-subtitle">
+        Access your Career Skill Navigator dashboard.
+    </p>
+
+
+    <form id="loginForm">
+
+        <!-- EMAIL -->
+
+        <div class="field">
+
+            <label for="email">
+                Email
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                autocomplete="email"
+                required>
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="field">
+
+            <label for="password">
+                Password
+            </label>
+
+            <div class="password-row">
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required>
+
+                <button
+                    type="button"
+                    class="show-password"
+                    id="togglePassword">
+                    Show
+                </button>
+
+            </div>
+
+            <div class="forgot-password">
+
+                <a href="php/forgot-password.php">
+                    Forgot Password?
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOGIN BUTTON -->
+
+        <button
+            type="submit"
+            class="login-button">
+            Sign In
+        </button>
+
+
+        <!-- ERROR -->
+
+        <div
+            class="error-message"
+            id="errorMessage">
+            Invalid email or password.
+        </div>
+
+    </form>
+
+
+    <!-- REGISTER -->
+
+    <div class="register-text">
+
+        Don't have an account?
+
+        <a href="register.html">
+            Create Account
+        </a>
+
+    </div>
+
+
+    <!-- SECURITY -->
+
+    <div class="security-note">
+
+        🔒 Your account information is currently stored
+        locally for this project prototype.
+        Production authentication can later be connected
+        to the backend database.
+
+    </div>
+
+</section>
+```
+
+</div>
+
+<script>
+
+    /* ==========================================
+       SHOW / HIDE PASSWORD
+    ========================================== */
+
+    const passwordInput =
+        document.getElementById("password");
+
+    const togglePassword =
+        document.getElementById("togglePassword");
+
+    togglePassword.addEventListener(
+        "click",
+        function () {
+
+            if (
+                passwordInput.type === "password"
+            ) {
+
+                passwordInput.type = "text";
+                togglePassword.textContent = "Hide";
+
+            } else {
+
+                passwordInput.type = "password";
+                togglePassword.textContent = "Show";
+
+            }
+
+        }
+    );
+
+
+    /* ==========================================
+       LOGIN
+    ========================================== */
+
+    const loginForm =
+        document.getElementById("loginForm");
+
+    const errorMessage =
+        document.getElementById("errorMessage");
+
+    loginForm.addEventListener(
+        "submit",
+        function (event) {
+
+            event.preventDefault();
+
+            const email =
+                document
+                    .getElementById("email")
+                    .value
+                    .trim();
+
+            const password =
+                passwordInput.value;
+
+
+            const savedEmail =
+                localStorage.getItem("studentEmail");
+
+            const savedPassword =
+                localStorage.getItem("studentPassword");
+
+
+            if (
+                email === savedEmail &&
+                password === savedPassword
+            ) {
+
+                localStorage.setItem(
+                    "isLoggedIn",
+                    "true"
+                );
+
+                localStorage.setItem(
+                    "loginTime",
+                    new Date().toISOString()
+                );
+
+                errorMessage.style.display =
+                    "none";
+
+                window.location.href =
+                    "progress.html";
+
+            } else {
+
+                errorMessage.style.display =
+                    "block";
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>

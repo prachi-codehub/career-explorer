@@ -1,0 +1,803 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b100e">
+  <meta name="description" content="Discover personalized internship pathways, compare skill matches, and organize your career applications with Career Skill Navigator.">
+  <title>Internship Intelligence | Career Skill Navigator</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    :root {
+      --page: #0b100e;
+      --panel: #111815;
+      --panel-2: #151e19;
+      --line: rgba(255,255,255,.09);
+      --lime: #b7ff5a;
+      --mint: #7dffce;
+      --text: #e8eee9;
+      --muted: #87938c;
+      --danger: #ff8f8f;
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(ellipse at 80% 0%, rgba(183,255,90,.065), transparent 32%),
+        var(--page);
+      color: var(--text);
+      font-family: "DM Sans", Arial, sans-serif;
+    }
+
+    button, input, select, textarea { font: inherit; }
+    button, select { cursor: pointer; }
+    button:focus-visible, input:focus-visible,
+    select:focus-visible, textarea:focus-visible, a:focus-visible {
+      outline: 2px solid var(--lime);
+      outline-offset: 3px;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      min-height: 76px;
+      padding: 14px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      background: rgba(11,16,14,.94);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark {
+      width: 43px; height: 43px; display: grid; place-items: center;
+      border-radius: 14px; background: var(--lime); color: #111610;
+      font-weight: 900; letter-spacing: -1px;
+    }
+    .brand strong { display: block; font-size: 13px; }
+    .brand span { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; letter-spacing: 1px; }
+
+    .site-header nav { display: flex; flex-wrap: wrap; gap: 19px; }
+    .site-header nav a, .bottom-links a {
+      color: var(--muted); text-decoration: none; font-size: 11px; font-weight: 700;
+    }
+    .site-header nav a:hover, .site-header nav a[aria-current="page"],
+    .bottom-links a:hover { color: var(--lime); }
+
+    .page {
+      width: min(1440px, 100%);
+      margin: auto;
+      padding: 45px 5% 70px;
+    }
+
+    .hero {
+      position: relative; overflow: hidden;
+      display: grid; grid-template-columns: minmax(0,1.5fr) minmax(240px,.7fr);
+      gap: 30px; align-items: center;
+      padding: clamp(25px,4vw,48px);
+      border: 1px solid rgba(183,255,90,.17);
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 90% 10%, rgba(183,255,90,.12), transparent 35%),
+        linear-gradient(130deg,#151f18,#101511);
+    }
+
+    .eyebrow {
+      color: var(--lime); font-size: 10px; font-weight: 900;
+      letter-spacing: 2px; text-transform: uppercase;
+    }
+    h1,h2,h3,p { overflow-wrap: anywhere; }
+    .hero h1 {
+      margin: 17px 0; max-width: 720px;
+      font-size: clamp(36px,5vw,65px); line-height: 1.02;
+      letter-spacing: -2.5px;
+    }
+    .hero h1 span { color: var(--lime); }
+    .hero-copy { max-width: 650px; color: var(--muted); font-size: 13px; line-height: 1.9; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 25px; }
+
+    .btn {
+      min-height: 42px; padding: 11px 16px; border-radius: 12px;
+      border: 1px solid var(--line); background: #18211b; color: var(--text);
+      font-size: 11px; font-weight: 800;
+    }
+    .btn-primary { background: var(--lime); color: #111610; border-color: var(--lime); }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary:hover { background: #d0ff96; }
+
+    .signal-card {
+      padding: 23px; border-radius: 20px;
+      border: 1px solid var(--line); background: rgba(7,11,9,.55);
+    }
+    .signal-card h2 { margin: 9px 0; font-size: 22px; }
+    .signal-card p { color: var(--muted); font-size: 11px; line-height: 1.7; }
+    .signal-row { display: flex; justify-content: space-between; gap: 10px; padding: 13px 0; border-top: 1px solid var(--line); font-size: 11px; }
+    .signal-row span { color: var(--muted); }
+    .signal-row strong { color: var(--lime); text-align: right; }
+
+    .stats {
+      display: grid; grid-template-columns: repeat(4,minmax(0,1fr));
+      gap: 13px; margin: 20px 0 44px;
+    }
+    .stat {
+      padding: 20px; border-radius: 17px; border: 1px solid var(--line);
+      background: rgba(255,255,255,.025);
+    }
+    .stat span { display: block; color: var(--muted); font-size: 10px; }
+    .stat strong { display: block; margin-top: 10px; font-size: 29px; letter-spacing: -1px; }
+    .stat small { display: block; margin-top: 6px; color: var(--muted); font-size: 9px; }
+
+    .section { margin-top: 43px; scroll-margin-top: 95px; }
+    .section-heading {
+      display: flex; justify-content: space-between; align-items: end;
+      gap: 20px; margin-bottom: 22px;
+    }
+    .section-heading h2 { margin: 9px 0 0; font-size: clamp(23px,3vw,32px); letter-spacing: -1px; }
+    .section-heading p { color: var(--muted); font-size: 11px; line-height: 1.7; }
+
+    .toolbar {
+      display: grid; grid-template-columns: minmax(190px,1.6fr) repeat(3,minmax(130px,1fr));
+      gap: 10px; margin-bottom: 16px;
+    }
+
+    .field {
+      width: 100%; min-width: 0; padding: 12px 13px;
+      border: 1px solid var(--line); border-radius: 12px;
+      color: var(--text); background: #111815; font-size: 11px;
+    }
+    .field::placeholder { color: #748078; }
+    select.field option { background: #111815; color: var(--text); }
+    .filter-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 16px 0 23px; }
+    .filter-btn {
+      padding: 9px 13px; border: 1px solid var(--line); border-radius: 30px;
+      background: transparent; color: var(--muted); font-size: 10px; font-weight: 800;
+    }
+    .filter-btn.active { background: var(--lime); border-color: var(--lime); color: #101610; }
+    .check-label { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; }
+    .check-label input { accent-color: var(--lime); }
+
+    .notice {
+      padding: 13px 15px; margin: 15px 0; border-radius: 12px;
+      background: rgba(183,255,90,.045); border: 1px solid rgba(183,255,90,.12);
+      color: var(--muted); font-size: 10px; line-height: 1.8;
+    }
+    .notice strong { color: var(--lime); }
+
+    .career-context {
+      display: flex; flex-wrap: wrap; gap: 9px; align-items: center;
+      margin: 16px 0; color: var(--muted); font-size: 11px;
+    }
+    .context-chip {
+      padding: 7px 10px; border-radius: 9px; background: var(--panel-2);
+      border: 1px solid var(--line); color: var(--text);
+    }
+
+    .opportunity-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 15px; }
+    .opportunity-card {
+      display: flex; flex-direction: column; min-width: 0; padding: 22px;
+      border-radius: var(--radius); border: 1px solid var(--line);
+      background: linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012));
+      transition: transform .2s ease,border-color .2s ease;
+    }
+    .opportunity-card:hover { transform: translateY(-3px); border-color: rgba(183,255,90,.28); }
+    .card-top { display: flex; align-items: start; justify-content: space-between; gap: 12px; }
+    .company-mark {
+      width: 43px; height: 43px; display: grid; place-items: center;
+      flex: 0 0 43px; border-radius: 13px; color: var(--lime);
+      background: rgba(183,255,90,.08); border: 1px solid rgba(183,255,90,.13);
+      font-size: 11px; font-weight: 900;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 8px; border-radius: 8px;
+      background: rgba(255,255,255,.04); color: var(--muted);
+      font-size: 9px; font-weight: 800;
+    }
+    .match-badge { color: var(--lime); background: rgba(183,255,90,.08); }
+    .card-field { margin-top: 19px; color: var(--lime); font-size: 9px; letter-spacing: 1px; text-transform: uppercase; }
+    .opportunity-card h3 { margin: 9px 0 7px; font-size: 19px; letter-spacing: -.5px; }
+    .company-name { color: #bac6be; font-size: 11px; font-weight: 700; }
+    .card-description { color: var(--muted); font-size: 11px; line-height: 1.8; }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 7px; margin: 5px 0 15px; }
+    .meta-item { color: var(--muted); font-size: 9px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 15px; }
+    .tag { padding: 6px 8px; border-radius: 7px; background: rgba(255,255,255,.045); color: #aab5ad; font-size: 9px; }
+    .match-block { padding: 13px; margin: 4px 0 14px; border-radius: 12px; background: rgba(183,255,90,.035); border: 1px solid rgba(183,255,90,.1); }
+    .match-head { display: flex; justify-content: space-between; gap: 10px; font-size: 10px; }
+    .match-head strong:last-child { color: var(--lime); }
+    .match-track { height: 5px; margin-top: 10px; overflow: hidden; border-radius: 99px; background: rgba(255,255,255,.09); }
+    .match-fill { height: 100%; border-radius: inherit; background: var(--lime); transition: width .25s ease; }
+    .match-explanation { margin: 9px 0 0; color: var(--muted); font-size: 10px; line-height: 1.7; }
+    .card-actions { display: flex; gap: 9px; margin-top: auto; padding-top: 15px; border-top: 1px solid var(--line); }
+    .card-actions .btn { flex: 1; padding: 10px; }
+    .btn-save.saved { color: var(--mint); border-color: rgba(125,255,206,.3); background: rgba(125,255,206,.06); }
+
+    .tracking-fields { display: grid; gap: 9px; margin-top: 15px; }
+    .tracking-fields label { display: grid; gap: 6px; color: var(--muted); font-size: 10px; }
+    .tracking-fields textarea { min-height: 65px; resize: vertical; }
+    .empty-state {
+      grid-column: 1/-1; padding: 35px 20px; text-align: center;
+      border: 1px dashed var(--line); border-radius: 17px; color: var(--muted);
+      font-size: 12px; line-height: 1.8;
+    }
+    .empty-state strong { display: block; color: var(--text); font-size: 15px; margin-bottom: 6px; }
+
+    .saved-section { padding: 25px; border: 1px solid var(--line); border-radius: 22px; background: rgba(255,255,255,.02); }
+    .saved-list { display: grid; gap: 10px; }
+    .saved-item {
+      display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center;
+      gap: 15px; padding: 15px; border: 1px solid var(--line);
+      border-radius: 13px; background: rgba(255,255,255,.025);
+    }
+    .saved-item strong { display: block; font-size: 12px; }
+    .saved-item p { margin: 5px 0 0; color: var(--muted); font-size: 10px; }
+    .saved-actions { display: flex; flex-wrap: wrap; justify-content: end; gap: 7px; }
+    .remove-btn { color: var(--danger); border-color: rgba(255,143,143,.18); }
+    .footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line); }
+    .footer strong { display: block; font-size: 12px; }
+    .footer p { color: var(--muted); font-size: 9px; }
+    .bottom-links { display: flex; flex-wrap: wrap; gap: 17px; align-items: center; }
+    .bottom-copy { margin-top: 20px; color: #657168; font-size: 9px; }
+
+    @media(max-width:1050px) {
+      .opportunity-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .toolbar { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    }
+    @media(max-width:700px) {
+      .site-header { align-items: flex-start; flex-direction: column; }
+      .site-header nav { gap: 13px; }
+      .page { padding: 25px 4% 50px; }
+      .hero { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: repeat(2,minmax(0,1fr)); margin-bottom: 30px; }
+      .section-heading { align-items: flex-start; flex-direction: column; gap: 5px; }
+      .opportunity-grid { grid-template-columns: 1fr; }
+      .toolbar { grid-template-columns: 1fr; }
+      .saved-section { padding: 16px; }
+      .saved-item { grid-template-columns: 1fr; }
+      .saved-actions { justify-content: start; }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      *,*::before,*::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+<header class="site-header">
+  <div class="brand">
+    <div class="brand-mark">CS</div>
+    <div>
+      <strong>Career Skill Navigator</strong>
+      <span>CAREER INTELLIGENCE PLATFORM</span>
+    </div>
+  </div>
+  <nav aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="career-recommendation.html">Careers</a>
+    <a href="skill-assessment.html">Assessment</a>
+    <a href="learning-roadmap.html">Roadmap</a>
+    <a href="progress.html">Progress</a>
+    <a href="internship.html" aria-current="page">Internships</a>
+  </nav>
+</header>
+
+<main class="page">
+  <section class="hero">
+    <div>
+      <span class="eyebrow">OPPORTUNITY INTELLIGENCE / 01</span>
+      <h1>Find the next step in <span>your career.</span></h1>
+      <p class="hero-copy">
+        Discover career pathways that connect your interests with the skills
+        you're building. Compare skill overlap, save opportunities, and keep
+        your application journey organized in one place.
+      </p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" id="exploreBtn" type="button">Explore recommendations ↘</button>
+        <button class="btn" id="savedBtn" type="button">View saved opportunities</button>
+      </div>
+    </div>
+    <aside class="signal-card">
+      <span class="eyebrow">YOUR CAREER SIGNAL</span>
+      <h2 id="careerSignal">Exploring careers</h2>
+      <p id="personalizationText">Build your profile to receive more relevant suggestions.</p>
+      <div class="signal-row"><span>Skills recognized</span><strong id="skillsSignal">0 skills</strong></div>
+      <div class="signal-row"><span>Best sample match</span><strong id="bestMatch">—</strong></div>
+      <div class="signal-row"><span>Profile readiness</span><strong id="readinessSignal">Not assessed</strong></div>
+    </aside>
+  </section>
+
+  <section class="stats" aria-label="Opportunity tracker statistics">
+    <div class="stat"><span>Saved opportunities</span><strong id="savedCount">0</strong><small>Your shortlist</small></div>
+    <div class="stat"><span>Applications in progress</span><strong id="applicationCount">0</strong><small>Applied or interview</small></div>
+    <div class="stat"><span>Upcoming deadlines</span><strong id="deadlineCount">0</strong><small>Saved items with future dates</small></div>
+    <div class="stat"><span>Career areas</span><strong id="fieldCount">5</strong><small>Across multiple disciplines</small></div>
+  </section>
+
+  <section class="section" id="recommendations">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">MATCHED TO YOUR PROFILE</span>
+        <h2>Recommended pathways</h2>
+        <p>Results are ranked by exact skill overlap and optional career-interest alignment.</p>
+      </div>
+    </div>
+
+    <div class="career-context">
+      <span>Active direction</span>
+      <span class="context-chip" id="careerChip">Exploring careers</span>
+      <span>Matching method</span>
+      <span class="context-chip">Skills + career interest</span>
+    </div>
+
+    <div class="notice">
+      <strong>Demo data:</strong> These are illustrative opportunity profiles, not
+      verified live vacancies. Names such as “Product Technology Team” are
+      descriptive labels, not claims about actual employers. Verify openings,
+      eligibility, deadlines and application links with an employer before applying.
+    </div>
+
+    <div class="toolbar">
+      <input class="field" id="searchInput" type="search" placeholder="Search roles, fields or skills..." aria-label="Search opportunities">
+      <select class="field" id="sortSelect" aria-label="Sort opportunities">
+        <option value="match">Best skill match</option>
+        <option value="title">Role name A–Z</option>
+        <option value="saved">Saved first</option>
+      </select>
+      <select class="field" id="statusFilter" aria-label="Filter by application status">
+        <option value="all">All statuses</option>
+        <option>Interested</option><option>Preparing</option><option>Applied</option>
+        <option>Interview</option><option>Selected</option><option>Rejected</option>
+      </select>
+      <select class="field" id="modeFilter" aria-label="Filter by work mode">
+        <option value="all">All work modes</option>
+        <option value="remote">Remote</option>
+        <option value="hybrid">Hybrid</option>
+        <option value="on-site">On-site</option>
+      </select>
+    </div>
+
+    <div class="filter-row" id="fieldFilters" aria-label="Filter by career field">
+      <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All fields</button>
+      <button class="filter-btn" type="button" data-filter="technology" aria-pressed="false">Technology</button>
+      <button class="filter-btn" type="button" data-filter="engineering" aria-pressed="false">Engineering</button>
+      <button class="filter-btn" type="button" data-filter="business" aria-pressed="false">Business</button>
+      <button class="filter-btn" type="button" data-filter="creative" aria-pressed="false">Creative</button>
+      <button class="filter-btn" type="button" data-filter="science" aria-pressed="false">Science</button>
+      <label class="check-label"><input type="checkbox" id="savedOnly"> Saved only</label>
+    </div>
+
+    <div class="opportunity-grid" id="opportunityGrid" aria-live="polite"></div>
+  </section>
+
+  <section class="section saved-section" id="savedSection">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">YOUR CAREER PIPELINE</span>
+        <h2>Saved opportunities</h2>
+        <p>Update your progress, record dates, and keep notes for each saved item.</p>
+      </div>
+    </div>
+    <div class="saved-list" id="savedList"></div>
+  </section>
+
+  <footer class="footer">
+    <div>
+      <strong>Career Skill Navigator</strong>
+      <p>Discover skills. Explore careers. Build your future.</p>
+    </div>
+    <div class="bottom-links">
+      <a href="index.html">Home</a>
+      <a href="career-recommendation.html">Careers</a>
+      <a href="skill-assessment.html">Assessment</a>
+      <a href="learning-roadmap.html">Roadmap</a>
+      <a href="progress.html">Progress</a>
+    </div>
+  </footer>
+  <div class="bottom-copy">© 2026 Career Skill Navigator · Career exploration demo</div>
+</main>
+
+<script>
+(() => {
+  "use strict";
+
+  const TRACKER_KEY = "careerNavigatorOpportunityTracker";
+  const SKILLS_KEY = "careerNavigatorStudentSkills";
+
+  const opportunities = [
+    {id:"frontend-intern",title:"Frontend Developer Intern",field:"technology",type:"Internship",mark:"FE",skills:["HTML","CSS","JavaScript","React"],mode:"hybrid",description:"Explore responsive interfaces, accessible components, and modern web application development.",interest:["frontend","web developer","software","it","technology","e&tc","aids"]},
+    {id:"data-analyst",title:"Data Analyst Intern",field:"technology",type:"Internship",mark:"DA",skills:["Python","SQL","Excel","Analytics"],mode:"hybrid",description:"Practice data cleaning, reporting, structured queries, and evidence-based business insights.",interest:["data","analytics","aids","artificial intelligence","business"]},
+    {id:"ai-ml",title:"AI / ML Learning Intern",field:"technology",type:"Internship",mark:"AI",skills:["Python","Machine Learning","Statistics"],mode:"remote",description:"Explore machine-learning fundamentals, data preparation, model experiments, and evaluation.",interest:["ai","ml","artificial intelligence","aids","data","technology"]},
+    {id:"iot-embedded",title:"IoT & Embedded Systems Intern",field:"engineering",type:"Internship",mark:"IoT",skills:["IoT","C/C++","Sensors","Arduino"],mode:"on-site",description:"Explore connected devices, microcontrollers, sensor integration, and prototype testing.",interest:["iot","embedded","electronics","e&tc","electrical","engineering"]},
+    {id:"mechanical-design",title:"Mechanical Design Intern",field:"engineering",type:"Internship",mark:"ME",skills:["CAD","Design","Manufacturing"],mode:"on-site",description:"Explore technical drawings, CAD models, design documentation, and manufacturing basics.",interest:["mechanical","cad","design","manufacturing","engineering"]},
+    {id:"civil-design",title:"Civil Engineering Intern",field:"engineering",type:"Internship",mark:"CE",skills:["AutoCAD","Planning","Estimation"],mode:"on-site",description:"Explore engineering drawings, quantity estimation, project documentation, and site planning.",interest:["civil","construction","autocad","infrastructure","engineering"]},
+    {id:"business-analyst",title:"Business Analyst Intern",field:"business",type:"Internship",mark:"BA",skills:["Excel","Analytics","Communication"],mode:"hybrid",description:"Practice requirements analysis, process documentation, reporting, and stakeholder communication.",interest:["business","management","analytics","finance","strategy"]},
+    {id:"finance-analyst",title:"Finance Analyst Intern",field:"business",type:"Internship",mark:"FN",skills:["Finance","Excel","Reporting"],mode:"hybrid",description:"Explore financial reporting, spreadsheet analysis, budgeting concepts, and business performance.",interest:["finance","accounting","business","economics"]},
+    {id:"uiux-design",title:"UI/UX Design Intern",field:"creative",type:"Internship",mark:"UX",skills:["Figma","UX","Prototyping","Design"],mode:"remote",description:"Explore user journeys, wireframes, interface design, usability, and interactive prototypes.",interest:["ui","ux","creative","design","product design"]},
+    {id:"biotechnology",title:"Biotechnology Research Intern",field:"science",type:"Research",mark:"BT",skills:["Biology","Research","Analysis"],mode:"on-site",description:"Explore scientific research, experimental documentation, biological concepts, and data analysis.",interest:["biotechnology","biology","biomedical","science","research"]},
+    {id:"environment",title:"Environmental Research Intern",field:"science",type:"Research",mark:"ES",skills:["Research","Environment","Analysis"],mode:"hybrid",description:"Explore sustainability research, environmental observations, reporting, and impact analysis.",interest:["environment","sustainability","science","research"]},
+    {id:"digital-marketing",title:"Digital Marketing Intern",field:"business",type:"Internship",mark:"DM",skills:["Communication","Analytics","Research"],mode:"remote",description:"Explore campaign planning, audience research, performance metrics, and content strategy.",interest:["marketing","business","communication","creative","media"]}
+  ];
+
+  const statuses = ["Interested","Preparing","Applied","Interview","Selected","Rejected"];
+  let activeField = "all";
+  let skills = [];
+  let selectedCareer = "";
+  let tracker = loadTracker();
+
+  function loadTracker() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(TRACKER_KEY) || "{}");
+      return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+    } catch { return {}; }
+  }
+
+  function loadSkills() {
+    try {
+      const detailed = JSON.parse(localStorage.getItem(SKILLS_KEY) || "null");
+      if (Array.isArray(detailed)) {
+        return detailed.filter(s => s && typeof s.name === "string")
+          .map(s => ({name:s.name, level:Number(s.level)||1}));
+      }
+    } catch {}
+    try {
+      const simple = JSON.parse(localStorage.getItem("studentSkills") || "[]");
+      if (Array.isArray(simple)) {
+        return simple.map(s => typeof s === "string" ? {name:s,level:1} : s)
+          .filter(s => s && typeof s.name === "string");
+      }
+    } catch {}
+    return [];
+  }
+
+  function readCareer() {
+    return localStorage.getItem("selectedCareer") ||
+      localStorage.getItem("studentInterest") || "";
+  }
+
+  function readScore() {
+    const raw = Number(localStorage.getItem("skillScore") || 0);
+    // SkillTracker stores a percentage. Some older pages stored a score out of 15.
+    if (!Number.isFinite(raw) || raw <= 0) return null;
+    return raw <= 15 ? Math.round(raw / 15 * 100) : Math.min(100, Math.round(raw));
+  }
+
+  function recordFor(id) {
+    return {
+      saved:false, status:"Interested", deadline:"", followUp:"", notes:"",
+      ...(tracker[id] || {})
+    };
+  }
+
+  function saveTracker() {
+    try {
+      localStorage.setItem(TRACKER_KEY, JSON.stringify(tracker));
+      return true;
+    } catch {
+      showToast("Your browser could not save this change. Check browser storage settings.");
+      return false;
+    }
+  }
+
+  function updateRecord(id, changes) {
+    tracker = {...tracker, [id]: {...recordFor(id), ...changes}};
+    saveTracker();
+    renderAll();
+  }
+
+  function norm(value) {
+    return String(value || "").toLowerCase().replace(/[^a-z0-9+#]/g, "");
+  }
+
+  const aliases = {
+    html:["html","htmlwebstructure"],
+    css:["css","cssresponsivedesign","responsivedesign"],
+    javascript:["javascript","js"],
+    python:["python","pythonprogramminglogic"],
+    sql:["sql","sqldatabases","databases"],
+    analytics:["analytics","dataanalysis","analysis"],
+    design:["design","mechanicaldesign"],
+    cad:["cad","autocad","computer aided design"],
+    "c/c++":["c/c++","c++","c"],
+    ux:["ux","uiux","userexperience"],
+    iot:["iot","internetofthings"],
+    research:["research"],
+    excel:["excel","spreadsheets"]
+  };
+
+  function hasSkill(required) {
+    const need = norm(required);
+    const candidates = aliases[need] || [need];
+    return skills.some(s => {
+      const have = norm(s.name);
+      return candidates.some(c => have === norm(c) || (norm(c).length >= 5 && have.includes(norm(c))));
+    });
+  }
+
+  function matchFor(item) {
+    const matched = item.skills.filter(hasSkill);
+    const missing = item.skills.filter(s => !matched.includes(s));
+    const interest = norm(selectedCareer);
+    const interestMatch = Boolean(interest) &&
+      (item.interest.some(term => interest.includes(norm(term)) || norm(term).includes(interest)) ||
+       norm(item.title).includes(interest));
+
+    const skillScore = item.skills.length ? Math.round(matched.length / item.skills.length * 100) : 0;
+    // Career interest can influence ranking, but never masquerades as skill overlap.
+    const rankingScore = Math.min(100, skillScore + (interestMatch ? 12 : 0));
+    return {matched, missing, skillScore, rankingScore, interestMatch};
+  }
+
+  function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, ch => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    }[ch]));
+  }
+
+  function modeLabel(mode) {
+    return mode === "on-site" ? "On-site" : mode.charAt(0).toUpperCase() + mode.slice(1);
+  }
+
+  function renderCard(item) {
+    const record = recordFor(item.id);
+    const match = matchFor(item);
+    const isSaved = record.saved;
+    const scoreLabel = skills.length ? match.skillScore + "%" : "Not assessed";
+
+    return `
+      <article class="opportunity-card">
+        <div class="card-top">
+          <div class="company-mark">${escapeHTML(item.mark)}</div>
+          <div style="display:grid;gap:7px;justify-items:end">
+            <span class="badge">${escapeHTML(item.type)}</span>
+            <span class="badge match-badge">${skills.length ? match.rankingScore + " ranking" : "Explore"}</span>
+          </div>
+        </div>
+        <div class="card-field">${escapeHTML(item.field)} · Sample pathway</div>
+        <h3>${escapeHTML(item.title)}</h3>
+        <div class="company-name">Illustrative opportunity profile</div>
+        <p class="card-description">${escapeHTML(item.description)}</p>
+        <div class="card-meta">
+          <span class="meta-item">◷ ${escapeHTML(modeLabel(item.mode))}</span>
+          <span class="meta-item">• Skills-based pathway</span>
+        </div>
+        <div class="tags">${item.skills.map(s => `<span class="tag">${escapeHTML(s)}</span>`).join("")}</div>
+        <div class="match-block">
+          <div class="match-head"><span>Skill overlap</span><strong>${scoreLabel}</strong></div>
+          <div class="match-track" role="progressbar" aria-label="Skill overlap" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${match.skillScore}">
+            <div class="match-fill" style="width:${skills.length ? match.skillScore : 0}%"></div>
+          </div>
+          <p class="match-explanation">${
+            skills.length
+              ? (match.matched.length ? "Matched: " + escapeHTML(match.matched.join(", ")) + ". " : "No exact skill matches found yet. ") +
+                (match.missing.length ? "Build next: " + escapeHTML(match.missing.join(", ")) + "." : "All listed sample skills match your saved profile.")
+              : "Save skills in Skill Tracker to calculate your skill overlap."
+          }</p>
+          ${match.interestMatch ? `<p class="match-explanation">↗ This pathway aligns with your selected career interest.</p>` : ""}
+        </div>
+        <div class="card-actions">
+          <button class="btn ${isSaved ? "btn-save saved" : "btn-save"}" data-action="save" data-id="${item.id}" type="button">${isSaved ? "✓ Saved" : "+ Save pathway"}</button>
+          <button class="btn" data-action="details" data-id="${item.id}" type="button">Track details</button>
+        </div>
+      </article>`;
+  }
+
+  function renderCards() {
+    const query = document.getElementById("searchInput").value.trim().toLowerCase();
+    const status = document.getElementById("statusFilter").value;
+    const mode = document.getElementById("modeFilter").value;
+    const savedOnly = document.getElementById("savedOnly").checked;
+    const sort = document.getElementById("sortSelect").value;
+
+    let results = opportunities.filter(item => {
+      const record = recordFor(item.id);
+      const searchable = [item.title,item.field,item.type,item.description,...item.skills].join(" ").toLowerCase();
+      return (activeField === "all" || item.field === activeField) &&
+        (!query || searchable.includes(query)) &&
+        (status === "all" || record.status === status) &&
+        (mode === "all" || item.mode === mode) &&
+        (!savedOnly || record.saved);
+    });
+
+    results.sort((a,b) => {
+      if (sort === "title") return a.title.localeCompare(b.title);
+      if (sort === "saved" && recordFor(a.id).saved !== recordFor(b.id).saved) return recordFor(b.id).saved - recordFor(a.id).saved;
+      return matchFor(b).rankingScore - matchFor(a).rankingScore;
+    });
+
+    document.getElementById("opportunityGrid").innerHTML = results.length
+      ? results.map(renderCard).join("")
+      : `<div class="empty-state"><strong>No matching pathways</strong>Try another search or change your filters.</div>`;
+  }
+
+  function renderSaved() {
+    const saved = opportunities.filter(item => recordFor(item.id).saved);
+    const list = document.getElementById("savedList");
+
+    if (!saved.length) {
+      list.innerHTML = `<div class="empty-state"><strong>Your shortlist starts here.</strong>Save a pathway above to track your preparation and application progress.</div>`;
+      return;
+    }
+
+    list.innerHTML = saved.map(item => {
+      const record = recordFor(item.id);
+      return `<article class="saved-item">
+        <div>
+          <strong>${escapeHTML(item.title)}</strong>
+          <p>${escapeHTML(item.field)} · ${matchFor(item).skillScore}% skill overlap · ${escapeHTML(modeLabel(item.mode))}</p>
+          <div class="tracking-fields">
+            <label>Application status
+              <select class="field" data-track="status" data-id="${item.id}">
+                ${statuses.map(s => `<option ${record.status === s ? "selected" : ""}>${s}</option>`).join("")}
+              </select>
+            </label>
+            <label>Target deadline
+              <input class="field" type="date" data-track="deadline" data-id="${item.id}" value="${escapeHTML(record.deadline)}">
+            </label>
+            <label>Follow-up date
+              <input class="field" type="date" data-track="followUp" data-id="${item.id}" value="${escapeHTML(record.followUp)}">
+            </label>
+            <label>Personal notes
+              <textarea class="field" data-track="notes" data-id="${item.id}" placeholder="Preparation tasks, contact details, or next steps">${escapeHTML(record.notes)}</textarea>
+            </label>
+          </div>
+        </div>
+        <div class="saved-actions">
+          <button class="btn" type="button" data-action="jump" data-id="${item.id}">View card</button>
+          <button class="btn remove-btn" type="button" data-action="remove" data-id="${item.id}">Remove</button>
+        </div>
+      </article>`;
+    }).join("");
+  }
+
+  function renderStats() {
+    const saved = opportunities.filter(item => recordFor(item.id).saved);
+    const active = saved.filter(item => ["Applied","Interview"].includes(recordFor(item.id).status));
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const deadlines = saved.filter(item => {
+      const raw = recordFor(item.id).deadline;
+      if (!raw) return false;
+      const date = new Date(raw + "T00:00:00");
+      return date >= today && !["Selected","Rejected"].includes(recordFor(item.id).status);
+    });
+    document.getElementById("savedCount").textContent = saved.length;
+    document.getElementById("applicationCount").textContent = active.length;
+    document.getElementById("deadlineCount").textContent = deadlines.length;
+    document.getElementById("skillsSignal").textContent = skills.length + (skills.length === 1 ? " skill" : " skills");
+    document.getElementById("readinessSignal").textContent = readScore() === null ? "Not assessed" : readScore() + "%";
+    const best = opportunities.map(matchFor).reduce((a,b) => b.skillScore > a.skillScore ? b : a, {skillScore:0});
+    document.getElementById("bestMatch").textContent = skills.length ? best.skillScore + "% skill overlap" : "Add skills";
+    document.getElementById("careerSignal").textContent = selectedCareer || "Exploring careers";
+    document.getElementById("careerChip").textContent = selectedCareer || "Exploring careers";
+    document.getElementById("personalizationText").textContent = selectedCareer
+      ? "Recommendations include pathways related to your selected direction."
+      : "Choose a career direction in your profile to improve interest-based ranking.";
+  }
+
+  function renderAll() {
+    renderStats();
+    renderCards();
+    renderSaved();
+  }
+
+  let toastTimer;
+  function showToast(message) {
+    let toast = document.getElementById("appToast");
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.id = "appToast";
+      toast.setAttribute("role","status");
+      Object.assign(toast.style,{
+        position:"fixed",bottom:"20px",left:"50%",transform:"translateX(-50%)",
+        zIndex:"99",maxWidth:"90%",padding:"13px 18px",borderRadius:"12px",
+        background:"#b7ff5a",color:"#111610",fontSize:"12px",fontWeight:"800",
+        boxShadow:"0 12px 40px #0008"
+      });
+      document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    toast.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { toast.hidden = true; }, 2600);
+  }
+
+  document.getElementById("fieldFilters").addEventListener("click", event => {
+    const button = event.target.closest("[data-filter]");
+    if (!button) return;
+    activeField = button.dataset.filter;
+    document.querySelectorAll(".filter-btn").forEach(b => {
+      const active = b === button;
+      b.classList.toggle("active", active);
+      b.setAttribute("aria-pressed", String(active));
+    });
+    renderCards();
+  });
+
+  ["searchInput","sortSelect","statusFilter","modeFilter","savedOnly"].forEach(id => {
+    document.getElementById(id).addEventListener("input", renderCards);
+    document.getElementById(id).addEventListener("change", renderCards);
+  });
+
+  document.getElementById("opportunityGrid").addEventListener("click", event => {
+    const button = event.target.closest("button[data-action]");
+    if (!button) return;
+    const item = opportunities.find(o => o.id === button.dataset.id);
+    if (!item) return;
+    const record = recordFor(item.id);
+
+    if (button.dataset.action === "save") {
+      updateRecord(item.id,{saved:!record.saved});
+      showToast(record.saved ? "Removed from your saved pathways." : "Pathway saved to your tracker.");
+    } else if (button.dataset.action === "details") {
+      if (!record.saved) tracker = {...tracker,[item.id]:{...record,saved:true}};
+      saveTracker();
+      renderAll();
+      document.getElementById("savedSection").scrollIntoView({behavior:"smooth"});
+      showToast("Your tracking fields are ready below.");
+    }
+  });
+
+  document.getElementById("savedList").addEventListener("change", event => {
+    const el = event.target.closest("[data-track]");
+    if (!el) return;
+    const {id,track} = el.dataset;
+    if (!opportunities.some(o => o.id === id)) return;
+    updateRecord(id,{[track]:el.value});
+    showToast("Tracker updated.");
+  });
+
+  document.getElementById("savedList").addEventListener("input", event => {
+    const el = event.target.closest('textarea[data-track="notes"]');
+    if (!el) return;
+    const {id,track} = el.dataset;
+    tracker = {...tracker,[id]:{...recordFor(id),[track]:el.value}};
+    // Persist notes as the user types without rebuilding the focused textarea.
+    saveTracker();
+    renderStats();
+  });
+
+  document.getElementById("savedList").addEventListener("click", event => {
+    const button = event.target.closest("button[data-action]");
+    if (!button) return;
+    const item = opportunities.find(o => o.id === button.dataset.id);
+    if (!item) return;
+
+    if (button.dataset.action === "remove") {
+      updateRecord(item.id,{saved:false});
+      showToast("Pathway removed from your shortlist.");
+    } else if (button.dataset.action === "jump") {
+      document.getElementById("recommendations").scrollIntoView({behavior:"smooth"});
+      showToast("Find the pathway in your recommendations.");
+    }
+  });
+
+  document.getElementById("exploreBtn").addEventListener("click", () => {
+    document.getElementById("recommendations").scrollIntoView({behavior:"smooth"});
+  });
+  document.getElementById("savedBtn").addEventListener("click", () => {
+    document.getElementById("savedSection").scrollIntoView({behavior:"smooth"});
+  });
+
+  function refreshProfile() {
+    skills = loadSkills();
+    selectedCareer = readCareer();
+    renderAll();
+  }
+
+  window.addEventListener("careerSkillsUpdated", refreshProfile);
+  window.addEventListener("storage", refreshProfile);
+
+  refreshProfile();
+})();
+</script>
+</body>
+</html>

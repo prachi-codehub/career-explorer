@@ -1,0 +1,197 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register | Career Skill Navigator</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>Career Skill Navigator</h1>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#careers">Careers</a>
+        <a href="login.html">Login</a>
+    </nav>
+</header>
+
+<section class="form-section">
+
+    <div class="form-container">
+
+        <h2>Create Your Career Profile</h2>
+
+        <p>
+            Register to start your personalized career journey.
+        </p>
+
+        <form id="registrationForm">
+
+            <label for="name">Full Name</label>
+            <input
+                type="text"
+                id="name"
+                placeholder="Enter your full name"
+                required
+            >
+
+            <label for="email">Email</label>
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                required
+            >
+
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                placeholder="Create a password"
+                minlength="6"
+                required
+            >
+
+            <label for="education">Education</label>
+            <select id="education" required>
+                <option value="">Select Education</option>
+                <option value="B.Tech">B.Tech</option>
+                <option value="B.E">B.E</option>
+                <option value="BCA">BCA</option>
+                <option value="B.Sc">B.Sc</option>
+                <option value="M.Tech">M.Tech</option>
+                <option value="MCA">MCA</option>
+                <option value="M.Sc">M.Sc</option>
+                <option value="Diploma">Diploma</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label for="interest">Career Interest</label>
+            <select id="interest" required>
+                <option value="">Select Career Interest</option>
+
+                <option value="Software Development">
+                    Software Development
+                </option>
+
+                <option value="Data & AI">
+                    Data & AI
+                </option>
+
+                <option value="Cyber Security">
+                    Cyber Security
+                </option>
+
+                <option value="IoT & Embedded">
+                    IoT & Embedded
+                </option>
+
+                <option value="Mechanical Engineering">
+                    Mechanical Engineering
+                </option>
+
+                <option value="Civil Engineering">
+                    Civil Engineering
+                </option>
+
+                <option value="Electrical Engineering">
+                    Electrical Engineering
+                </option>
+
+                <option value="Electronics & Communication">
+                    Electronics & Communication
+                </option>
+
+                <option value="Chemical Engineering">
+                    Chemical Engineering
+                </option>
+
+                <option value="Biotechnology">
+                    Biotechnology
+                </option>
+
+                <option value="Automobile Engineering">
+                    Automobile Engineering
+                </option>
+
+                <option value="Finance">
+                    Finance
+                </option>
+
+                <option value="Healthcare">
+                    Healthcare
+                </option>
+
+                <option value="Design">
+                    Design
+                </option>
+
+                <option value="Management & Marketing">
+                    Management & Marketing
+                </option>
+
+                <option value="Media">
+                    Media
+                </option>
+
+                <option value="Law">
+                    Law
+                </option>
+
+                <option value="Agriculture">
+                    Agriculture
+                </option>
+
+                <option value="Government & Public Service">
+                    Government & Public Service
+                </option>
+
+                <option value="Not sure">
+                    Not sure
+                </option>
+            </select>
+
+            <label for="skills">Current Skills</label>
+
+            <input
+                type="text"
+                id="skills"
+                placeholder="Example: Python, HTML, SQL"
+                required
+            >
+
+            <button
+                type="submit"
+                id="registerButton"
+            >
+                Create Account
+            </button>
+
+        </form>
+
+        <p style="margin-top: 20px;">
+            Already have an account?
+            <a href="login.html">Login here</a>
+        </p>
+
+    </div>
+
+</section>
+
+<footer>
+    <p>© 2026 Career Skill Navigator</p>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+```

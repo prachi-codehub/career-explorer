@@ -1,0 +1,826 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Career Recommendations | Career Skill Navigator</title>
+
+    <meta name="description"
+          content="Explore career recommendations based on your skills, interests and assessment results.">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            --navy: #17233c;
+            --purple: #6956d8;
+            --lime: #c7f36b;
+            --background: #f5f6fb;
+            --text: #242b3b;
+            --muted: #687187;
+            --border: #e5e8f0;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--background);
+            color: var(--text);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        header {
+            background: var(--navy);
+            color: white;
+            padding: 20px 7%;
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        header h1 {
+            font-size: 22px;
+            margin: 0;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: var(--lime);
+        }
+
+        .hero {
+            padding: 55px 7%;
+            background: linear-gradient(125deg, #17233c, #43358c);
+            color: white;
+        }
+
+        .eyebrow {
+            color: var(--lime);
+            font-weight: bold;
+            letter-spacing: 2px;
+            font-size: 12px;
+        }
+
+        .hero h2 {
+            font-size: clamp(30px, 5vw, 48px);
+            line-height: 1.15;
+            max-width: 750px;
+            margin: 15px 0;
+        }
+
+        .hero p {
+            color: #e1e5f2;
+            line-height: 1.7;
+            max-width: 650px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--lime);
+            color: #17233c;
+            padding: 12px 18px;
+            border-radius: 9px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid #aeb8d1;
+            color: white;
+        }
+
+        .container {
+            width: 86%;
+            max-width: 1250px;
+            margin: 35px auto;
+        }
+
+        .section-title {
+            margin-bottom: 8px;
+            font-size: 28px;
+        }
+
+        .muted {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin: 25px 0;
+        }
+
+        .summary-card {
+            background: var(--white);
+            padding: 22px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 5px 18px #1d2b4b08;
+        }
+
+        .summary-card span {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .summary-card strong {
+            display: block;
+            margin-top: 12px;
+            font-size: 27px;
+            overflow-wrap: anywhere;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 30px 0 20px;
+        }
+
+        .toolbar input,
+        .toolbar select {
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: white;
+            min-width: 190px;
+            font-size: 14px;
+        }
+
+        .toolbar input {
+            flex: 1;
+        }
+
+        .career-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .career-card {
+            background: white;
+            padding: 23px;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .career-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px #1d2b4b12;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tag {
+            color: #5747bd;
+            background: #efedff;
+            padding: 7px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .match {
+            font-size: 20px;
+            font-weight: bold;
+            color: #25804a;
+            white-space: nowrap;
+        }
+
+        .career-card h3 {
+            margin: 20px 0 8px;
+            font-size: 20px;
+        }
+
+        .career-card p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.65;
+        }
+
+        .match-track {
+            height: 7px;
+            background: #eceef4;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 10px 0 15px;
+        }
+
+        .match-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #6d5ce7, #b7e85c);
+            border-radius: 20px;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin: 10px 0 20px;
+        }
+
+        .skill {
+            background: #f1f3f8;
+            color: #4d566b;
+            padding: 7px 9px;
+            border-radius: 7px;
+            font-size: 12px;
+        }
+
+        .career-card .btn {
+            margin-top: auto;
+            text-align: center;
+        }
+
+        .status {
+            padding: 16px;
+            border-radius: 10px;
+            margin: 18px 0;
+            background: white;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .error {
+            color: #a12d36;
+            background: #fff0f0;
+            border-color: #f3cccc;
+        }
+
+        .empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 35px;
+            background: white;
+            border-radius: 14px;
+            color: var(--muted);
+        }
+
+        footer {
+            margin-top: 55px;
+            padding: 25px;
+            text-align: center;
+            color: var(--muted);
+            background: white;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 900px) {
+            .career-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 18px 5%;
+            }
+
+            .hero {
+                padding: 40px 6%;
+            }
+
+            .container {
+                width: 90%;
+            }
+
+            .summary-grid,
+            .career-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .toolbar input,
+            .toolbar select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="nav-inner">
+        <h1>Career Skill Navigator</h1>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="skill-assessment.html">Assessment</a>
+            <a href="profile.html">Profile</a>
+            <a href="learning-roadmap.html">Learning Roadmap</a>
+        </nav>
+    </div>
+</header>
+
+<section class="hero">
+    <span class="eyebrow">PERSONALIZED CAREER DISCOVERY</span>
+
+    <h2>Discover careers that match your potential.</h2>
+
+    <p>
+        Explore career options, review your assessment results and
+        identify the skills you can develop to move toward your goals.
+    </p>
+
+    <div class="hero-actions">
+        <a href="skill-assessment.html" class="btn">
+            Take Skill Assessment →
+        </a>
+
+        <a href="#recommendations" class="btn btn-secondary">
+            Explore Careers
+        </a>
+    </div>
+</section>
+
+<main class="container">
+
+    <section>
+        <h2 class="section-title">Your Career Snapshot</h2>
+
+        <p class="muted">
+            These details are loaded from your saved assessment.
+        </p>
+
+        <div class="summary-grid">
+
+            <div class="summary-card">
+                <span>Assessment Score</span>
+                <strong id="assessmentScore">Not completed</strong>
+            </div>
+
+            <div class="summary-card">
+                <span>Your Career Field</span>
+                <strong id="assessmentField">Not available</strong>
+            </div>
+
+            <div class="summary-card">
+                <span>Careers Available</span>
+                <strong id="careerCount">Loading...</strong>
+            </div>
+
+        </div>
+
+        <div id="assessmentNotice" class="status">
+            Checking your assessment results...
+        </div>
+    </section>
+
+    <section id="recommendations">
+
+        <h2 class="section-title">Explore Career Recommendations</h2>
+
+        <p class="muted">
+            Search careers and filter the list to explore your options.
+            Match percentages are estimates based on your saved assessment
+            and career-field alignment, not guaranteed job suitability.
+        </p>
+
+        <div class="toolbar">
+            <input
+                type="search"
+                id="careerSearch"
+                placeholder="Search careers..."
+                aria-label="Search careers"
+            >
+
+            <select id="fieldFilter" aria-label="Filter careers by field">
+                <option value="all">All career fields</option>
+            </select>
+
+            <select id="sortFilter" aria-label="Sort careers">
+                <option value="match">Highest match first</option>
+                <option value="name">Name: A to Z</option>
+            </select>
+        </div>
+
+        <div id="apiStatus" class="status">
+            Loading careers from the API...
+        </div>
+
+        <div id="careerGrid" class="career-grid"></div>
+
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 Career Skill Navigator · Discover · Develop · Navigate</p>
+</footer>
+
+<script>
+(function () {
+    "use strict";
+
+    const API_URL = "http://localhost:3000/api/careers";
+
+    const careerGrid = document.getElementById("careerGrid");
+    const apiStatus = document.getElementById("apiStatus");
+    const careerCount = document.getElementById("careerCount");
+    const searchInput = document.getElementById("careerSearch");
+    const fieldFilter = document.getElementById("fieldFilter");
+    const sortFilter = document.getElementById("sortFilter");
+    const assessmentNotice = document.getElementById("assessmentNotice");
+
+    let careers = [];
+    let assessment = null;
+    let dna = null;
+
+    function readAssessment() {
+        try {
+            assessment = JSON.parse(
+                localStorage.getItem("skillAssessmentResult") || "null"
+            );
+
+            dna = JSON.parse(
+                localStorage.getItem("careerDNAScores") || "null"
+            );
+        } catch (error) {
+            assessment = null;
+            dna = null;
+            console.error("Assessment data could not be read:", error);
+        }
+
+        const scoreElement = document.getElementById("assessmentScore");
+        const fieldElement = document.getElementById("assessmentField");
+
+        if (assessment) {
+            const score = Number(assessment.score);
+            const maxScore = Number(assessment.maxScore);
+
+            if (
+                Number.isFinite(score) &&
+                Number.isFinite(maxScore) &&
+                maxScore > 0
+            ) {
+                scoreElement.textContent =
+                    Math.round((score / maxScore) * 100) + "%";
+            } else {
+                scoreElement.textContent = "Saved";
+            }
+
+            fieldElement.textContent =
+                assessment.fieldName ||
+                assessment.field ||
+                "Not specified";
+
+            assessmentNotice.className = "status";
+            assessmentNotice.textContent =
+                "Your assessment has been loaded. Career matches are estimated from your saved results.";
+        } else {
+            scoreElement.textContent = "Not completed";
+            fieldElement.textContent = "Not available";
+
+            assessmentNotice.className = "status";
+            assessmentNotice.textContent =
+                "You have not completed an assessment yet. You can still explore careers, or take the assessment for a more personalized estimate.";
+        }
+    }
+
+    function getFieldCategory(career) {
+        const field = String(career.field || "").toLowerCase();
+        const name = String(career.name || career.title || "").toLowerCase();
+
+        if (name.includes("frontend") || name.includes("software")) {
+            return "Technology";
+        }
+
+        if (name.includes("data analyst")) {
+            return "Data";
+        }
+
+        if (name.includes("business analyst")) {
+            return "Business";
+        }
+
+        if (name.includes("ui/ux") || name.includes("designer")) {
+            return "Design";
+        }
+
+        if (name.includes("mechanical")) {
+            return "Mechanical Engineering";
+        }
+
+        if (name.includes("civil")) {
+            return "Civil Engineering";
+        }
+
+        if (name.includes("iot")) {
+            return "IoT / Electronics";
+        }
+
+        if (name.includes("ai/ml") || name.includes("machine learning")) {
+            return "Artificial Intelligence";
+        }
+
+        if (field) {
+            return field
+                .split(/[\s/_-]+/)
+                .map(function (word) {
+                    return word.charAt(0).toUpperCase() + word.slice(1);
+                })
+                .join(" ");
+        }
+
+        return "Other";
+    }
+
+    function calculateCareerMatch(career) {
+        if (!assessment) {
+            return null;
+        }
+
+        const careerName = String(
+            career.name || career.title || ""
+        ).toLowerCase();
+
+        const field = String(assessment.field || "").toLowerCase();
+        const goal = String(assessment.careerGoal || "").toLowerCase();
+        const category = String(career.field || "").toLowerCase();
+
+        const fieldMap = {
+            "frontend developer": ["computer", "technology", "it", "general"],
+            "data analyst": ["computer", "business", "commerce", "finance", "general"],
+            "iot engineer": ["computer", "electronics", "iot", "vocational"],
+            "mechanical design engineer": ["mechanical", "vocational"],
+            "civil engineer": ["civil", "vocational"],
+            "business analyst": ["business", "commerce", "finance", "computer", "general"],
+            "ui/ux designer": ["design", "arts", "media", "computer", "general"],
+            "ai/ml engineer": ["computer", "physics", "math", "general"]
+        };
+
+        const canonicalName = Object.keys(fieldMap).find(function (name) {
+            return careerName.includes(name);
+        });
+
+        let score = 45;
+
+        if (field && category && field === category) {
+            score += 15;
+        }
+
+        if (canonicalName && fieldMap[canonicalName].includes(field)) {
+            score += 20;
+        }
+
+        if (careerName.includes("frontend") ||
+            careerName.includes("iot") ||
+            careerName.includes("ai/ml")) {
+            score += (Number(dna && dna.technology) || 0) * 0.15;
+        }
+
+        if (careerName.includes("data analyst")) {
+            score += (Number(dna && dna.dataThinking) || 0) * 0.15;
+        }
+
+        if (careerName.includes("business analyst")) {
+            score += (Number(dna && dna.communication) || 0) * 0.15;
+        }
+
+        if (careerName.includes("ui/ux")) {
+            score += (Number(dna && dna.communication) || 0) * 0.10;
+        }
+
+        if (careerName.includes("mechanical") ||
+            careerName.includes("civil")) {
+            score += (Number(dna && dna.problemSolving) || 0) * 0.15;
+        }
+
+        if (goal && (careerName.includes(goal) || goal.includes(careerName))) {
+            score += 10;
+        }
+
+        return Math.min(98, Math.round(score));
+    }
+
+    function escapeHTML(value) {
+        return String(value == null ? "" : value).replace(/[&<>"']/g, function (char) {
+            const entities = {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            };
+
+            return entities[char];
+        });
+    }
+
+    function populateFieldFilter() {
+        const categories = Array.from(new Set(
+            careers.map(getFieldCategory)
+        )).sort();
+
+        fieldFilter.innerHTML =
+            '<option value="all">All career fields</option>';
+
+        categories.forEach(function (category) {
+            const option = document.createElement("option");
+            option.value = category;
+            option.textContent = category;
+            fieldFilter.appendChild(option);
+        });
+    }
+
+    function renderCareers() {
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        const selectedField = fieldFilter.value;
+        const sortBy = sortFilter.value;
+
+        const filtered = careers
+            .map(function (career) {
+                return {
+                    ...career,
+                    title: career.name || career.title || "Unnamed Career",
+                    category: getFieldCategory(career),
+                    match: calculateCareerMatch(career)
+                };
+            })
+            .filter(function (career) {
+                const text = [
+                    career.title,
+                    career.field,
+                    career.description,
+                    career.category
+                ].join(" ").toLowerCase();
+
+                const matchesSearch = text.includes(searchTerm);
+                const matchesField =
+                    selectedField === "all" ||
+                    career.category === selectedField;
+
+                return matchesSearch && matchesField;
+            });
+
+        filtered.sort(function (a, b) {
+            if (sortBy === "name") {
+                return a.title.localeCompare(b.title);
+            }
+
+            if (a.match === null && b.match === null) {
+                return a.title.localeCompare(b.title);
+            }
+
+            if (a.match === null) return 1;
+            if (b.match === null) return -1;
+
+            return b.match - a.match;
+        });
+
+        careerGrid.innerHTML = "";
+
+        if (filtered.length === 0) {
+            careerGrid.innerHTML =
+                '<div class="empty">No careers found. Try another search or filter.</div>';
+            return;
+        }
+
+        filtered.forEach(function (career) {
+            const matchText = career.match === null
+                ? "—"
+                : career.match + "%";
+
+            const matchWidth = career.match === null
+                ? 0
+                : career.match;
+
+            const description = career.description ||
+                "Explore this career path and learn about the skills it requires.";
+
+            const card = document.createElement("article");
+            card.className = "career-card";
+
+            card.innerHTML = `
+                <div class="card-top">
+                    <span class="tag">${escapeHTML(career.category)}</span>
+                    <span class="match">${matchText}</span>
+                </div>
+
+                <h3>${escapeHTML(career.title)}</h3>
+
+                <p>${escapeHTML(description)}</p>
+
+                <div class="match-track"
+                     aria-label="Estimated career match">
+                    <div class="match-fill"
+                         style="width:${matchWidth}%"></div>
+                </div>
+
+                <p>
+                    <strong>Estimated match</strong>
+                    <br>
+                    ${career.match === null
+                        ? "Complete the assessment to see your estimated match."
+                        : "Based on your saved assessment and career-field alignment."}
+                </p>
+
+                <div class="skills">
+                    <span class="skill">${escapeHTML(career.field || career.category)}</span>
+                </div>
+
+                <a class="btn" href="learning-roadmap.html">
+                    Explore Learning Roadmap →
+                </a>
+            `;
+
+            careerGrid.appendChild(card);
+        });
+    }
+
+    async function loadCareers() {
+        apiStatus.className = "status";
+        apiStatus.textContent = "Loading careers from your API...";
+
+        try {
+            const response = await fetch(API_URL);
+
+            if (!response.ok) {
+                throw new Error("API returned HTTP " + response.status);
+            }
+
+            const data = await response.json();
+
+            if (!data.success || !Array.isArray(data.careers)) {
+                throw new Error("The API response does not contain a careers list.");
+            }
+
+            careers = data.careers;
+            careerCount.textContent = String(careers.length);
+
+            populateFieldFilter();
+
+            apiStatus.style.display = "none";
+            renderCareers();
+        } catch (error) {
+            console.error("Career API error:", error);
+
+            careerCount.textContent = "Unavailable";
+            apiStatus.className = "status error";
+            apiStatus.textContent =
+                "Could not load careers from " + API_URL +
+                ". Start your Node.js API server and refresh this page. " +
+                "If the server is running, check the browser console for errors.";
+
+            careerGrid.innerHTML = "";
+        }
+    }
+
+    searchInput.addEventListener("input", renderCareers);
+    fieldFilter.addEventListener("change", renderCareers);
+    sortFilter.addEventListener("change", renderCareers);
+
+    readAssessment();
+    loadCareers();
+
+})();
+</script>
+
+</body>
+</html>

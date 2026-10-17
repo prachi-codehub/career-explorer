@@ -1,0 +1,830 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Skill Gap Radar | Career Skill Navigator</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            min-height: 100vh;
+        }
+
+        .gap-page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 70px 24px;
+        }
+
+        .gap-header {
+            margin-bottom: 35px;
+        }
+
+        .gap-eyebrow {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #b7ff4a;
+            margin-bottom: 12px;
+        }
+
+        .gap-header h1 {
+            font-size: clamp(36px, 5vw, 64px);
+            line-height: 1;
+            margin: 0 0 16px;
+        }
+
+        .gap-header p {
+            max-width: 680px;
+            color: #9ba5a2;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .gap-grid {
+            display: grid;
+            grid-template-columns: 330px 1fr;
+            gap: 24px;
+            align-items: stretch;
+        }
+
+        .score-card,
+        .skills-card,
+        .action-card {
+            background: rgba(255, 255, 255, 0.045);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .score-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .score-label {
+            color: #9ba5a2;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .score-number {
+            font-size: 76px;
+            line-height: 1;
+            font-weight: 800;
+            margin: 22px 0 8px;
+            color: #b7ff4a;
+        }
+
+        .score-total {
+            color: #8e9895;
+            font-size: 18px;
+        }
+
+        .level-badge {
+            display: inline-flex;
+            width: fit-content;
+            margin-top: 22px;
+            padding: 9px 14px;
+            border-radius: 999px;
+            background: rgba(183, 255, 74, 0.1);
+            color: #b7ff4a;
+            border: 1px solid rgba(183, 255, 74, 0.2);
+            font-weight: 700;
+        }
+
+        .score-message {
+            margin-top: 25px;
+            color: #aeb8b4;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .skills-card h2 {
+            margin: 0 0 8px;
+            font-size: 25px;
+        }
+
+        .skills-subtitle {
+            color: #8f9995;
+            margin-bottom: 28px;
+            font-size: 14px;
+        }
+
+        .skill-item {
+            margin-bottom: 25px;
+        }
+
+        .skill-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 9px;
+        }
+
+        .skill-name {
+            font-weight: 700;
+        }
+
+        .skill-level {
+            color: #b7ff4a;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .skill-track {
+            height: 9px;
+            border-radius: 99px;
+            background: rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+        }
+
+        .skill-fill {
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(
+                90deg,
+                #b7ff4a,
+                #72e6a0
+            );
+            transition: width 0.5s ease;
+        }
+
+        .action-card {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .action-card h2 {
+            margin: 0 0 8px;
+        }
+
+        .action-card p {
+            margin: 0;
+            color: #929c98;
+            line-height: 1.6;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .gap-button {
+            border: 0;
+            border-radius: 12px;
+            padding: 13px 18px;
+            font-weight: 800;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .primary-gap-button {
+            background: #b7ff4a;
+            color: #101510;
+        }
+
+        .secondary-gap-button {
+            background: rgba(255, 255, 255, 0.07);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .empty-state {
+            max-width: 700px;
+            margin: 80px auto;
+            text-align: center;
+            padding: 45px 25px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 24px;
+        }
+
+        .empty-state h2 {
+            margin-bottom: 12px;
+        }
+
+        .empty-state p {
+            color: #9ca6a2;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 850px) {
+
+            .gap-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-card {
+                grid-column: auto;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .score-number {
+                font-size: 64px;
+            }
+        }
+
+        @media (max-width: 520px) {
+
+            .gap-page {
+                padding: 45px 16px;
+            }
+
+            .score-card,
+            .skills-card,
+            .action-card {
+                padding: 22px;
+                border-radius: 18px;
+            }
+
+            .skill-top {
+                flex-direction: column;
+                gap: 4px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <header>
+        <h2>Career Skill Navigator</h2>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="profile.html">Profile</a>
+            <a href="skill-assessment.html">Assessment</a>
+            <a href="skill-gap.html">Skill Gap</a>
+            <a href="learning-roadmap.html">Roadmap</a>
+            <a href="login.html">Login</a>
+        </nav>
+    </header>
+
+
+    <main class="gap-page">
+
+        <div class="gap-header">
+
+            <span class="gap-eyebrow">
+                SKILL INTELLIGENCE
+            </span>
+
+            <h1>Skill Gap Radar</h1>
+
+            <p>
+                Understand your current skill readiness and identify
+                the areas that can strengthen your career direction.
+            </p>
+
+        </div>
+
+
+        <!-- EMPTY STATE -->
+
+        <div
+            id="emptyState"
+            class="empty-state"
+            style="display: none;"
+        >
+
+            <h2>Complete your Skill Assessment</h2>
+
+            <p>
+                Your Skill Gap Radar will appear here after you
+                complete the assessment.
+            </p>
+
+            <a
+                href="skill-assessment.html"
+                class="gap-button primary-gap-button"
+            >
+                Start Assessment
+            </a>
+
+        </div>
+
+
+        <!-- GAP DASHBOARD -->
+
+        <div
+            id="gapDashboard"
+            class="gap-grid"
+            style="display: none;"
+        >
+
+            <!-- SCORE -->
+
+            <section class="score-card">
+
+                <div>
+
+                    <div class="score-label">
+                        Overall Skill Score
+                    </div>
+
+                    <div class="score-number" id="scoreNumber">
+                        0
+                    </div>
+
+                    <div class="score-total">
+                        out of 15
+                    </div>
+
+                    <div
+                        class="level-badge"
+                        id="levelBadge"
+                    >
+                        Beginner
+                    </div>
+
+                    <p
+                        class="score-message"
+                        id="scoreMessage"
+                    >
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- SKILLS -->
+
+            <section class="skills-card">
+
+                <h2>Your Skill Profile</h2>
+
+                <p class="skills-subtitle">
+                    Assessment breakdown across core career skills.
+                </p>
+
+
+                <div class="skill-item">
+
+                    <div class="skill-top">
+
+                        <span class="skill-name">
+                            HTML & Web Structure
+                        </span>
+
+                        <span
+                            class="skill-level"
+                            id="htmlLevel"
+                        >
+                            —
+                        </span>
+
+                    </div>
+
+                    <div class="skill-track">
+
+                        <div
+                            class="skill-fill"
+                            id="htmlBar"
+                            style="width: 0%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="skill-item">
+
+                    <div class="skill-top">
+
+                        <span class="skill-name">
+                            CSS & Responsive Design
+                        </span>
+
+                        <span
+                            class="skill-level"
+                            id="cssLevel"
+                        >
+                            —
+                        </span>
+
+                    </div>
+
+                    <div class="skill-track">
+
+                        <div
+                            class="skill-fill"
+                            id="cssBar"
+                            style="width: 0%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="skill-item">
+
+                    <div class="skill-top">
+
+                        <span class="skill-name">
+                            JavaScript
+                        </span>
+
+                        <span
+                            class="skill-level"
+                            id="jsLevel"
+                        >
+                            —
+                        </span>
+
+                    </div>
+
+                    <div class="skill-track">
+
+                        <div
+                            class="skill-fill"
+                            id="jsBar"
+                            style="width: 0%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="skill-item">
+
+                    <div class="skill-top">
+
+                        <span class="skill-name">
+                            Python & Programming Logic
+                        </span>
+
+                        <span
+                            class="skill-level"
+                            id="pythonLevel"
+                        >
+                            —
+                        </span>
+
+                    </div>
+
+                    <div class="skill-track">
+
+                        <div
+                            class="skill-fill"
+                            id="pythonBar"
+                            style="width: 0%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="skill-item">
+
+                    <div class="skill-top">
+
+                        <span class="skill-name">
+                            SQL & Databases
+                        </span>
+
+                        <span
+                            class="skill-level"
+                            id="sqlLevel"
+                        >
+                            —
+                        </span>
+
+                    </div>
+
+                    <div class="skill-track">
+
+                        <div
+                            class="skill-fill"
+                            id="sqlBar"
+                            style="width: 0%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ACTION -->
+
+            <section class="action-card">
+
+                <div>
+
+                    <h2>Continue your career journey</h2>
+
+                    <p id="actionMessage">
+                        Build practical projects and continue developing
+                        your career skills.
+                    </p>
+
+                </div>
+
+                <div class="action-buttons">
+
+                    <a
+                        href="skill-assessment.html"
+                        class="gap-button secondary-gap-button"
+                    >
+                        Retake Assessment
+                    </a>
+
+                    <a
+                        href="learning-roadmap.html"
+                        class="gap-button primary-gap-button"
+                    >
+                        View Roadmap →
+                    </a>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+        <p>© 2026 Career Skill Navigator</p>
+    </footer>
+
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                /*
+                 * Read the score saved by
+                 * skill-assessment.html
+                 */
+
+                const savedScore =
+                    localStorage.getItem("skillScore");
+
+
+                const emptyState =
+                    document.getElementById("emptyState");
+
+                const dashboard =
+                    document.getElementById("gapDashboard");
+
+
+                /*
+                 * No assessment completed
+                 */
+
+                if (
+                    savedScore === null ||
+                    savedScore === ""
+                ) {
+
+                    emptyState.style.display = "block";
+
+                    dashboard.style.display = "none";
+
+                    return;
+
+                }
+
+
+                /*
+                 * Convert saved score to number
+                 */
+
+                const score =
+                    Number(savedScore);
+
+
+                /*
+                 * Show dashboard
+                 */
+
+                emptyState.style.display = "none";
+
+                dashboard.style.display = "grid";
+
+
+                /*
+                 * Display score
+                 */
+
+                document.getElementById(
+                    "scoreNumber"
+                ).textContent = score;
+
+
+                /*
+                 * Determine level
+                 */
+
+                let level = "Beginner";
+
+                let message =
+                    "Build your foundation and strengthen your core skills.";
+
+                if (score >= 12) {
+
+                    level = "Advanced";
+
+                    message =
+                        "Excellent skill readiness. Focus on advanced projects, portfolio work and real-world applications.";
+
+                } else if (score >= 8) {
+
+                    level = "Intermediate";
+
+                    message =
+                        "You have a solid foundation. Focus on practical projects and strengthening your weaker areas.";
+
+                }
+
+
+                document.getElementById(
+                    "levelBadge"
+                ).textContent = level;
+
+
+                document.getElementById(
+                    "scoreMessage"
+                ).textContent = message;
+
+
+                /*
+                 * Get individual assessment values.
+                 *
+                 * These values are saved by the
+                 * assessment page when available.
+                 */
+
+                const skillValues = [
+
+                    {
+                        value:
+                            localStorage.getItem("skillHTML"),
+                        level:
+                            "htmlLevel",
+                        bar:
+                            "htmlBar"
+                    },
+
+                    {
+                        value:
+                            localStorage.getItem("skillCSS"),
+                        level:
+                            "cssLevel",
+                        bar:
+                            "cssBar"
+                    },
+
+                    {
+                        value:
+                            localStorage.getItem("skillJavaScript"),
+                        level:
+                            "jsLevel",
+                        bar:
+                            "jsBar"
+                    },
+
+                    {
+                        value:
+                            localStorage.getItem("skillPython"),
+                        level:
+                            "pythonLevel",
+                        bar:
+                            "pythonBar"
+                    },
+
+                    {
+                        value:
+                            localStorage.getItem("skillSQL"),
+                        level:
+                            "sqlLevel",
+                        bar:
+                            "sqlBar"
+                    }
+
+                ];
+
+
+                /*
+                 * If individual values are not yet stored,
+                 * calculate a visual profile from the
+                 * overall score.
+                 */
+
+                skillValues.forEach(function (skill) {
+
+                    let value =
+                        Number(skill.value);
+
+
+                    if (
+                        !skill.value ||
+                        isNaN(value)
+                    ) {
+
+                        value =
+                            Math.round(
+                                score / 15 * 3
+                            );
+
+                    }
+
+
+                    let percentage =
+                        (value / 3) * 100;
+
+
+                    let skillText =
+                        "Beginner";
+
+
+                    if (value >= 3) {
+
+                        skillText =
+                            "Advanced";
+
+                    } else if (value >= 2) {
+
+                        skillText =
+                            "Intermediate";
+
+                    }
+
+
+                    document.getElementById(
+                        skill.level
+                    ).textContent = skillText;
+
+
+                    document.getElementById(
+                        skill.bar
+                    ).style.width =
+                        percentage + "%";
+
+                });
+
+
+                /*
+                 * Final action message
+                 */
+
+                if (score >= 12) {
+
+                    document.getElementById(
+                        "actionMessage"
+                    ).textContent =
+                        "Your assessment shows strong readiness. Start building advanced projects and a professional portfolio.";
+
+                } else if (score >= 8) {
+
+                    document.getElementById(
+                        "actionMessage"
+                    ).textContent =
+                        "Your foundation is developing well. Follow the roadmap to strengthen practical skills.";
+
+                } else {
+
+                    document.getElementById(
+                        "actionMessage"
+                    ).textContent =
+                        "Start with the fundamentals, then follow your personalized roadmap step by step.";
+
+                }
+
+            }
+
+        );
+
+    </script>
+
+</body>
+
+</html>
+```

@@ -1,0 +1,1701 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Learning Roadmap | Career Skill Navigator</title>
+
+    <script src="gamification.js"></script>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #101512;
+            color: white;
+        }
+
+        header {
+            min-height: 70px;
+            padding: 0 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            border-bottom: 1px solid #29332d;
+            background: #111713;
+        }
+
+        header h2 {
+            color: #b7ff4a;
+            margin: 0;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+
+        nav a {
+            color: #c0c8c4;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #b7ff4a;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1150px;
+            margin: auto;
+            padding: 60px 0;
+        }
+
+        .eyebrow {
+            color: #b7ff4a;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin: 12px 0;
+        }
+
+        .intro {
+            max-width: 700px;
+            color: #9ca7a1;
+            line-height: 1.7;
+        }
+
+        .career-box,
+        .progress-box {
+            margin-top: 25px;
+            padding: 24px;
+            background: #171e19;
+            border: 1px solid #344238;
+            border-radius: 18px;
+        }
+
+        .career-box span {
+            color: #89948e;
+            font-size: 12px;
+        }
+
+        .career-box strong {
+            display: block;
+            margin-top: 8px;
+            color: #b7ff4a;
+            font-size: 24px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        #progressText {
+            color: #b7ff4a;
+            font-weight: bold;
+        }
+
+        .progress {
+            height: 10px;
+            background: #29332d;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        #progressFill {
+            height: 100%;
+            width: 0%;
+            background: #b7ff4a;
+            transition: 0.3s;
+        }
+
+        /* COURSES */
+
+        .course-section {
+            margin-top: 40px;
+        }
+
+        .section-title {
+            color: #b7ff4a;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .course-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .course-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 22px;
+            background: #171e19;
+            border: 1px solid #303b34;
+            border-radius: 18px;
+        }
+
+        .course-info {
+            flex: 1;
+        }
+
+        .course-info h2 {
+            margin: 0 0 8px;
+            font-size: 21px;
+        }
+
+        .course-info p {
+            margin: 5px 0;
+            color: #8f9a94;
+            font-size: 14px;
+        }
+
+        .course-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .tag {
+            padding: 6px 9px;
+            border-radius: 8px;
+            background: #202a23;
+            color: #aeb8b2;
+            font-size: 11px;
+        }
+
+        .course-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            min-width: 130px;
+        }
+
+        .status-btn {
+            padding: 10px 12px;
+            border: 0;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .status-btn.progress {
+            background: #28351f;
+            color: #b7ff4a;
+        }
+
+        .status-btn.completed {
+            background: #b7ff4a;
+            color: #101512;
+        }
+
+        .remove-btn {
+            padding: 9px;
+            border: 1px solid #414c45;
+            border-radius: 9px;
+            background: transparent;
+            color: #a2aaa6;
+            cursor: pointer;
+        }
+
+        .remove-btn:hover {
+            color: white;
+            border-color: #b7ff4a;
+        }
+
+        .empty-courses {
+            padding: 45px 20px;
+            text-align: center;
+            background: #171e19;
+            border: 1px dashed #3b483f;
+            border-radius: 18px;
+            color: #89948e;
+        }
+
+        .empty-courses h2 {
+            color: white;
+        }
+
+        .course-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 18px;
+            background: #b7ff4a;
+            color: #101512;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        /* PHASES */
+
+        .phases {
+            margin-top: 45px;
+            display: grid;
+            gap: 18px;
+        }
+
+        .phase {
+            padding: 25px;
+            background: #171e19;
+            border: 1px solid #303b34;
+            border-radius: 18px;
+        }
+
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .phase-number {
+            color: #b7ff4a;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .phase h2 {
+            margin: 5px 0 0;
+        }
+
+        .phase-percent {
+            color: #b7ff4a;
+        }
+
+        .task {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 8px;
+            padding: 13px;
+            background: #1d251f;
+            border-radius: 10px;
+        }
+
+        .task input {
+            width: 18px;
+            height: 18px;
+            accent-color: #b7ff4a;
+        }
+
+        .task.completed label {
+            text-decoration: line-through;
+            color: #66716b;
+        }
+
+        .next {
+            margin-top: 35px;
+            padding: 25px;
+            background: #171e19;
+            border: 1px solid #303b34;
+            border-radius: 18px;
+        }
+
+        .next p {
+            color: #9ba59f;
+            line-height: 1.6;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 18px;
+            background: #b7ff4a;
+            color: #101512;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        footer {
+            padding: 30px;
+            text-align: center;
+            color: #66716b;
+            border-top: 1px solid #29332d;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #b7ff4a;
+            color: #101512;
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-weight: bold;
+            display: none;
+            z-index: 9999;
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px;
+            }
+
+            .container {
+                width: 92%;
+                padding: 40px 0;
+            }
+
+            h1 {
+                font-size: 38px;
+            }
+
+            .course-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .course-actions {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h2>Career Skill Navigator</h2>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+        <a href="profile.html">Profile</a>
+        <a href="career-recommendation.html">Careers</a>
+        <a href="skill-assessment.html">Assessment</a>
+        <a href="learning-roadmap.html">Roadmap</a>
+        <a href="course-recommendations.html">Courses</a>
+        <a href="progress.html">Progress</a>
+
+    </nav>
+
+</header>
+
+
+<main class="container">
+
+
+    <span class="eyebrow">
+        PERSONALIZED DEVELOPMENT
+    </span>
+
+
+    <h1>Your Learning Roadmap</h1>
+
+
+    <p class="intro">
+
+        Track your selected courses, complete your learning
+        phases and build your path toward career readiness.
+
+    </p>
+
+
+    <!-- CAREER -->
+
+    <div class="career-box">
+
+        <span>
+            YOUR CAREER DIRECTION
+        </span>
+
+        <strong id="careerName">
+            Exploring Careers
+        </strong>
+
+    </div>
+
+
+    <!-- PROGRESS -->
+
+    <div class="progress-box">
+
+        <div class="progress-header">
+
+            <span>
+                Overall Roadmap Progress
+            </span>
+
+            <span id="progressText">
+                0%
+            </span>
+
+        </div>
+
+        <div class="progress">
+
+            <div id="progressFill"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ALL SELECTED COURSES -->
+
+    <section class="course-section">
+
+        <div class="section-title">
+            MY SELECTED COURSES
+        </div>
+
+
+        <div
+            id="courseList"
+            class="course-list"
+        ></div>
+
+
+        <div
+            id="emptyCourses"
+            class="empty-courses"
+            style="display:none;"
+        >
+
+            <h2>
+                No courses added yet
+            </h2>
+
+            <p>
+                Explore the course library and add as many
+                courses as you want to your roadmap.
+            </p>
+
+            <a
+                href="course-recommendations.html"
+                class="course-link"
+            >
+                Explore Courses →
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- ROADMAP PHASES -->
+
+    <section class="phases">
+
+
+        <!-- PHASE 1 -->
+
+        <div class="phase">
+
+            <div class="phase-header">
+
+                <div>
+
+                    <span class="phase-number">
+                        PHASE 01
+                    </span>
+
+                    <h2>Foundation</h2>
+
+                </div>
+
+                <span
+                    class="phase-percent"
+                    id="phase1"
+                >
+                    0%
+                </span>
+
+            </div>
+
+
+            <div class="task">
+
+                <input
+                    type="checkbox"
+                    id="task1"
+                >
+
+                <label for="task1">
+                    Understand career fundamentals
+                </label>
+
+            </div>
+
+
+            <div class="task">
+
+                <input
+                    type="checkbox"
+                    id="task2"
+                >
+
+                <label for="task2">
+                    Strengthen core technical skills
+                </label>
+
+            </div>
+
+
+            <div class="task">
+
+                <input
+                    type="checkbox"
+                    id="task3"
+                >
+
+                <label for="task3">
+                    Complete beginner-level learning
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- PHASE 2 -->
+
+        <div class="phase">
+
+            <div class="phase-header">
+
+                <div>
+
+                    <span class="phase-number">
+                        PHASE 02
+                    </span>
+
+                    <h2>Skill Development</h2>
+
+                </div>
+
+                <span
+                    class="phase-percent"
+                    id="phase2"
+                >
+                    0%
+                </span>
+
+            </div>
+
+
+            <div class="task">
+
+                <input
+                    type="checkbox"
+                    id="task4"
+                >
+
+                <label for="task4">
+                    Practice through hands-on exercises
+                </label>
+
+            </div>
+
+
+            <div class="task">
+
+                <input
+                    type="checkbox"
+                    id="task5"
+                >
+
+                <label for="task5">
+                    Complete the recommended course
+                </label>
+
+            </div>
+
+
+            <div class="task">
+
+                <input
+                    type="checkbox"
+                    id="task6"
+                >
+
+                <label for="task6">
+                    Build practical technical confidence
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- PHASE 3 -->
+
+        <div class="phase">
+
+            <div class="phase-header">
+
+                <div>
+
+                    <span class="phase-number">
+                        PHASE 03
+                    </span>
+
+                    <h2>Project Building</h2>
+
+                </div>
+
+                <span
+                    class="phase-percent"
+                    id="phase3"
+                >
+                    0%
+                </span>
+
+            </div>
+
+
+            <div class="task">
+
+                <input
+                    type="checkbox"
+                    id="task7"
+                >
+
+                <label for="task7">
+                    Build your first practical project
+                </label>
+
+            </div>
+
+
+            <div class="task">
+
+                <input
+                    type="checkbox"
+                    id="task8"
+                >
+
+                <label for="task8">
+                    Build an advanced project
+                </label>
+
+            </div>
+
+
+            <div class="task">
+
+                <input
+                    type="checkbox"
+                    id="task9"
+                >
+
+                <label for="task9">
+                    Document your project work
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- PHASE 4 -->
+
+        <div class="phase">
+
+            <div class="phase-header">
+
+                <div>
+
+                    <span class="phase-number">
+                        PHASE 04
+                    </span>
+
+                    <h2>Portfolio</h2>
+
+                </div>
+
+                <span
+                    class="phase-percent"
+                    id="phase4"
+                >
+                    0%
+                </span>
+
+            </div>
+
+
+            <div class="task">
+
+                <input
+                    type="checkbox"
+                    id="task10"
+                >
+
+                <label for="task10">
+                    Add projects to your portfolio
+                </label>
+
+            </div>
+
+
+            <div class="task">
+
+                <input
+                    type="checkbox"
+                    id="task11"
+                >
+
+                <label for="task11">
+                    Create a professional resume
+                </label>
+
+            </div>
+
+
+            <div class="task">
+
+                <input
+                    type="checkbox"
+                    id="task12"
+                >
+
+                <label for="task12">
+                    Improve your professional profile
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- PHASE 5 -->
+
+        <div class="phase">
+
+            <div class="phase-header">
+
+                <div>
+
+                    <span class="phase-number">
+                        PHASE 05
+                    </span>
+
+                    <h2>Career Readiness</h2>
+
+                </div>
+
+                <span
+                    class="phase-percent"
+                    id="phase5"
+                >
+                    0%
+                </span>
+
+            </div>
+
+
+            <div class="task">
+
+                <input
+                    type="checkbox"
+                    id="task13"
+                >
+
+                <label for="task13">
+                    Prepare for interviews
+                </label>
+
+            </div>
+
+
+            <div class="task">
+
+                <input
+                    type="checkbox"
+                    id="task14"
+                >
+
+                <label for="task14">
+                    Explore internships and opportunities
+                </label>
+
+            </div>
+
+
+            <div class="task">
+
+                <input
+                    type="checkbox"
+                    id="task15"
+                >
+
+                <label for="task15">
+                    Start applying for relevant opportunities
+                </label>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- NEXT -->
+
+    <section class="next">
+
+        <h2 id="nextTitle">
+            Start building your roadmap
+        </h2>
+
+        <p id="nextMessage">
+            Add courses and complete your roadmap tasks
+            to build career readiness.
+        </p>
+
+        <a
+            href="course-recommendations.html"
+            class="button"
+        >
+            Add More Courses →
+        </a>
+
+    </section>
+
+
+</main>
+
+
+<div
+    id="toast"
+    class="toast"
+></div>
+
+
+<footer>
+
+    Career Skill Navigator © 2026
+
+</footer>
+
+
+<script>
+
+
+/* ==========================================
+   CAREER
+========================================== */
+
+const career =
+    localStorage.getItem("selectedCareer") ||
+    localStorage.getItem("studentInterest") ||
+    "Exploring Careers";
+
+document.getElementById(
+    "careerName"
+).textContent = career;
+
+
+/* ==========================================
+   GET COURSES
+========================================== */
+
+function getCourses() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem(
+                "roadmapCourses"
+            )
+        ) || [];
+
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+/* ==========================================
+   DISPLAY ALL COURSES
+========================================== */
+
+function displayCourses() {
+
+    const courses =
+        getCourses();
+
+    const list =
+        document.getElementById(
+            "courseList"
+        );
+
+    const empty =
+        document.getElementById(
+            "emptyCourses"
+        );
+
+
+    list.innerHTML = "";
+
+
+    if (courses.length === 0) {
+
+        empty.style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    empty.style.display =
+        "none";
+
+
+    courses.forEach(function(course) {
+
+        const card =
+            document.createElement(
+                "div"
+            );
+
+        card.className =
+            "course-card";
+
+
+        const addedDate =
+            course.addedAt
+                ? new Date(
+                    course.addedAt
+                  ).toLocaleDateString()
+                : "Recently";
+
+
+        card.innerHTML = `
+
+            <div class="course-info">
+
+                <h2>
+                    ${escapeHTML(course.name)}
+                </h2>
+
+                <p>
+                    ${escapeHTML(course.field)}
+                    •
+                    ${escapeHTML(course.duration)}
+                </p>
+
+                <p>
+                    Added: ${addedDate}
+                </p>
+
+                <div class="course-meta">
+
+                    ${
+                        (course.skills || [])
+                            .map(function(skill) {
+
+                                return `
+                                    <span class="tag">
+                                        ${escapeHTML(skill)}
+                                    </span>
+                                `;
+
+                            })
+                            .join("")
+                    }
+
+                </div>
+
+            </div>
+
+
+            <div class="course-actions">
+
+                <button
+                    class="status-btn ${
+                        course.completed
+                            ? "completed"
+                            : "progress"
+                    }"
+                    data-id="${course.id}"
+                >
+
+                    ${
+                        course.completed
+                            ? "✓ Completed"
+                            : "In Progress"
+                    }
+
+                </button>
+
+
+                <button
+                    class="remove-btn"
+                    data-remove="${course.id}"
+                >
+
+                    Remove
+
+                </button>
+
+            </div>
+
+        `;
+
+
+        card
+            .querySelector(
+                "[data-id]"
+            )
+            .addEventListener(
+                "click",
+                function() {
+
+                    toggleCourse(
+                        course.id
+                    );
+
+                }
+            );
+
+
+        card
+            .querySelector(
+                "[data-remove]"
+            )
+            .addEventListener(
+                "click",
+                function() {
+
+                    removeCourse(
+                        course.id
+                    );
+
+                }
+            );
+
+
+        list.appendChild(card);
+
+    });
+
+}
+
+
+/* ==========================================
+   TOGGLE COURSE
+========================================== */
+
+function toggleCourse(id) {
+
+    const courses =
+        getCourses();
+
+
+    const course =
+        courses.find(
+            function(item) {
+
+                return item.id === id;
+
+            }
+        );
+
+
+    if (!course) {
+        return;
+    }
+
+
+    const wasCompleted =
+        course.completed;
+
+
+    course.completed =
+        !course.completed;
+
+
+    localStorage.setItem(
+        "roadmapCourses",
+        JSON.stringify(courses)
+    );
+
+
+    /*
+       Award XP only when a course
+       is actually completed.
+    */
+
+    if (
+        course.completed &&
+        !wasCompleted &&
+        typeof awardCareerXP === "function"
+    ) {
+
+        awardCareerXP(
+            "course_" + course.id,
+            50,
+            "Completed course: " + course.name
+        );
+
+        showToast(
+            "Course completed! +50 XP 🎉"
+        );
+
+    } else {
+
+        showToast(
+            course.completed
+                ? "Course marked completed!"
+                : "Course moved back to In Progress."
+        );
+
+    }
+
+
+    displayCourses();
+
+    calculateProgress();
+
+}
+
+
+/* ==========================================
+   REMOVE COURSE
+========================================== */
+
+function removeCourse(id) {
+
+    let courses =
+        getCourses();
+
+
+    const course =
+        courses.find(
+            function(item) {
+
+                return item.id === id;
+
+            }
+        );
+
+
+    courses =
+        courses.filter(
+            function(item) {
+
+                return item.id !== id;
+
+            }
+        );
+
+
+    localStorage.setItem(
+        "roadmapCourses",
+        JSON.stringify(courses)
+    );
+
+
+    if (courses.length > 0) {
+
+        localStorage.setItem(
+            "selectedCourse",
+            courses[courses.length - 1].name
+        );
+
+    } else {
+
+        localStorage.removeItem(
+            "selectedCourse"
+        );
+
+        localStorage.removeItem(
+            "selectedCourseTime"
+        );
+
+    }
+
+
+    displayCourses();
+
+    calculateProgress();
+
+
+    showToast(
+        course
+            ? course.name + " removed."
+            : "Course removed."
+    );
+
+}
+
+
+/* ==========================================
+   ROADMAP TASKS
+========================================== */
+
+const checkboxes =
+    document.querySelectorAll(
+        'input[type="checkbox"]'
+    );
+
+
+let savedTasks = [];
+
+
+try {
+
+    savedTasks =
+        JSON.parse(
+            localStorage.getItem(
+                "roadmapTasks"
+            )
+        ) || [];
+
+} catch (error) {
+
+    savedTasks = [];
+
+}
+
+
+checkboxes.forEach(
+    function(checkbox) {
+
+        const saved =
+            savedTasks.find(
+                function(item) {
+
+                    return item.id === checkbox.id;
+
+                }
+            );
+
+
+        if (
+            saved &&
+            saved.completed
+        ) {
+
+            checkbox.checked =
+                true;
+
+            checkbox
+                .parentElement
+                .classList.add(
+                    "completed"
+                );
+
+        }
+
+
+        checkbox.addEventListener(
+            "change",
+            function() {
+
+                const wasChecked =
+                    !checkbox.checked;
+
+                saveTasks();
+
+                calculateProgress();
+
+
+                /*
+                   Award 50 XP for each
+                   roadmap task completed.
+                */
+
+                if (
+                    checkbox.checked &&
+                    wasChecked &&
+                    typeof awardCareerXP === "function"
+                ) {
+
+                    awardCareerXP(
+                        "task_" + checkbox.id,
+                        50,
+                        "Completed roadmap task"
+                    );
+
+                    showToast(
+                        "Roadmap task completed! +50 XP 🎯"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+/* ==========================================
+   SAVE TASKS
+========================================== */
+
+function saveTasks() {
+
+    const tasks = [];
+
+
+    checkboxes.forEach(
+        function(checkbox) {
+
+            tasks.push({
+
+                id:
+                    checkbox.id,
+
+                completed:
+                    checkbox.checked
+
+            });
+
+
+            if (checkbox.checked) {
+
+                checkbox
+                    .parentElement
+                    .classList.add(
+                        "completed"
+                    );
+
+            } else {
+
+                checkbox
+                    .parentElement
+                    .classList.remove(
+                        "completed"
+                    );
+
+            }
+
+        }
+    );
+
+
+    localStorage.setItem(
+        "roadmapTasks",
+        JSON.stringify(tasks)
+    );
+
+}
+
+
+/* ==========================================
+   OVERALL PROGRESS
+========================================== */
+
+function calculateProgress() {
+
+    const courses =
+        getCourses();
+
+
+    const completedCourses =
+        courses.filter(
+            function(course) {
+
+                return course.completed;
+
+            }
+        ).length;
+
+
+    const totalUnits =
+        checkboxes.length +
+        courses.length;
+
+
+    const completedTasks =
+        Array.from(
+            checkboxes
+        ).filter(
+            function(checkbox) {
+
+                return checkbox.checked;
+
+            }
+        ).length;
+
+
+    const completedUnits =
+        completedTasks +
+        completedCourses;
+
+
+    const percentage =
+        totalUnits === 0
+            ? 0
+            : Math.round(
+                (
+                    completedUnits /
+                    totalUnits
+                ) * 100
+            );
+
+
+    document.getElementById(
+        "progressText"
+    ).textContent =
+        percentage + "%";
+
+
+    document.getElementById(
+        "progressFill"
+    ).style.width =
+        percentage + "%";
+
+
+    localStorage.setItem(
+        "roadmapProgress",
+        percentage
+    );
+
+
+    calculatePhase(
+        1,
+        3,
+        "phase1"
+    );
+
+    calculatePhase(
+        4,
+        6,
+        "phase2"
+    );
+
+    calculatePhase(
+        7,
+        9,
+        "phase3"
+    );
+
+    calculatePhase(
+        10,
+        12,
+        "phase4"
+    );
+
+    calculatePhase(
+        13,
+        15,
+        "phase5"
+    );
+
+
+    updateMessage(
+        percentage
+    );
+
+}
+
+
+/* ==========================================
+   PHASE PROGRESS
+========================================== */
+
+function calculatePhase(
+    start,
+    end,
+    output
+) {
+
+    let completed = 0;
+
+
+    for (
+        let i = start;
+        i <= end;
+        i++
+    ) {
+
+        const checkbox =
+            document.getElementById(
+                "task" + i
+            );
+
+
+        if (
+            checkbox &&
+            checkbox.checked
+        ) {
+
+            completed++;
+
+        }
+
+    }
+
+
+    const percentage =
+        Math.round(
+            (completed / 3) * 100
+        );
+
+
+    document.getElementById(
+        output
+    ).textContent =
+        percentage + "%";
+
+}
+
+
+/* ==========================================
+   NEXT MESSAGE
+========================================== */
+
+function updateMessage(
+    percentage
+) {
+
+    const title =
+        document.getElementById(
+            "nextTitle"
+        );
+
+    const message =
+        document.getElementById(
+            "nextMessage"
+        );
+
+
+    if (percentage === 100) {
+
+        title.textContent =
+            "Roadmap completed 🎉";
+
+        message.textContent =
+            "Excellent work. You have completed your selected courses and roadmap tasks.";
+
+    } else if (percentage >= 70) {
+
+        title.textContent =
+            "You are close to career readiness";
+
+        message.textContent =
+            "Complete the remaining courses and roadmap activities.";
+
+    } else if (percentage >= 30) {
+
+        title.textContent =
+            "Keep building momentum";
+
+        message.textContent =
+            "Continue learning, complete your selected courses and build practical projects.";
+
+    } else {
+
+        title.textContent =
+            "Start building your roadmap";
+
+        message.textContent =
+            getCourses().length > 0
+                ? "Your selected courses are ready above. Start learning and complete your roadmap tasks."
+                : "Explore the course library and add multiple courses to your personalized roadmap.";
+
+    }
+
+}
+
+
+/* ==========================================
+   ESCAPE HTML
+========================================== */
+
+function escapeHTML(value) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        value || "";
+
+    return div.innerHTML;
+
+}
+
+
+/* ==========================================
+   TOAST
+========================================== */
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.style.display =
+        "block";
+
+
+    setTimeout(
+        function() {
+
+            toast.style.display =
+                "none";
+
+        },
+        2200
+    );
+
+}
+
+
+/* ==========================================
+   INITIAL LOAD
+========================================== */
+
+displayCourses();
+
+calculateProgress();
+
+</script>
+
+
+</body>
+</html>
+```

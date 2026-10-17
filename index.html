@@ -1,0 +1,625 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Career Skill Navigator | Find Your Career Direction</title>
+
+    <meta name="description" content="Discover career paths, assess your skills, identify skill gaps and build a personalized learning roadmap.">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Career Skill Navigator</h1>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#careers">Careers</a>
+            <a href="skill-assessment.html">Assessment</a>
+            <a href="ai-career-assistant.html">Career Assistant</a>
+            <a href="internship.html">Opportunities</a>
+            <a href="profile.html">Profile</a>
+            <a href="react-app/src/php/login.php">Login</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- HERO SECTION -->
+        <section id="home" class="hero">
+
+            <div>
+                <p class="hero-eyebrow">CAREER INTELLIGENCE PLATFORM</p>
+
+                <h2>
+                    Find the career<br>
+                    that fits your
+                    <span style="color:#c7f36b;">potential.</span>
+                </h2>
+
+                <p>
+                    Discover your strengths, explore career paths,
+                    identify skill gaps and build a personalized
+                    roadmap for the future you want.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="react-app/src/php/register.php" class="btn">
+                        Start Your Journey →
+                    </a>
+
+                    <a href="#careers" class="hero-secondary">
+                        Explore careers
+                    </a>
+                </div>
+            </div>
+
+            <!-- CAREER DNA CARD -->
+            <div class="career-intelligence">
+
+                <div class="intelligence-top">
+                    <div>
+                        <span class="small-label">YOUR CAREER SNAPSHOT</span>
+                        <h3>Career DNA</h3>
+                    </div>
+
+                    <span class="live-dot">● LIVE</span>
+                </div>
+
+                <div class="match-score">
+                    <div>
+                        <span>Assessment score</span>
+                        <strong id="careerMatchScore">0%</strong>
+                    </div>
+
+                    <div class="score-circle" id="careerScoreCircle">0</div>
+                </div>
+
+                <div id="assessmentField"
+                     style="margin:12px 0;font-size:14px;">
+                    Complete your skill assessment to see your career field.
+                </div>
+
+                <div class="skill-bars">
+
+                    <div class="skill-row">
+                        <div>
+                            <span>Problem Solving</span>
+                            <b id="problemScore">0%</b>
+                        </div>
+                        <div class="progress-bar">
+                            <span id="problemBar" style="--progress:0%;"></span>
+                        </div>
+                    </div>
+
+                    <div class="skill-row">
+                        <div>
+                            <span>Technology</span>
+                            <b id="technologyScore">0%</b>
+                        </div>
+                        <div class="progress-bar">
+                            <span id="technologyBar" style="--progress:0%;"></span>
+                        </div>
+                    </div>
+
+                    <div class="skill-row">
+                        <div>
+                            <span>Data Thinking</span>
+                            <b id="dataScore">0%</b>
+                        </div>
+                        <div class="progress-bar">
+                            <span id="dataBar" style="--progress:0%;"></span>
+                        </div>
+                    </div>
+
+                    <div class="skill-row">
+                        <div>
+                            <span>Communication</span>
+                            <b id="communicationScore">0%</b>
+                        </div>
+                        <div class="progress-bar">
+                            <span id="communicationBar" style="--progress:0%;"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="skill-pills">
+                    <span class="skill-pill">Problem Solving</span>
+                    <span class="skill-pill">Technology</span>
+                    <span class="skill-pill">Analytics</span>
+                    <span class="skill-pill">Creativity</span>
+                </div>
+
+                <div style="margin-top:20px;">
+                    <a href="skill-assessment.html" class="btn">
+                        Take Assessment →
+                    </a>
+
+                    <a href="career-recommendation.html"
+                       style="display:inline-block;margin:10px;color:inherit;">
+                        View Career Matches →
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- VALUE STRIP -->
+        <section class="value-strip">
+
+            <div class="value-item">
+                <strong>01</strong>
+                <div>
+                    <h3>Discover</h3>
+                    <p>Understand your strengths and interests.</p>
+                </div>
+            </div>
+
+            <div class="value-item">
+                <strong>02</strong>
+                <div>
+                    <h3>Match</h3>
+                    <p>Explore careers aligned with your profile.</p>
+                </div>
+            </div>
+
+            <div class="value-item">
+                <strong>03</strong>
+                <div>
+                    <h3>Build</h3>
+                    <p>Follow a roadmap to develop missing skills.</p>
+                </div>
+            </div>
+
+            <div class="value-item">
+                <strong>04</strong>
+                <div>
+                    <h3>Track</h3>
+                    <p>Measure your progress toward career readiness.</p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ABOUT -->
+        <section id="about">
+
+            <span class="section-label">WHY CAREER SKILL NAVIGATOR</span>
+
+            <h2>Your career journey,<br>connected in one place.</h2>
+
+            <p>
+                Career decisions can feel overwhelming when skills,
+                interests, courses and opportunities are scattered
+                across different platforms. Career Skill Navigator
+                brings these pieces together into one personalized
+                career journey.
+            </p>
+
+        </section>
+
+        <!-- FEATURES -->
+        <section class="feature-section">
+
+            <div class="section-heading">
+                <div>
+                    <span class="section-label">THE PLATFORM</span>
+                    <h2>From self-discovery to career readiness.</h2>
+                </div>
+
+                <p>
+                    Every feature is designed to move you one step
+                    closer to a career direction.
+                </p>
+            </div>
+
+            <div class="feature-grid">
+
+                <article class="feature-card feature-large">
+                    <span class="feature-number">01</span>
+                    <div class="feature-icon">◈</div>
+                    <h3>Career DNA</h3>
+                    <p>
+                        Build a personal profile based on your
+                        interests, skills, education and strengths.
+                    </p>
+                    <a href="profile.html">Build your profile →</a>
+                </article>
+
+                <article class="feature-card">
+                    <span class="feature-number">02</span>
+                    <div class="feature-icon">◎</div>
+                    <h3>Skill Assessment</h3>
+                    <p>
+                        Evaluate your current technical and
+                        professional skills.
+                    </p>
+                    <a href="skill-assessment.html">Assess my skills →</a>
+                </article>
+
+                <article class="feature-card">
+                    <span class="feature-number">03</span>
+                    <div class="feature-icon">✦</div>
+                    <h3>Career Match</h3>
+                    <p>
+                        Discover career paths that connect with
+                        your current profile.
+                    </p>
+                    <a href="career-recommendation.html">Explore matches →</a>
+                </article>
+
+                <article class="feature-card">
+                    <span class="feature-number">04</span>
+                    <div class="feature-icon">◌</div>
+                    <h3>Skill Gap Radar</h3>
+                    <p>
+                        Identify the skills you need to strengthen
+                        for your target career.
+                    </p>
+                    <a href="skill-gap.html">View skill gaps →</a>
+                </article>
+
+                <article class="feature-card feature-dark">
+                    <span class="feature-number">05</span>
+                    <div class="feature-icon">→</div>
+                    <h3>Learning Roadmap</h3>
+                    <p>
+                        Turn your career goal into a practical,
+                        step-by-step learning plan.
+                    </p>
+                    <a href="learning-roadmap.html">Build my roadmap →</a>
+                </article>
+
+                <article class="feature-card">
+                    <span class="feature-number">06</span>
+                    <div class="feature-icon">✦</div>
+                    <h3>Career Guidance Chatbot</h3>
+                    <p>
+                        Get guidance on career choices, skills to learn,
+                        project ideas and your next learning steps.
+                    </p>
+                    <a href="ai-career-assistant.html">
+                        Ask the Career Assistant →
+                    </a>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- CAREER EXPLORER -->
+        <section id="careers">
+
+            <div class="section-heading">
+                <div>
+                    <span class="section-label">CAREER EXPLORER</span>
+                    <h2>One platform.<br>Many possibilities.</h2>
+                </div>
+
+                <p>
+                    Explore careers across technology, engineering,
+                    business, design and science.
+                </p>
+            </div>
+
+            <div class="career-container">
+
+                <article class="career-card">
+                    <span class="career-tag">TECHNOLOGY</span>
+                    <h3>Frontend Developer</h3>
+                    <p>
+                        Build websites and user interfaces using
+                        HTML, CSS, JavaScript and modern frameworks.
+                    </p>
+                    <div class="career-meta">
+                        <span>HTML/CSS</span>
+                        <span>JavaScript</span>
+                    </div>
+                </article>
+
+                <article class="career-card">
+                    <span class="career-tag">DATA</span>
+                    <h3>Data Analyst</h3>
+                    <p>
+                        Turn information into useful insights using
+                        SQL, statistics and data visualization.
+                    </p>
+                    <div class="career-meta">
+                        <span>SQL</span>
+                        <span>Analytics</span>
+                    </div>
+                </article>
+
+                <article class="career-card">
+                    <span class="career-tag">ENGINEERING</span>
+                    <h3>IoT Engineer</h3>
+                    <p>
+                        Connect sensors, devices and software to
+                        create intelligent connected systems.
+                    </p>
+                    <div class="career-meta">
+                        <span>Electronics</span>
+                        <span>IoT</span>
+                    </div>
+                </article>
+
+                <article class="career-card">
+                    <span class="career-tag">DESIGN</span>
+                    <h3>UI/UX Designer</h3>
+                    <p>
+                        Design digital experiences that are useful,
+                        accessible and engaging.
+                    </p>
+                    <div class="career-meta">
+                        <span>Creativity</span>
+                        <span>UX Design</span>
+                    </div>
+                </article>
+
+                <article class="career-card">
+                    <span class="career-tag">ENGINEERING</span>
+                    <h3>Mechanical Design Engineer</h3>
+                    <p>
+                        Create and improve mechanical systems,
+                        components and product designs.
+                    </p>
+                    <div class="career-meta">
+                        <span>CAD</span>
+                        <span>Design</span>
+                    </div>
+                </article>
+
+                <article class="career-card">
+                    <span class="career-tag">CIVIL ENGINEERING</span>
+                    <h3>Civil Engineer</h3>
+                    <p>
+                        Plan and design buildings, roads and
+                        infrastructure projects.
+                    </p>
+                    <div class="career-meta">
+                        <span>Structures</span>
+                        <span>Planning</span>
+                    </div>
+                </article>
+
+                <article class="career-card">
+                    <span class="career-tag">BUSINESS</span>
+                    <h3>Business Analyst</h3>
+                    <p>
+                        Understand business needs and help teams
+                        improve processes using data and analysis.
+                    </p>
+                    <div class="career-meta">
+                        <span>Analysis</span>
+                        <span>Communication</span>
+                    </div>
+                </article>
+
+                <article class="career-card">
+                    <span class="career-tag">ARTIFICIAL INTELLIGENCE</span>
+                    <h3>AI/ML Engineer</h3>
+                    <p>
+                        Develop intelligent applications using
+                        machine learning and data.
+                    </p>
+                    <div class="career-meta">
+                        <span>Python</span>
+                        <span>Machine Learning</span>
+                    </div>
+                </article>
+
+            </div>
+
+            <div style="text-align:center;margin-top:30px;">
+                <a href="career-recommendation.html" class="btn">
+                    Explore All Career Recommendations →
+                </a>
+            </div>
+
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section class="journey-section">
+
+            <div class="journey-copy">
+                <span class="section-label">YOUR JOURNEY</span>
+
+                <h2>
+                    From “I don't know” to “I know my next step.”
+                </h2>
+
+                <p>
+                    Start with what you know today. The platform
+                    helps you understand where you are, where you
+                    could go and what you can do next.
+                </p>
+
+                <a href="react-app/src/php/register.php" class="btn">
+                    Create your career profile →
+                </a>
+            </div>
+
+            <div class="journey-timeline">
+
+                <div class="journey-step">
+                    <span>01</span>
+                    <div>
+                        <h3>Build your profile</h3>
+                        <p>Tell us about your education, interests and skills.</p>
+                    </div>
+                </div>
+
+                <div class="journey-step">
+                    <span>02</span>
+                    <div>
+                        <h3>Take the assessment</h3>
+                        <p>Understand your current strengths and development areas.</p>
+                    </div>
+                </div>
+
+                <div class="journey-step">
+                    <span>03</span>
+                    <div>
+                        <h3>Explore your matches</h3>
+                        <p>Compare career directions and understand possible fits.</p>
+                    </div>
+                </div>
+
+                <div class="journey-step">
+                    <span>04</span>
+                    <div>
+                        <h3>Follow your roadmap</h3>
+                        <p>Learn, practice, build projects and track your progress.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FINAL CTA -->
+        <section class="final-cta">
+
+            <div>
+                <span class="section-label">READY WHEN YOU ARE</span>
+
+                <h2>
+                    Your next career move starts with understanding yourself.
+                </h2>
+
+                <p>
+                    Create your profile and begin exploring your career possibilities.
+                </p>
+
+                <a href="react-app/src/php/register.php" class="btn">
+                    Start exploring →
+                </a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>
+            © 2026 Career Skill Navigator · Discover · Develop · Navigate
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+
+    <!-- LOAD SAVED CAREER DNA -->
+    <script>
+    (function () {
+
+        window.updateCareerDNA = function (scores) {
+            scores = scores || {};
+
+            const fields = [
+                ["problem", scores.problemSolving],
+                ["technology", scores.technology],
+                ["data", scores.dataThinking],
+                ["communication", scores.communication]
+            ];
+
+            fields.forEach(function (item) {
+                const name = item[0];
+                const number = Number(item[1]);
+
+                const score = Number.isFinite(number)
+                    ? Math.max(0, Math.min(100, Math.round(number)))
+                    : 0;
+
+                const scoreElement = document.getElementById(name + "Score");
+                const barElement = document.getElementById(name + "Bar");
+
+                if (scoreElement) {
+                    scoreElement.textContent = score + "%";
+                }
+
+                if (barElement) {
+                    barElement.style.setProperty("--progress", score + "%");
+                }
+            });
+
+            const matchNumber = Number(scores.careerMatch);
+            const match = Number.isFinite(matchNumber)
+                ? Math.max(0, Math.min(100, Math.round(matchNumber)))
+                : 0;
+
+            const matchElement = document.getElementById("careerMatchScore");
+            const circleElement = document.getElementById("careerScoreCircle");
+
+            if (matchElement) matchElement.textContent = match + "%";
+            if (circleElement) circleElement.textContent = match;
+        };
+
+        function loadCareerDNA() {
+            let result = null;
+            let dna = null;
+
+            try {
+                result = JSON.parse(
+                    localStorage.getItem("skillAssessmentResult") || "null"
+                );
+
+                dna = JSON.parse(
+                    localStorage.getItem("careerDNAScores") || "null"
+                );
+            } catch (error) {
+                console.error("Error reading assessment data:", error);
+            }
+
+            const fieldElement = document.getElementById("assessmentField");
+
+            if (result) {
+                // Display the field selected by the assessment.
+                if (fieldElement) {
+                    fieldElement.textContent =
+                        "Your assessed career field: " +
+                        (result.fieldName || result.field || "Not specified");
+                }
+
+                // Convert the assessment score to a percentage.
+                const score = Number(result.score);
+                const maxScore = Number(result.maxScore);
+
+                const percentage = Number.isFinite(score) &&
+                    Number.isFinite(maxScore) && maxScore > 0
+                    ? (score / maxScore) * 100
+                    : 0;
+
+                window.updateCareerDNA({
+                    problemSolving: dna ? dna.problemSolving : 0,
+                    technology: dna ? dna.technology : 0,
+                    dataThinking: dna ? dna.dataThinking : 0,
+                    communication: dna ? dna.communication : 0,
+                    careerMatch: percentage
+                });
+            } else {
+                window.updateCareerDNA({});
+
+                if (fieldElement) {
+                    fieldElement.textContent =
+                        "Complete your skill assessment to see your career field.";
+                }
+            }
+        }
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", loadCareerDNA);
+        } else {
+            loadCareerDNA();
+        }
+
+    })();
+    </script>
+
+</body>
+</html>

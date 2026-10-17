@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Career Profile | Career Skill Navigator</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .profile-page {
+            min-height: 100vh;
+            padding: 60px 5% 90px;
+        }
+
+        .profile-container {
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        .profile-hero {
+            margin-bottom: 35px;
+        }
+
+        .eyebrow {
+            color: #b7ff5a;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 13px;
+        }
+
+        .profile-hero h1 {
+            margin: 0 0 14px;
+            font-size: clamp(40px, 5vw, 65px);
+            line-height: 1;
+        }
+
+        .profile-hero h1 span {
+            color: #b7ff5a;
+        }
+
+        .profile-hero p {
+            color: #8f999f;
+            max-width: 650px;
+            line-height: 1.8;
+        }
+
+        .profile-layout {
+            display: grid;
+            grid-template-columns: .75fr 1.25fr;
+            gap: 22px;
+        }
+
+        .profile-card,
+        .edit-card {
+            border-radius: 26px;
+            background: rgba(255,255,255,.045);
+            border: 1px solid rgba(255,255,255,.08);
+        }
+
+        .profile-card {
+            padding: 30px;
+            position: sticky;
+            top: 90px;
+            height: fit-content;
+        }
+
+        .avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 25px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg,#b7ff5a,#7dffce);
+            color: #101411;
+            font-size: 29px;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .profile-card h2 {
+            margin: 0 0 7px;
+            font-size: 25px;
+        }
+
+        .profile-role {
+            color: #b7ff5a;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .profile-meta {
+            display: grid;
+            gap: 12px;
+        }
+
+        .meta-item {
+            padding: 14px;
+            border-radius: 14px;
+            background: rgba(255,255,255,.035);
+        }
+
+        .meta-item span {
+            display: block;
+            color: #77838a;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .meta-item strong {
+            font-size: 13px;
+            color: #dce2df;
+        }
+
+        .interest-box {
+            margin-top: 18px;
+            padding: 17px;
+            border-radius: 15px;
+            border: 1px solid rgba(183,255,90,.14);
+            background: rgba(183,255,90,.05);
+        }
+
+        .interest-box span {
+            display: block;
+            color: #77838a;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 7px;
+        }
+
+        .interest-box strong {
+            color: #b7ff5a;
+            font-size: 14px;
+        }
+
+        .edit-card {
+            padding: 30px;
+        }
+
+        .edit-card h2 {
+            margin: 0 0 7px;
+        }
+
+        .edit-card > p {
+            color: #89949b;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        .field label {
+            display: block;
+            color: #aeb7bc;
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid rgba(255,255,255,.09);
+            background: rgba(0,0,0,.18);
+            color: white;
+            border-radius: 11px;
+            padding: 12px 13px;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .field textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .field select option {
+            background: #151a1d;
+            color: white;
+        }
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            border-color: rgba(183,255,90,.45);
+        }
+
+        .skills-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 10px;
+        }
+
+        .skill-tag {
+            padding: 7px 10px;
+            border-radius: 20px;
+            background: rgba(183,255,90,.09);
+            border: 1px solid rgba(183,255,90,.15);
+            color: #b7ff5a;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .profile-btn {
+            border: 0;
+            border-radius: 11px;
+            padding: 13px 19px;
+            font-family: inherit;
+            font-weight: 900;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .save-btn {
+            background: #b7ff5a;
+            color: #101411;
+        }
+
+        .reset-btn {
+            background: rgba(255,255,255,.07);
+            color: white;
+            border: 1px solid rgba(255,255,255,.1);
+        }
+
+        .save-message {
+            display: none;
+            margin-top: 15px;
+            padding: 12px 14px;
+            border-radius: 11px;
+            background: rgba(183,255,90,.08);
+            color: #b7ff5a;
+            font-size: 12px;
+        }
+
+        .profile-footer {
+            margin-top: 22px;
+            padding: 22px;
+            border-radius: 20px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(183,255,90,.09),
+                    rgba(125,255,206,.03)
+                );
+            border: 1px solid rgba(183,255,90,.15);
+        }
+
+        .profile-footer h3 {
+            margin: 0 0 7px;
+            font-size: 17px;
+        }
+
+        .profile-footer p {
+            margin: 0;
+            color: #89949b;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 850px) {
+            .profile-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-card {
+                position: static;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .profile-page {
+                padding: 45px 4% 70px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .field.full {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+
+    <div class="brand">
+        <div class="brand-mark">CS</div>
+
+        <div>
+            <strong>Career Skill Navigator</strong>
+            <span>Career Intelligence Platform</span>
+        </div>
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="career-recommendation.html">Careers</a>
+        <a href="skill-assessment.html">Assessment</a>
+        <a href="learning-roadmap.html">Roadmap</a>
+        <a href="progress.html">Progress</a>
+    </nav>
+
+</header>
+
+
+<main class="profile-page">
+
+    <div class="profile-container">
+
+        <section class="profile-hero">
+
+            <div class="eyebrow">
+                CAREER IDENTITY / 06
+            </div>
+
+            <h1>
+                Your career
+                <span>profile.</span>
+            </h1>
+
+            <p>
+                Keep your education, interests, skills and career direction
+                organized in one place. This profile powers your personalized
+                Career Skill Navigator experience.
+            </p>
+
+        </section>
+
+
+        <section class="profile-layout">
+
+
+            <!-- PROFILE SUMMARY -->
+
+            <aside class="profile-card">
+
+                <div class="avatar" id="avatar">
+                    CS
+                </div>
+
+                <h2 id="profileName">
+                    Your Name
+                </h2>
+
+                <div class="profile-role" id="profileRole">
+                    Career Explorer
+                </div>
+
+
+                <div class="profile-meta">
+
+                    <div class="meta-item">
+
+                        <span>Email</span>
+
+                        <strong id="profileEmail">
+                            Not added
+                        </strong>
+
+                    </div>
+
+
+                    <div class="meta-item">
+
+                        <span>Education</span>
+
+                        <strong id="profileEducation">
+                            Not added
+                        </strong>
+
+                    </div>
+
+
+                    <div class="meta-item">
+
+                        <span>Location</span>
+
+                        <strong id="profileLocation">
+                            Not added
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="interest-box">
+
+                    <span>Career Direction</span>
+
+                    <strong id="profileInterest">
+                        Not selected
+                    </strong>
+
+                </div>
+
+
+                <div class="skills-preview" id="profileSkills"></div>
+
+            </aside>
+
+
+            <!-- EDITOR -->
+
+            <section class="edit-card">
+
+                <h2>Edit your profile</h2>
+
+                <p>
+                    Update your information to keep your career profile current.
+                </p>
+
+
+                <form id="profileForm">
+
+                    <div class="form-grid">
+
+                        <div class="field">
+
+                            <label>Full Name</label>
+
+                            <input
+                                type="text"
+                                id="fullName"
+                                placeholder="Your full name"
+                                required>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>Email</label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                placeholder="you@email.com"
+                                required>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>Education</label>
+
+                            <select id="education">
+
+                                <option value="">
+                                    Select education
+                                </option>
+
+                                <option>B.Tech</option>
+                                <option>B.E</option>
+                                <option>BCA</option>
+                                <option>B.Sc</option>
+                                <option>M.Tech</option>
+                                <option>MCA</option>
+                                <option>M.Sc</option>
+                                <option>Diploma</option>
+                                <option>Other</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>Location</label>
+
+                            <input
+                                type="text"
+                                id="location"
+                                placeholder="City, State">
+
+                        </div>
+
+
+                        <div class="field full">
+
+                            <label>Primary Career Interest</label>
+
+                            <select id="interest">
+
+                                <option value="">
+                                    Select your direction
+                                </option>
+
+                                <option>Software Development</option>
+                                <option>Data & AI</option>
+                                <option>Cyber Security</option>
+                                <option>IoT & Embedded</option>
+                                <option>Mechanical Engineering</option>
+                                <option>Civil Engineering</option>
+                                <option>Electrical Engineering</option>
+                                <option>Electronics & Communication</option>
+                                <option>Chemical Engineering</option>
+                                <option>Biotechnology</option>
+                                <option>Automobile Engineering</option>
+                                <option>Finance</option>
+                                <option>Healthcare</option>
+                                <option>Design</option>
+                                <option>Management & Marketing</option>
+                                <option>Media</option>
+                                <option>Law</option>
+                                <option>Agriculture</option>
+                                <option>Government & Public Service</option>
+                                <option>Not sure</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="field full">
+
+                            <label>Current Skills</label>
+
+                            <textarea
+                                id="skills"
+                                placeholder="Example: Python, SQL, Communication, CAD, Excel"></textarea>
+
+                        </div>
+
+
+                        <div class="field full">
+
+                            <label>About You</label>
+
+                            <textarea
+                                id="about"
+                                placeholder="Tell us about your strengths, interests or career goals."></textarea>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-actions">
+
+                        <button
+                            type="submit"
+                            class="profile-btn save-btn">
+                            Save Profile
+                        </button>
+
+                        <button
+                            type="button"
+                            class="profile-btn reset-btn"
+                            onclick="resetProfile()">
+                            Reset
+                        </button>
+
+                    </div>
+
+                    <div
+                        class="save-message"
+                        id="saveMessage">
+                        Profile updated successfully.
+                    </div>
+
+                </form>
+
+
+                <div class="profile-footer">
+
+                    <h3>
+                        Your profile powers the navigator.
+                    </h3>
+
+                    <p>
+                        Career direction, skills and assessment results are
+                        used across your career matches, skill-gap analysis,
+                        roadmap and progress dashboard.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<script>
+
+/* --------------------------------
+   LOAD EXISTING DATA
+-------------------------------- */
+
+const profileData = {
+
+    fullName:
+        localStorage.getItem("studentName") || "",
+
+    email:
+        localStorage.getItem("studentEmail") || "",
+
+    education:
+        localStorage.getItem("studentEducation") || "",
+
+    interest:
+        localStorage.getItem("studentInterest") || "",
+
+    skills:
+        localStorage.getItem("studentSkills") || "",
+
+    location:
+        localStorage.getItem("studentLocation") || "",
+
+    about:
+        localStorage.getItem("studentAbout") || ""
+
+};
+
+
+document.getElementById("fullName").value =
+    profileData.fullName;
+
+document.getElementById("email").value =
+    profileData.email;
+
+document.getElementById("education").value =
+    profileData.education;
+
+document.getElementById("interest").value =
+    profileData.interest;
+
+document.getElementById("skills").value =
+    profileData.skills;
+
+document.getElementById("location").value =
+    profileData.location;
+
+document.getElementById("about").value =
+    profileData.about;
+
+
+/* --------------------------------
+   UPDATE PROFILE CARD
+-------------------------------- */
+
+function updateProfileCard() {
+
+    const name =
+        document.getElementById("fullName").value.trim();
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const education =
+        document.getElementById("education").value;
+
+    const interest =
+        document.getElementById("interest").value;
+
+    const skills =
+        document.getElementById("skills").value.trim();
+
+    const location =
+        document.getElementById("location").value.trim();
+
+
+    document.getElementById("profileName").textContent =
+        name || "Your Name";
+
+    document.getElementById("profileEmail").textContent =
+        email || "Not added";
+
+    document.getElementById("profileEducation").textContent =
+        education || "Not added";
+
+    document.getElementById("profileLocation").textContent =
+        location || "Not added";
+
+    document.getElementById("profileInterest").textContent =
+        interest || "Not selected";
+
+
+    document.getElementById("profileRole").textContent =
+        interest
+            ? "Aspiring " + interest
+            : "Career Explorer";
+
+
+    /* Avatar initials */
+
+    const initials =
+        name
+            ? name
+                .split(" ")
+                .filter(Boolean)
+                .slice(0,2)
+                .map(word => word[0])
+                .join("")
+                .toUpperCase()
+            : "CS";
+
+    document.getElementById("avatar").textContent =
+        initials;
+
+
+    /* Skills */
+
+    const skillsBox =
+        document.getElementById("profileSkills");
+
+    skillsBox.innerHTML = "";
+
+    if (skills) {
+
+        skills
+            .split(",")
+            .map(skill => skill.trim())
+            .filter(Boolean)
+            .slice(0,8)
+            .forEach(skill => {
+
+                const tag =
+                    document.createElement("span");
+
+                tag.className =
+                    "skill-tag";
+
+                tag.textContent =
+                    skill;
+
+                skillsBox.appendChild(tag);
+
+            });
+
+    }
+
+}
+
+
+/* --------------------------------
+   SAVE PROFILE
+-------------------------------- */
+
+document
+    .getElementById("profileForm")
+    .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+
+        const name =
+            document.getElementById("fullName").value.trim();
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const education =
+            document.getElementById("education").value;
+
+        const interest =
+            document.getElementById("interest").value;
+
+        const skills =
+            document.getElementById("skills").value.trim();
+
+        const location =
+            document.getElementById("location").value.trim();
+
+        const about =
+            document.getElementById("about").value.trim();
+
+
+        localStorage.setItem(
+            "studentName",
+            name
+        );
+
+        localStorage.setItem(
+            "studentEmail",
+            email
+        );
+
+        localStorage.setItem(
+            "studentEducation",
+            education
+        );
+
+        localStorage.setItem(
+            "studentInterest",
+            interest
+        );
+
+        localStorage.setItem(
+            "studentSkills",
+            skills
+        );
+
+        localStorage.setItem(
+            "studentLocation",
+            location
+        );
+
+        localStorage.setItem(
+            "studentAbout",
+            about
+        );
+
+
+        /*
+           Keep selectedCareer synchronized with
+           the profile career direction.
+        */
+
+        if (interest) {
+
+            localStorage.setItem(
+                "selectedCareer",
+                interest
+            );
+
+        }
+
+
+        updateProfileCard();
+
+
+        const message =
+            document.getElementById("saveMessage");
+
+        message.style.display =
+            "block";
+
+
+        setTimeout(() => {
+
+            message.style.display =
+                "none";
+
+        }, 2500);
+
+    });
+
+
+/* --------------------------------
+   RESET FORM
+-------------------------------- */
+
+function resetProfile() {
+
+    const confirmReset =
+        confirm(
+            "Reset the profile form?"
+        );
+
+    if (!confirmReset) return;
+
+
+    document
+        .getElementById("profileForm")
+        .reset();
+
+
+    updateProfileCard();
+
+}
+
+
+/* --------------------------------
+   INITIAL RENDER
+-------------------------------- */
+
+updateProfileCard();
+
+</script>
+
+</body>
+</html>

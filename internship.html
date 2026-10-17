@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b100e">
+<meta name="description" content="Find internships matched to your career interests and skills with Career Skill Navigator.">
+<title>Opportunity Intelligence | Career Skill Navigator</title>
+<style>
+:root{--page:#0b100e;--panel:#111815;--panel2:#151e19;--line:rgba(255,255,255,.1);--lime:#b7ff5a;--mint:#7dffce;--text:#e8eee9;--muted:#8b9890;--radius:20px}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 0%,rgba(183,255,90,.07),transparent 34%),var(--page);color:var(--text);font-family:Inter,"Segoe UI",Arial,sans-serif}button,input,select,textarea{font:inherit}button,select{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+header{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:18px;padding:14px 5%;background:rgba(11,16,14,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:12px}.logo{width:43px;height:43px;display:grid;place-items:center;border-radius:14px;background:var(--lime);color:#101610;font-weight:950}.brand b{display:block;font-size:13px}.brand small{display:block;color:var(--muted);font-size:9px;letter-spacing:1px;margin-top:4px}nav{display:flex;gap:18px;flex-wrap:wrap}nav a{font-size:11px;font-weight:750;color:var(--muted);text-decoration:none}nav a:hover,nav a.active{color:var(--lime)}
+main{width:min(1440px,100%);margin:auto;padding:36px 5% 70px}.eyebrow{font-size:10px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--lime)}.hero{display:grid;grid-template-columns:1.4fr .7fr;gap:28px;align-items:center;padding:clamp(24px,4vw,46px);border:1px solid rgba(183,255,90,.18);border-radius:28px;background:radial-gradient(circle at 90% 5%,rgba(183,255,90,.12),transparent 36%),linear-gradient(130deg,#151f18,#101511)}h1{font-size:clamp(36px,5vw,62px);line-height:1.03;letter-spacing:-2.5px;margin:15px 0}h1 span{color:var(--lime)}.hero p{max-width:650px;color:var(--muted);font-size:13px;line-height:1.8}.hero-card,.panel,.stat,.card{border:1px solid var(--line);background:rgba(255,255,255,.025);border-radius:18px}.hero-card{padding:22px;background:rgba(5,9,7,.5)}.hero-card h2{font-size:19px;margin:10px 0}.hero-card p{font-size:11px}.score-row{display:flex;justify-content:space-between;padding:12px 0;border-top:1px solid var(--line);font-size:11px}.score-row span{color:var(--muted)}.score-row b{color:var(--lime)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0 36px}.stat{padding:18px}.stat span{color:var(--muted);font-size:10px}.stat strong{display:block;font-size:28px;margin-top:8px;letter-spacing:-1px}.stat small{display:block;color:var(--muted);font-size:9px;margin-top:5px}
+.section{margin-top:38px;scroll-margin-top:90px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:18px}.section-head h2{font-size:clamp(23px,3vw,31px);letter-spacing:-1px;margin:8px 0}.section-head p{font-size:11px;color:var(--muted);line-height:1.7;max-width:650px}.panel{padding:22px;background:rgba(255,255,255,.02)}.profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field-wrap{display:grid;gap:7px}.field-wrap label{font-size:11px;color:#bdc7bf;font-weight:750}.field{width:100%;min-width:0;background:#0e1511;color:var(--text);border:1px solid var(--line);border-radius:11px;padding:12px;font-size:12px}.field::placeholder{color:#657169}.field option{background:#111815}.hint{color:var(--muted);font-size:10px;line-height:1.6}.skills-box{display:flex;flex-wrap:wrap;gap:8px}.skill-chip{border:1px solid var(--line);border-radius:30px;padding:8px 11px;color:var(--muted);background:transparent;font-size:10px;font-weight:750}.skill-chip.selected{background:var(--lime);color:#101610;border-color:var(--lime)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.btn{border:1px solid var(--line);border-radius:11px;padding:11px 15px;min-height:40px;background:#18211b;color:var(--text);font-size:11px;font-weight:850}.btn-primary{background:var(--lime);color:#101610;border-color:var(--lime)}.btn:hover{transform:translateY(-1px)}.notice{padding:13px 15px;border:1px solid rgba(183,255,90,.14);border-radius:12px;color:var(--muted);font-size:10px;line-height:1.7;margin-top:15px}.notice b{color:var(--lime)}
+.toolbar{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:10px;margin:15px 0}.filter-row{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 20px}.filter-btn{border:1px solid var(--line);background:transparent;color:var(--muted);padding:9px 13px;border-radius:30px;font-size:10px;font-weight:800}.filter-btn.active{background:var(--lime);color:#101610;border-color:var(--lime)}.context{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px;color:var(--muted);font-size:10px}.context span{padding:7px 9px;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{padding:20px;display:flex;flex-direction:column;min-width:0;transition:transform .2s,border-color .2s;background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012))}.card:hover{transform:translateY(-3px);border-color:rgba(183,255,90,.3)}.card-top{display:flex;justify-content:space-between;gap:10px;align-items:start}.company-mark{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:rgba(183,255,90,.08);border:1px solid rgba(183,255,90,.15);color:var(--lime);font-size:11px;font-weight:900}.badge{font-size:9px;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.05);color:var(--muted);font-weight:800}.match-badge{background:rgba(183,255,90,.09);color:var(--lime)}.category{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--lime);margin-top:18px}.card h3{font-size:18px;margin:8px 0 5px;letter-spacing:-.4px}.company{font-size:11px;color:#bdc7bf;font-weight:750}.desc{font-size:11px;line-height:1.7;color:var(--muted);margin:12px 0}.meta{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:13px}.meta span{font-size:9px;color:var(--muted)}.tags{display:flex;flex-wrap:wrap;gap:6px;margin:3px 0 14px}.tag{font-size:9px;padding:6px 8px;border-radius:7px;background:rgba(255,255,255,.045);color:#b1bcb4}.match-box{padding:12px;margin:2px 0 13px;border:1px solid rgba(183,255,90,.12);background:rgba(183,255,90,.035);border-radius:12px}.match-head{display:flex;justify-content:space-between;gap:8px;font-size:10px}.match-head b:last-child{color:var(--lime)}.track{height:5px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:9px}.fill{height:100%;background:var(--lime);border-radius:99px}.explain{font-size:10px;color:var(--muted);line-height:1.65;margin:8px 0 0}.missing{color:#ffcb83}.card-actions{display:flex;gap:8px;margin-top:auto;padding-top:14px;border-top:1px solid var(--line)}.card-actions .btn{flex:1;padding:10px 8px}.saved{color:var(--mint);border-color:rgba(125,255,206,.3)}.empty{grid-column:1/-1;text-align:center;padding:30px;border:1px dashed var(--line);border-radius:16px;color:var(--muted);font-size:12px}.saved-list{display:grid;gap:10px}.saved-item{display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,220px) auto;gap:12px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.02)}.saved-item strong{font-size:12px;display:block}.saved-item small{color:var(--muted);font-size:10px}.saved-item .field{padding:9px;font-size:10px}.footer{border-top:1px solid var(--line);margin-top:45px;padding-top:20px;color:var(--muted);font-size:10px;line-height:1.8}
+dialog{width:min(540px,calc(100% - 28px));border:1px solid rgba(183,255,90,.2);border-radius:18px;background:#111815;color:var(--text);padding:24px}dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(4px)}dialog h2{margin-top:0}dialog p,dialog li{color:var(--muted);font-size:12px;line-height:1.8}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{grid-template-columns:1fr}.toolbar{grid-template-columns:1fr 1fr}.toolbar .field:first-child{grid-column:1/-1}}
+@media(max-width:650px){header{align-items:flex-start;flex-direction:column}nav{gap:12px}.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.profile-grid,.toolbar{grid-template-columns:1fr}.toolbar .field:first-child{grid-column:auto}.saved-item{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}main{padding-top:22px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><div class="logo">CS</div><div><b>Career Skill Navigator</b><small>OPPORTUNITY INTELLIGENCE</small></div></div>
+  <nav aria-label="Main navigation">
+    <a href="index.html">Home</a><a href="career-recommendation.html">Careers</a><a href="skill-assessment.html">Assessment</a><a class="active" aria-current="page" href="internship.html">Opportunities</a><a href="learning-roadmap.html">Roadmap</a>
+  </nav>
+</header>
+<main>
+  <section class="hero">
+    <div><div class="eyebrow">Your next step starts here</div><h1>Find the work that<br><span>fits your potential.</span></h1><p>Build your career profile, discover opportunities ranked against your skills, and see exactly what to learn next. Your match score is calculated from your profile and the requirements listed for each sample opportunity.</p><div class="actions"><button class="btn btn-primary" id="startProfile">Build my profile ↗</button><button class="btn" id="showTopMatches">Show top matches</button></div></div>
+    <aside class="hero-card"><div class="eyebrow">MATCH ENGINE</div><h2>A better way to explore.</h2><p>Matching uses your selected skills, interests, study field, and preferred work mode. You can see why each opportunity fits—and which skills are missing.</p><div class="score-row"><span>Matching method</span><b>Skills + interests</b></div><div class="score-row"><span>Opportunity types</span><b>Multi-field</b></div><div class="score-row"><span>Saved data</span><b>This browser</b></div></aside>
+  </section>
+  <section class="stats" aria-label="Profile and matching summary">
+    <div class="stat"><span>PROFILE SKILLS</span><strong id="statSkills">0</strong><small>Skills selected by you</small></div>
+    <div class="stat"><span>OPPORTUNITIES</span><strong id="statOpportunities">10</strong><small>Sample opportunities</small></div>
+    <div class="stat"><span>STRONG MATCHES</span><strong id="statStrong">0</strong><small>Match score 70% or higher</small></div>
+    <div class="stat"><span>SAVED</span><strong id="statSaved">0</strong><small>Saved in this browser</small></div>
+  </section>
+
+  <section class="section" id="profileSection">
+    <div class="section-head"><div><div class="eyebrow">01 / Your profile</div><h2>Tell us what you're building toward.</h2><p>Your profile drives the ranking. Choose the skills you have today; you can update them as you learn.</p></div></div>
+    <div class="panel">
+      <div class="profile-grid">
+        <div class="field-wrap"><label for="branch">Study field / branch</label><select class="field" id="branch"><option value="Any">Exploring / not sure yet</option><option>Technology</option><option>IT</option><option>AIDS</option><option>Computer Engineering</option><option>E&TC</option><option>IoT</option><option>Mechanical Engineering</option><option>Civil Engineering</option><option>Business</option><option>Creative</option><option>Science</option><option>Biotechnology</option></select></div>
+        <div class="field-wrap"><label for="interest">Career interest</label><select class="field" id="interest"><option value="Any">Explore all fields</option><option>Technology</option><option>Engineering</option><option>Business</option><option>Creative</option><option>Science</option></select></div>
+        <div class="field-wrap"><label for="workMode">Preferred work mode</label><select class="field" id="workMode"><option value="Any">Any work mode</option><option>Remote</option><option>Hybrid</option><option>On-site</option></select></div>
+        <div class="field-wrap"><label for="level">Current experience</label><select class="field" id="level"><option value="Beginner">Beginner / learning</option><option value="Intermediate">Intermediate / some projects</option><option value="Advanced">Advanced / experienced</option></select></div>
+      </div>
+      <div class="field-wrap" style="margin-top:18px"><label>Select skills you already have</label><div class="skills-box" id="skillsBox"></div><div class="hint">Tip: select only skills you can currently use or explain. Your recommendations become more useful as your profile becomes accurate.</div></div>
+      <div class="field-wrap" style="margin-top:17px"><label for="extraSkills">Other skills (optional, comma-separated)</label><input class="field" id="extraSkills" placeholder="e.g. AutoCAD, public speaking, Figma"></div>
+      <div class="actions"><button class="btn btn-primary" id="calculateBtn">Calculate my matches</button><button class="btn" id="resetProfile">Reset profile</button></div>
+      <div class="notice"><b>Transparent matching:</b> this version uses a rule-based scoring formula, not a connected AI model. Scores are estimates based on the sample requirements below; they are not hiring guarantees.</div>
+    </div>
+  </section>
+
+  <section class="section" id="opportunitiesSection">
+    <div class="section-head"><div><div class="eyebrow">02 / Opportunity radar</div><h2>Opportunities ranked for you.</h2><p>Open “Why this match?” to see matched skills, missing skills, and a practical next step.</p></div><button class="btn" id="sortBest">Sort: best match ↓</button></div>
+    <div class="toolbar"><input class="field" id="search" placeholder="Search roles, skills, or organizations…"><select class="field" id="modeFilter"><option value="Any">All work modes</option><option>Remote</option><option>Hybrid</option><option>On-site</option></select><select class="field" id="sortFilter"><option value="match">Best match</option><option value="title">Role name A–Z</option><option value="duration">Duration</option></select></div>
+    <div class="filter-row" id="categoryFilters"><button class="filter-btn active" data-category="All">All fields</button><button class="filter-btn" data-category="Technology">Technology</button><button class="filter-btn" data-category="Engineering">Engineering</button><button class="filter-btn" data-category="Business">Business</button><button class="filter-btn" data-category="Creative">Creative</button><button class="filter-btn" data-category="Science">Science</button></div>
+    <div class="context" id="profileContext"><span>Profile not calculated yet</span><span>Choose your skills above</span></div>
+    <div class="grid" id="opportunityGrid" aria-live="polite"></div>
+  </section>
+
+  <section class="section" id="savedSection">
+    <div class="section-head"><div><div class="eyebrow">03 / Your shortlist</div><h2>Saved opportunities.</h2><p>Keep your shortlist organized and track the status of each application.</p></div></div>
+    <div class="panel"><div class="saved-list" id="savedList"></div></div>
+  </section>
+  <div class="footer">Career Skill Navigator · Opportunity Intelligence. Demo opportunities are illustrative sample data and are not verified live vacancies. Verify the employer, deadline, and application link before sharing personal information or applying.</div>
+</main>
+<dialog id="detailDialog"><div id="dialogContent"></div><div class="actions"><button class="btn btn-primary" id="dialogSave">Save opportunity</button><button class="btn" id="dialogClose">Close</button></div></dialog>
+<script>
+"use strict";
+const SKILL_OPTIONS = [
+ "HTML","CSS","JavaScript","React","Python","SQL","Data Analysis","Machine Learning",
+ "C / C++","IoT","Arduino","Embedded Systems","AutoCAD","SolidWorks","CAD Design",
+ "Engineering Drawing","Surveying","Structural Basics","Excel","Communication",
+ "Market Research","Financial Analysis","Figma","UI/UX Design","Graphic Design",
+ "Laboratory Skills","Biology","Scientific Research","Project Management"
+];
+const OPPORTUNITIES = [
+ {id:"frontend",title:"Frontend Developer Intern",company:"Digital Product Studio",category:"Technology",branch:["Technology","IT","AIDS","Computer Engineering"],mode:"Remote",duration:"8–12 weeks",level:"Beginner",skills:["HTML","CSS","JavaScript","React"],interests:["Technology"],description:"Build accessible, responsive interfaces and learn how modern web products are shipped.",next:"Build a responsive portfolio page and practice JavaScript DOM interactions."},
+ {id:"data",title:"Data Analyst Intern",company:"Insight Analytics Lab",category:"Technology",branch:["Technology","IT","AIDS","Computer Engineering","Business"],mode:"Hybrid",duration:"10–12 weeks",level:"Beginner",skills:["Python","SQL","Data Analysis","Excel"],interests:["Technology","Business"],description:"Clean datasets, create useful summaries, and communicate findings through simple dashboards.",next:"Practice SQL queries and create a small data-analysis project with charts."},
+ {id:"aiml",title:"AI / ML Research Intern",company:"Applied Intelligence Group",category:"Technology",branch:["Technology","IT","AIDS","Computer Engineering","Science"],mode:"Hybrid",duration:"12 weeks",level:"Intermediate",skills:["Python","Machine Learning","SQL","Data Analysis"],interests:["Technology","Science"],description:"Explore datasets and assist with experiments for introductory machine-learning workflows.",next:"Strengthen Python and statistics, then document one small model experiment."},
+ {id:"iot",title:"IoT & Embedded Intern",company:"Connected Systems Lab",category:"Engineering",branch:["Engineering","E&TC","IoT","Technology"],mode:"On-site",duration:"8–10 weeks",level:"Beginner",skills:["C / C++","IoT","Arduino","Embedded Systems"],interests:["Engineering","Technology"],description:"Prototype connected devices and learn the basics of sensors, microcontrollers, and embedded code.",next:"Build a sensor-to-microcontroller mini project and document the circuit."},
+ {id:"mechanical",title:"Mechanical Design Intern",company:"Precision Design Works",category:"Engineering",branch:["Engineering","Mechanical Engineering"],mode:"On-site",duration:"10 weeks",level:"Beginner",skills:["SolidWorks","CAD Design","Engineering Drawing","Project Management"],interests:["Engineering"],description:"Support component modeling, technical drawings, and design documentation.",next:"Create a small 3D model and a dimensioned engineering drawing."},
+ {id:"civil",title:"Civil Engineering Intern",company:"Built Environment Studio",category:"Engineering",branch:["Engineering","Civil Engineering"],mode:"On-site",duration:"8–12 weeks",level:"Beginner",skills:["AutoCAD","Surveying","Structural Basics","Engineering Drawing"],interests:["Engineering"],description:"Learn how site information, drawings, and basic project documentation come together.",next:"Practice a basic CAD plan and revise surveying and drawing fundamentals."},
+ {id:"business",title:"Business Analyst Intern",company:"Growth & Strategy Team",category:"Business",branch:["Business","Technology","IT","AIDS"],mode:"Hybrid",duration:"10 weeks",level:"Beginner",skills:["Excel","Communication","Market Research","SQL"],interests:["Business","Technology"],description:"Turn business questions into structured research, reports, and clear recommendations.",next:"Build an Excel report and write a one-page analysis of a real business problem."},
+ {id:"finance",title:"Finance Analyst Intern",company:"Financial Insights Desk",category:"Business",branch:["Business","Science"],mode:"Hybrid",duration:"8–10 weeks",level:"Beginner",skills:["Excel","Financial Analysis","Data Analysis","Communication"],interests:["Business"],description:"Assist with spreadsheet analysis, financial summaries, and careful data reporting.",next:"Practice spreadsheet formulas and prepare a sample budget or financial summary."},
+ {id:"ux",title:"UI/UX Design Intern",company:"Experience Design Studio",category:"Creative",branch:["Creative","Technology","IT","Computer Engineering"],mode:"Remote",duration:"8 weeks",level:"Beginner",skills:["Figma","UI/UX Design","Graphic Design","Communication"],interests:["Creative","Technology"],description:"Explore user needs, map simple flows, and create wireframes and interface prototypes.",next:"Redesign one familiar app screen and explain the design decisions."},
+ {id:"biotech",title:"Biotechnology Lab Intern",company:"Life Science Research Unit",category:"Science",branch:["Science","Biotechnology"],mode:"On-site",duration:"10–12 weeks",level:"Beginner",skills:["Laboratory Skills","Biology","Scientific Research","Communication"],interests:["Science"],description:"Become familiar with lab practices, research documentation, and scientific workflows.",next:"Review laboratory safety, core biology concepts, and scientific note-taking."}
+];
+const STORAGE_PROFILE="csn_opportunity_profile_v1";
+const STORAGE_SAVED="csn_opportunity_saved_v1";
+let selectedSkills=new Set();
+let activeCategory="All";
+let currentDetailId=null;
+let profile={branch:"Any",interest:"Any",mode:"Any",level:"Beginner",skills:[],extra:[]};
+let saved=loadJSON(STORAGE_SAVED,[]);
+let hasCalculated=false;
+const $=id=>document.getElementById(id);
+function loadJSON(key,fallback){try{const v=JSON.parse(localStorage.getItem(key));return v??fallback}catch{return fallback}}
+function safeText(value){return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function normalize(s){return String(s||"").trim().toLowerCase()}
+function allSkills(){return [...new Set([...profile.skills,...profile.extra])]}
+function renderSkillOptions(){
+ $("skillsBox").innerHTML=SKILL_OPTIONS.map(s=>`<button type="button" class="skill-chip ${selectedSkills.has(s)?"selected":""}" data-skill="${safeText(s)}" aria-pressed="${selectedSkills.has(s)}">${safeText(s)}</button>`).join("");
+ $("skillsBox").querySelectorAll("[data-skill]").forEach(btn=>btn.addEventListener("click",()=>{const s=btn.dataset.skill;selectedSkills.has(s)?selectedSkills.delete(s):selectedSkills.add(s);renderSkillOptions();}));
+}
+function readProfile(){
+ profile.branch=$("branch").value;profile.interest=$("interest").value;profile.mode=$("workMode").value;profile.level=$("level").value;profile.skills=[...selectedSkills];
+ profile.extra=$("extraSkills").value.split(",").map(s=>s.trim()).filter(Boolean);
+}
+function scoreOpportunity(o){
+ const skills=allSkills().map(normalize);
+ const matched=o.skills.filter(s=>skills.includes(normalize(s)));
+ const missing=o.skills.filter(s=>!skills.includes(normalize(s)));
+ const total=o.skills.length||1;
+ const skillRatio=matched.length/total;
+ let score=Math.round(skillRatio*65);
+ if(profile.interest!=="Any"&&o.interests.includes(profile.interest))score+=20;
+ else if(profile.interest==="Any")score+=10;
+ if(profile.branch!=="Any"&&o.branch.includes(profile.branch))score+=10;
+ else if(profile.branch==="Any")score+=5;
+ if(profile.mode!=="Any"&&o.mode===profile.mode)score+=5;
+ else if(profile.mode==="Any")score+=5;
+ if(profile.level===o.level)score+=5;
+ score=Math.max(0,Math.min(100,score));
+ const reasons=[];
+ if(matched.length)reasons.push(`${matched.length} skill${matched.length===1?"":"s"} match`);
+ if(profile.interest!=="Any"&&o.interests.includes(profile.interest))reasons.push("career interest aligns");
+ if(profile.branch!=="Any"&&o.branch.includes(profile.branch))reasons.push("study field aligns");
+ if(profile.mode!=="Any"&&o.mode===profile.mode)reasons.push("work mode matches");
+ return {score,matched,missing,reasons};
+}
+function rankedOpportunities(){
+ return OPPORTUNITIES.map(o=>({...o,match:scoreOpportunity(o)}));
+}
+function renderContext(){
+ const skills=allSkills();
+ $("profileContext").innerHTML=`<span>${safeText(profile.branch==="Any"?"Exploring fields":profile.branch)}</span><span>${safeText(profile.interest==="Any"?"All career interests":profile.interest)}</span><span>${skills.length} skill${skills.length===1?"":"s"} selected</span><span>${hasCalculated?"Personalized ranking active":"Preview ranking — calculate to personalize"}</span>`;
+}
+function renderOpportunities(){
+ let list=rankedOpportunities();
+ const q=normalize($("search").value);
+ const mode=$("modeFilter").value;
+ if(activeCategory!=="All")list=list.filter(o=>o.category===activeCategory);
+ if(mode!=="Any")list=list.filter(o=>o.mode===mode);
+ if(q)list=list.filter(o=>normalize([o.title,o.company,o.category,o.description,...o.skills].join(" ")).includes(q));
+ const sort=$("sortFilter").value;
+ if(sort==="title")list.sort((a,b)=>a.title.localeCompare(b.title));
+ else if(sort==="duration")list.sort((a,b)=>a.duration.localeCompare(b.duration));
+ else list.sort((a,b)=>b.match.score-a.match.score);
+ $("opportunityGrid").innerHTML=list.length?list.map(o=>{
+  const m=o.match;const isSaved=saved.some(s=>s.id===o.id);
+  return `<article class="card"><div class="card-top"><div class="company-mark">${safeText(o.company.split(/\s+/).map(w=>w[0]).join("").slice(0,2).toUpperCase())}</div><span class="badge match-badge">${m.score}% match</span></div><div class="category">${safeText(o.category)}</div><h3>${safeText(o.title)}</h3><div class="company">${safeText(o.company)}</div><p class="desc">${safeText(o.description)}</p><div class="meta"><span>◷ ${safeText(o.duration)}</span><span>· ${safeText(o.mode)}</span><span>· ${safeText(o.level)}</span></div><div class="tags">${o.skills.map(s=>`<span class="tag">${safeText(s)}</span>`).join("")}</div><div class="match-box"><div class="match-head"><span>Profile compatibility</span><b>${m.score}%</b></div><div class="track"><div class="fill" style="width:${m.score}%"></div></div><p class="explain">${m.matched.length?`Matched: ${m.matched.map(safeText).join(", ")}.`:"No listed required skills matched yet."} ${m.missing.length?`<span class="missing">To build: ${m.missing.map(safeText).join(", ")}.</span>`:"All listed required skills match your profile."}</p></div><div class="card-actions"><button class="btn ${isSaved?"saved":""}" data-save="${o.id}">${isSaved?"✓ Saved":"＋ Save"}</button><button class="btn btn-primary" data-detail="${o.id}">Why this match?</button></div></article>`;
+ }).join(""):`<div class="empty"><strong>No matching opportunities found.</strong>Try another search term, work mode, or career-field filter.</div>`;
+ $("opportunityGrid").querySelectorAll("[data-save]").forEach(b=>b.addEventListener("click",()=>toggleSave(b.dataset.save)));
+ $("opportunityGrid").querySelectorAll("[data-detail]").forEach(b=>b.addEventListener("click",()=>showDetails(b.dataset.detail)));
+ const all=rankedOpportunities();
+ $("statSkills").textContent=allSkills().length;
+ $("statOpportunities").textContent=OPPORTUNITIES.length;
+ $("statStrong").textContent=all.filter(o=>o.match.score>=70).length;
+ $("statSaved").textContent=saved.length;
+ renderContext();
+}
+function persistSaved(){localStorage.setItem(STORAGE_SAVED,JSON.stringify(saved))}
+function toggleSave(id){
+ const o=OPPORTUNITIES.find(x=>x.id===id);if(!o)return;
+ const index=saved.findIndex(s=>s.id===id);
+ if(index>=0)saved.splice(index,1);else saved.push({id,status:"Interested",notes:""});
+ persistSaved();renderOpportunities();renderSaved();
+}
+function renderSaved(){
+ const list=$("savedList");
+ if(!saved.length){list.innerHTML='<div class="empty"><strong>Your shortlist is empty.</strong>Save an opportunity above to keep it here.</div>';return}
+ list.innerHTML=saved.map(item=>{const o=OPPORTUNITIES.find(x=>x.id===item.id);if(!o)return"";return `<div class="saved-item"><div><strong>${safeText(o.title)}</strong><small>${safeText(o.company)} · ${scoreOpportunity(o).score}% profile match</small></div><select class="field" data-status="${o.id}" aria-label="Application status for ${safeText(o.title)}">${["Interested","Preparing","Applied","Interview","Offer","Not proceeding"].map(s=>`<option ${item.status===s?"selected":""}>${s}</option>`).join("")}</select><button class="btn" data-remove="${o.id}">Remove</button><div class="field-wrap" style="grid-column:1/-1"><label for="notes-${o.id}">Notes / next action</label><textarea class="field" id="notes-${o.id}" data-notes="${o.id}" placeholder="e.g. Finish portfolio, verify deadline…">${safeText(item.notes||"")}</textarea></div></div>`}).join("");
+ list.querySelectorAll("[data-status]").forEach(el=>el.addEventListener("change",()=>{const x=saved.find(s=>s.id===el.dataset.status);if(x){x.status=el.value;persistSaved()}}));
+ list.querySelectorAll("[data-notes]").forEach(el=>el.addEventListener("input",()=>{const x=saved.find(s=>s.id===el.dataset.notes);if(x){x.notes=el.value;persistSaved()}}));
+ list.querySelectorAll("[data-remove]").forEach(el=>el.addEventListener("click",()=>toggleSave(el.dataset.remove)));
+}
+function showDetails(id){
+ const o=OPPORTUNITIES.find(x=>x.id===id);if(!o)return;currentDetailId=id;const m=scoreOpportunity(o);
+ $("dialogContent").innerHTML=`<div class="eyebrow">MATCH BREAKDOWN</div><h2>${safeText(o.title)}</h2><p>${safeText(o.company)} · ${safeText(o.category)} · ${safeText(o.mode)}</p><div class="match-box"><div class="match-head"><span>Estimated profile match</span><b>${m.score}%</b></div><div class="track"><div class="fill" style="width:${m.score}%"></div></div><p class="explain">This is a rule-based estimate, not a hiring probability.</p></div><h3>Why it matches</h3><ul>${(m.reasons.length?m.reasons:["No specific profile alignment yet; use this as an exploration option."]).map(x=>`<li>${safeText(x)}</li>`).join("")}</ul><h3>Skills you already have</h3><p>${m.matched.length?m.matched.map(safeText).join(", "):"None of the listed required skills are selected in your profile yet."}</p><h3>Skills to build</h3><p>${m.missing.length?m.missing.map(safeText).join(", "):"Your selected skills cover all listed requirements."}</p><h3>Suggested next step</h3><p>${safeText(o.next)}</p><p><b>Reminder:</b> This is sample opportunity data. Confirm actual openings and application details with a verified employer.</p>`;
+ $("dialogSave").textContent=saved.some(s=>s.id===id)?"✓ Already saved":"Save opportunity";
+ $("detailDialog").showModal();
+}
+function calculate(){
+ readProfile();hasCalculated=true;
+ localStorage.setItem(STORAGE_PROFILE,JSON.stringify({...profile,mode:profile.mode,level:profile.level}));
+ renderOpportunities();renderSaved();
+ $("opportunitiesSection").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function resetProfile(){
+ selectedSkills.clear();profile={branch:"Any",interest:"Any",mode:"Any",level:"Beginner",skills:[],extra:[]};hasCalculated=false;
+ $("branch").value="Any";$("interest").value="Any";$("workMode").value="Any";$("level").value="Beginner";$("extraSkills").value="";
+ localStorage.removeItem(STORAGE_PROFILE);renderSkillOptions();renderOpportunities();renderSaved();
+}
+function restoreProfile(){
+ const p=loadJSON(STORAGE_PROFILE,null);if(!p)return;
+ profile=p;selectedSkills=new Set(p.skills||[]);
+ $("branch").value=p.branch||"Any";$("interest").value=p.interest||"Any";$("workMode").value=p.mode||"Any";$("level").value=p.level||"Beginner";$("extraSkills").value=(p.extra||[]).join(", ");hasCalculated=true;
+}
+$("calculateBtn").addEventListener("click",calculate);
+$("resetProfile").addEventListener("click",resetProfile);
+$("startProfile").addEventListener("click",()=>$("profileSection").scrollIntoView({behavior:"smooth"}));
+$("showTopMatches").addEventListener("click",()=>$("opportunitiesSection").scrollIntoView({behavior:"smooth"}));
+$("search").addEventListener("input",renderOpportunities);
+$("modeFilter").addEventListener("change",renderOpportunities);
+$("sortFilter").addEventListener("change",renderOpportunities);
+$("sortBest").addEventListener("click",()=>{$("sortFilter").value="match";renderOpportunities()});
+$("categoryFilters").querySelectorAll("[data-category]").forEach(b=>b.addEventListener("click",()=>{activeCategory=b.dataset.category;$("categoryFilters").querySelectorAll(".filter-btn").forEach(x=>x.classList.toggle("active",x===b));renderOpportunities()}));
+$("dialogClose").addEventListener("click",()=>$("detailDialog").close());
+$("dialogSave").addEventListener("click",()=>{if(currentDetailId){if(!saved.some(s=>s.id===currentDetailId))toggleSave(currentDetailId);$("dialogSave").textContent="✓ Saved";}});
+restoreProfile();renderSkillOptions();renderOpportunities();renderSaved();
+</script>
+</body>
+</html>

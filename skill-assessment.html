@@ -1,0 +1,606 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill Assessment | Career Skill Navigator</title>
+<link rel="stylesheet" href="style.css">
+<script src="gamification.js"></script>
+
+<style>
+.assessment-page{padding:55px 5% 80px}
+.assessment-header{max-width:900px;margin-bottom:35px}
+.eyebrow{color:#b7ff5a;font-size:11px;font-weight:900;letter-spacing:2px;margin-bottom:12px}
+.assessment-header h1{font-size:clamp(38px,5vw,65px);line-height:1.05;margin:0 0 18px}
+.assessment-header h1 span{color:#b7ff5a}
+.assessment-header p{color:#89949a;max-width:700px;line-height:1.8;font-size:14px}
+.assessment-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:25px;align-items:start}
+.assessment-card,.score-card,.info-card{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);border-radius:24px}
+.assessment-card{padding:30px}
+.field-label{display:block;margin:0 0 10px;font-weight:700;font-size:13px}
+.field-select{width:100%;padding:14px;background:#171d1a;color:#f2f5f2;border:1px solid rgba(255,255,255,.15);border-radius:12px;margin-bottom:22px;font:inherit}
+.field-select option{background:#171d1a}
+.field-hint{font-size:12px;line-height:1.7;color:#89949a;margin:-10px 0 24px}
+.question{padding:24px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.question:first-child{padding-top:0}
+.question-top{display:flex;gap:15px;margin-bottom:18px}
+.question-number{width:34px;height:34px;flex:0 0 34px;display:grid;place-items:center;border-radius:10px;background:rgba(183,255,90,.09);color:#b7ff5a;font-size:12px;font-weight:900}
+.question-content{flex:1}
+.question-content h3{margin:0 0 6px;font-size:16px}
+.question-content p{margin:0;color:#89949a;font-size:12px;line-height:1.7}
+.level-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-left:49px}
+.level-option{position:relative}
+.level-option input{position:absolute;opacity:0;width:1px;height:1px}
+.level-option label{display:block;padding:13px 8px;border:1px solid rgba(255,255,255,.1);border-radius:12px;cursor:pointer;text-align:center;background:rgba(255,255,255,.02);transition:.2s}
+.level-option label strong{display:block;font-size:12px;margin-bottom:4px}
+.level-option label span{color:#89949a;font-size:10px}
+.level-option input:checked+label{border-color:#b7ff5a;background:rgba(183,255,90,.08)}
+.level-option input:checked+label strong{color:#b7ff5a}
+.level-option input:focus-visible+label{outline:2px solid #b7ff5a;outline-offset:3px}
+.submit-area{padding-top:25px}
+.calculate-button{width:100%;padding:15px;border:0;border-radius:13px;background:#b7ff5a;color:#101411;font-family:inherit;font-weight:900;cursor:pointer}
+.calculate-button:hover{filter:brightness(1.06)}
+.score-column{display:grid;gap:18px;position:sticky;top:100px}
+.score-card{padding:28px;text-align:center}
+.score-label{color:#89949a;text-transform:uppercase;letter-spacing:1.5px;font-size:10px}
+.score-number{font-size:70px;font-weight:900;line-height:1;margin:18px 0 5px;color:#b7ff5a}
+.score-out-of{color:#89949a;font-size:12px}
+.score-message{margin-top:18px;padding:12px;border-radius:12px;background:rgba(255,255,255,.035);color:#a1abad;font-size:11px;line-height:1.7}
+.info-card{padding:22px}
+.info-card h3{margin:0 0 14px;font-size:15px}
+.info-card ul{padding:0;margin:0;list-style:none}
+.info-card li{display:flex;gap:10px;color:#a1abad;font-size:11px;line-height:1.7;margin-bottom:12px}
+.info-card li:before{content:"→";color:#b7ff5a;font-weight:900}
+.result-panel{display:none;margin-top:25px;padding:22px;border-radius:18px;border:1px solid rgba(183,255,90,.2);background:rgba(183,255,90,.05)}
+.result-panel.show{display:block}
+.result-panel h2{font-size:21px;margin:0 0 12px}
+.result-panel strong{color:#b7ff5a}
+.result-panel p{color:#a1abad;font-size:13px;line-height:1.8}
+.result-panel ul{padding-left:20px;color:#a1abad;font-size:13px;line-height:1.9}
+.result-meta{color:#89949a;font-size:11px}
+.progress-track{height:7px;border-radius:10px;background:rgba(255,255,255,.09);overflow:hidden;margin:12px 0}
+.progress-fill{height:100%;width:0;background:#b7ff5a;transition:width .3s}
+.dna-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0}
+.dna-result{background:rgba(255,255,255,.04);border-radius:12px;padding:12px}
+.dna-result span{display:block;color:#a1abad;font-size:11px}
+.dna-result strong{display:block;font-size:22px;margin-top:5px}
+@media(max-width:900px){.assessment-layout{grid-template-columns:1fr}.score-column{position:static}}
+@media(max-width:600px){.assessment-page{padding:35px 4% 60px}.assessment-card{padding:20px}.level-options{grid-template-columns:1fr;margin-left:0}.question-top{gap:12px}.score-number{font-size:58px}}
+</style>
+</head>
+
+<body>
+<header class="site-header">
+  <div class="brand">
+    <div class="brand-mark">CS</div>
+    <div><strong>Career Skill Navigator</strong><span>Career Intelligence Platform</span></div>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="career-recommendation.html">Careers</a>
+    <a href="skill-assessment.html" aria-current="page">Assessment</a>
+    <a href="learning-roadmap.html">Roadmap</a>
+    <a href="progress.html">Progress</a>
+  </nav>
+</header>
+
+<main class="assessment-page">
+  <section class="assessment-header">
+    <div class="eyebrow">MULTI-DOMAIN SKILL INTELLIGENCE</div>
+    <h1>Discover your <span>skill potential.</span></h1>
+    <p>Select your course and career area to assess relevant skills. Your results highlight areas to strengthen and help you plan your next learning steps.</p>
+  </section>
+
+  <section class="assessment-layout">
+    <div class="assessment-card">
+      <form id="assessmentForm">
+        <label class="field-label" for="courseField">1. Select your course or career field</label>
+        <select class="field-select" id="courseField" required>
+          <option value="">Choose your field</option>
+          <optgroup label="Engineering and Technology">
+            <option value="computer">Computer Engineering / IT / AIDS / AI-ML</option>
+            <option value="electronics">E&TC / Electronics / Electrical</option>
+            <option value="iot">IoT / Robotics / Embedded Systems</option>
+            <option value="mechanical">Mechanical / Automobile / Manufacturing</option>
+            <option value="civil">Civil / Construction / Architecture</option>
+            <option value="chemical">Chemical Engineering</option>
+          </optgroup>
+          <optgroup label="Science and Research">
+            <option value="physics">Physics / Mathematics</option>
+            <option value="chemistry">Chemistry</option>
+            <option value="biology">Biology / Biotechnology / Microbiology</option>
+            <option value="environment">Environmental Science / Agriculture</option>
+          </optgroup>
+          <optgroup label="Commerce and Management">
+            <option value="commerce">BCom / MCom / Accounting</option>
+            <option value="business">BBA / MBA / Business Management</option>
+            <option value="finance">Finance / Banking / Economics</option>
+            <option value="hrmarketing">Human Resources / Marketing / Sales</option>
+          </optgroup>
+          <optgroup label="Arts and Creative">
+            <option value="arts">BA / Humanities / Social Sciences</option>
+            <option value="design">Graphic Design / UI-UX / Animation</option>
+            <option value="media">Journalism / Media / Content</option>
+          </optgroup>
+          <optgroup label="Other Career Areas">
+            <option value="healthcare">Healthcare / Nursing / Pharmacy / Allied Health</option>
+            <option value="law">Law / Legal Studies</option>
+            <option value="education">Education / Teaching</option>
+            <option value="hospitality">Hospitality / Tourism</option>
+            <option value="vocational">Diploma / ITI / Skilled Trades</option>
+            <option value="general">Undecided / General Skills / Other</option>
+          </optgroup>
+        </select>
+
+        <p class="field-hint">This is a self-reported skills assessment, not a formal qualification or professional certification.</p>
+
+        <label class="field-label" for="careerGoal">2. Preferred career goal (optional)</label>
+        <input id="careerGoal" class="field-select" type="text" maxlength="100" placeholder="e.g. Mechanical Design Engineer, Accountant, Teacher" style="margin-bottom:24px">
+
+        <div id="questionsContainer" aria-live="polite">
+          <p class="field-hint">Choose a field above to load your five relevant assessment questions.</p>
+        </div>
+
+        <div class="submit-area">
+          <button type="submit" class="calculate-button">Calculate My Skill Profile →</button>
+        </div>
+
+        <div class="result-panel" id="resultPanel" aria-live="polite">
+          <h2>Your skill profile</h2>
+          <p>Your score: <strong id="resultScore">0 / 15</strong></p>
+          <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+          <p id="resultText"></p>
+          <div class="dna-results">
+            <div class="dna-result"><span>Problem Solving</span><strong id="dnaProblem">0%</strong></div>
+            <div class="dna-result"><span>Technology</span><strong id="dnaTechnology">0%</strong></div>
+            <div class="dna-result"><span>Data Thinking</span><strong id="dnaData">0%</strong></div>
+            <div class="dna-result"><span>Communication</span><strong id="dnaCommunication">0%</strong></div>
+          </div>
+          <h3>Skills to strengthen</h3>
+          <ul id="gapList"></ul>
+          <h3>Suggested next steps</h3>
+          <p id="nextSteps"></p>
+          <p class="result-meta" id="resultMeta"></p>
+        </div>
+      </form>
+    </div>
+
+    <aside class="score-column">
+      <div class="score-card">
+        <div class="score-label">Current skill signal</div>
+        <div class="score-number" id="scoreDisplay">—</div>
+        <div class="score-out-of">out of 15</div>
+        <div class="score-message" id="scoreMessage">Choose your field and complete the assessment to generate your skill signal.</div>
+      </div>
+      <div class="info-card">
+        <h3>How this works</h3>
+        <ul>
+          <li>Select the course or field closest to your studies.</li>
+          <li>Rate five relevant skill areas from beginner to advanced.</li>
+          <li>Each answer contributes 1–3 points.</li>
+          <li>Review your lowest-rated areas for practice priorities.</li>
+          <li>Your latest result is stored in this browser for other modules to read.</li>
+        </ul>
+      </div>
+    </aside>
+  </section>
+</main>
+
+<script>
+const fieldData = {
+  computer: {title:"Computer Engineering, IT and AI",questions:[
+    ["Programming and logical thinking","How confidently can you break a problem into steps and write code?"],
+    ["Web and application development","How comfortably can you build or modify a digital application?"],
+    ["Data and databases","How well can you organize data, use spreadsheets or query databases?"],
+    ["Debugging and problem solving","How confidently can you find errors and solve technical problems?"],
+    ["Projects and learning tools","How independently can you build a project and learn a new technology?"]
+  ]},
+  electronics: {title:"Electronics, E&TC and Electrical",questions:[
+    ["Circuit fundamentals","How confidently can you understand basic electrical or electronic circuits?"],
+    ["Components and instruments","How comfortably can you identify components and use basic measuring instruments?"],
+    ["Signals and system concepts","How well do you understand signals, sensors or electrical systems?"],
+    ["Testing and troubleshooting","How confidently can you diagnose a circuit or equipment problem?"],
+    ["Practical projects and safety","How comfortably can you follow lab safety and complete practical tasks?"]
+  ]},
+  iot: {title:"IoT, Robotics and Embedded Systems",questions:[
+    ["Sensors and electronic components","How well can you explain sensors, actuators and their uses?"],
+    ["Microcontrollers and embedded logic","How comfortably can you work with a microcontroller or embedded platform?"],
+    ["Connectivity and data flow","How well do you understand device communication and data collection?"],
+    ["Building and debugging prototypes","How confidently can you test and troubleshoot a prototype?"],
+    ["System design and safety","How well can you combine hardware and software into a useful solution?"]
+  ]},
+  mechanical: {title:"Mechanical, Automobile and Manufacturing",questions:[
+    ["Engineering mechanics","How confidently can you apply force, motion and mechanics concepts?"],
+    ["Technical drawing and CAD","How comfortably can you read engineering drawings or use CAD tools?"],
+    ["Materials and manufacturing","How well do you understand materials, manufacturing processes and tolerances?"],
+    ["Measurement and troubleshooting","How confidently can you measure components and identify mechanical faults?"],
+    ["Design and practical projects","How comfortably can you plan, build or improve a mechanical design?"]
+  ]},
+  civil: {title:"Civil Engineering, Construction and Architecture",questions:[
+    ["Construction materials","How well can you identify and explain common construction materials?"],
+    ["Drawings and measurements","How confidently can you read plans, drawings and dimensions?"],
+    ["Structures and site concepts","How well do you understand basic structural or construction principles?"],
+    ["Planning and estimation","How comfortably can you calculate quantities, costs or project schedules?"],
+    ["Site safety and teamwork","How confidently can you follow safety practices and coordinate practical work?"]
+  ]},
+  chemical: {title:"Chemical Engineering",questions:[
+    ["Chemistry fundamentals","How confidently can you apply basic chemistry concepts?"],
+    ["Process and material concepts","How well do you understand process flow, materials or unit operations?"],
+    ["Measurements and calculations","How comfortably can you interpret measurements, units and numerical data?"],
+    ["Laboratory and process safety","How well can you follow laboratory or industrial safety procedures?"],
+    ["Analysis and troubleshooting","How confidently can you investigate a process issue using evidence?"]
+  ]},
+  physics: {title:"Physics and Mathematics",questions:[
+    ["Core subject concepts","How confidently can you explain key concepts in your subject?"],
+    ["Mathematical reasoning","How comfortably can you solve multi-step numerical problems?"],
+    ["Data interpretation","How well can you interpret graphs, equations or experimental data?"],
+    ["Investigation and experimentation","How confidently can you plan or interpret an experiment?"],
+    ["Research and problem solving","How comfortably can you investigate an unfamiliar problem?"]
+  ]},
+  chemistry: {title:"Chemistry",questions:[
+    ["Chemical concepts and reactions","How confidently can you explain chemical principles and reactions?"],
+    ["Calculations and quantitative analysis","How comfortably can you solve chemistry calculations?"],
+    ["Laboratory techniques","How well do you understand basic lab methods and equipment?"],
+    ["Observation and data recording","How accurately can you record observations and interpret results?"],
+    ["Laboratory safety and analysis","How confidently can you follow safety rules and analyze findings?"]
+  ]},
+  biology: {title:"Biology, Biotechnology and Microbiology",questions:[
+    ["Biological concepts","How confidently can you explain key biological processes?"],
+    ["Laboratory methods","How well do you understand basic lab methods and equipment?"],
+    ["Observation and data analysis","How comfortably can you interpret biological observations or data?"],
+    ["Research and scientific reasoning","How confidently can you evaluate a scientific question or claim?"],
+    ["Documentation and lab safety","How well can you follow protocols and record findings accurately?"]
+  ]},
+  environment: {title:"Environmental Science and Agriculture",questions:[
+    ["Environmental or agricultural fundamentals","How confidently can you explain important concepts in your field?"],
+    ["Observation and fieldwork","How comfortably can you collect observations or field measurements?"],
+    ["Data and evidence","How well can you interpret field data, charts or sample results?"],
+    ["Sustainability and problem solving","How confidently can you suggest practical solutions to local challenges?"],
+    ["Safety and project planning","How comfortably can you plan fieldwork and follow relevant safety practices?"]
+  ]},
+  commerce: {title:"Commerce, Accounting and Taxation",questions:[
+    ["Accounting fundamentals","How confidently can you understand and record basic financial transactions?"],
+    ["Spreadsheets and calculations","How comfortably can you use spreadsheets and financial calculations?"],
+    ["Business and economic concepts","How well do you understand business operations and economic principles?"],
+    ["Accuracy and documentation","How carefully can you check records, figures and supporting documents?"],
+    ["Financial analysis and communication","How confidently can you explain financial information?"]
+  ]},
+  business: {title:"Business and Management",questions:[
+    ["Business fundamentals","How well do you understand how organizations and business functions operate?"],
+    ["Planning and decision making","How confidently can you compare options and plan a task?"],
+    ["Communication and presentations","How comfortably can you explain an idea to different audiences?"],
+    ["Teamwork and leadership","How confidently can you coordinate with others to complete a goal?"],
+    ["Problem solving and analysis","How well can you identify a business problem and suggest improvements?"]
+  ]},
+  finance: {title:"Finance, Banking and Economics",questions:[
+    ["Financial concepts","How confidently can you explain basic financial or economic concepts?"],
+    ["Numerical and spreadsheet skills","How comfortably can you work with percentages, figures and spreadsheets?"],
+    ["Data interpretation","How well can you interpret tables, trends and financial reports?"],
+    ["Risk and decision making","How confidently can you compare financial options and their risks?"],
+    ["Accuracy and ethical practice","How carefully can you handle figures and follow professional standards?"]
+  ]},
+  hrmarketing: {title:"Human Resources, Marketing and Sales",questions:[
+    ["Communication and presentation","How confidently can you communicate ideas clearly?"],
+    ["Understanding people and customers","How well can you understand customer needs or team concerns?"],
+    ["Research and analysis","How comfortably can you collect feedback and identify patterns?"],
+    ["Planning and persuasion","How confidently can you plan a campaign, pitch or people-related activity?"],
+    ["Teamwork and professionalism","How well can you collaborate and handle feedback professionally?"]
+  ]},
+  arts: {title:"Arts, Humanities and Social Sciences",questions:[
+    ["Reading and subject understanding","How confidently can you understand and explain complex ideas?"],
+    ["Writing and communication","How comfortably can you write clearly for a particular audience?"],
+    ["Research and critical thinking","How well can you compare sources and evaluate arguments?"],
+    ["Creativity and interpretation","How confidently can you develop and explain your own perspective?"],
+    ["Presentation and collaboration","How comfortably can you present work and collaborate with others?"]
+  ]},
+  design: {title:"Design, UI/UX and Animation",questions:[
+    ["Visual communication","How confidently can you use layout, color, typography or visual composition?"],
+    ["Design tools and techniques","How comfortably can you use relevant design or creative tools?"],
+    ["Understanding users or audiences","How well can you identify the needs of the people using your work?"],
+    ["Creative problem solving","How confidently can you develop and compare different ideas?"],
+    ["Portfolio and feedback","How comfortably can you present work and improve it using feedback?"]
+  ]},
+  media: {title:"Journalism, Media and Content",questions:[
+    ["Writing and storytelling","How confidently can you create clear and engaging content?"],
+    ["Research and fact checking","How well can you verify information and assess source reliability?"],
+    ["Audience awareness","How comfortably can you adapt content to different audiences?"],
+    ["Digital media tools","How confidently can you use relevant publishing, audio or video tools?"],
+    ["Ethics and deadlines","How well can you work accurately, responsibly and to a deadline?"]
+  ]},
+  healthcare: {title:"Healthcare and Allied Health",questions:[
+    ["Foundational subject knowledge","How confidently can you explain key concepts from your course?"],
+    ["Observation and documentation","How carefully can you observe, record and report information?"],
+    ["Communication and empathy","How comfortably can you communicate respectfully with people?"],
+    ["Procedures and safety awareness","How well do you understand the importance of protocols and safety?"],
+    ["Evidence-based problem solving","How confidently can you use evidence to reason through a scenario?"]
+  ]},
+  law: {title:"Law and Legal Studies",questions:[
+    ["Legal concepts and terminology","How confidently can you explain foundational legal concepts?"],
+    ["Reading and interpretation","How well can you interpret detailed texts and identify key points?"],
+    ["Research and source evaluation","How confidently can you find and assess relevant legal information?"],
+    ["Reasoning and argument building","How comfortably can you structure an evidence-based argument?"],
+    ["Writing and professional ethics","How clearly can you write and recognize confidentiality or ethical concerns?"]
+  ]},
+  education: {title:"Education and Teaching",questions:[
+    ["Subject knowledge","How confidently can you explain the subject you want to teach?"],
+    ["Lesson planning","How comfortably can you organize a lesson around learning objectives?"],
+    ["Communication and explanation","How well can you explain a concept in different ways?"],
+    ["Classroom and learner awareness","How confidently can you respond to different learning needs?"],
+    ["Assessment and reflection","How comfortably can you check learning and improve your approach?"]
+  ]},
+  hospitality: {title:"Hospitality and Tourism",questions:[
+    ["Customer service","How confidently can you respond to customer needs?"],
+    ["Communication and teamwork","How comfortably can you coordinate with colleagues and guests?"],
+    ["Planning and organization","How well can you organize tasks, bookings or schedules?"],
+    ["Problem solving under pressure","How confidently can you respond to an unexpected issue?"],
+    ["Professionalism and safety","How consistently can you follow service standards and safety practices?"]
+  ]},
+  vocational: {title:"Diploma, ITI and Skilled Trades",questions:[
+    ["Trade fundamentals","How confidently can you explain the core principles of your trade?"],
+    ["Tools and equipment","How comfortably can you identify and use tools under proper supervision?"],
+    ["Practical measurements","How accurately can you measure, inspect or check your work?"],
+    ["Troubleshooting","How confidently can you identify the cause of a practical problem?"],
+    ["Safety and work quality","How consistently can you follow safety rules and quality standards?"]
+  ]},
+  general: {title:"General and Transferable Skills",questions:[
+    ["Communication","How confidently can you explain ideas clearly in speech or writing?"],
+    ["Critical thinking","How comfortably can you compare information and make reasoned decisions?"],
+    ["Digital literacy","How confidently can you use common digital tools to complete tasks?"],
+    ["Teamwork and adaptability","How comfortably can you collaborate and learn from feedback?"],
+    ["Planning and problem solving","How well can you plan tasks and work through challenges?"]
+  ]}
+};
+
+const form = document.getElementById("assessmentForm");
+const fieldSelect = document.getElementById("courseField");
+const questionsContainer = document.getElementById("questionsContainer");
+const scoreDisplay = document.getElementById("scoreDisplay");
+const scoreMessage = document.getElementById("scoreMessage");
+const resultPanel = document.getElementById("resultPanel");
+const resultScore = document.getElementById("resultScore");
+const resultText = document.getElementById("resultText");
+const gapList = document.getElementById("gapList");
+const nextSteps = document.getElementById("nextSteps");
+const progressFill = document.getElementById("progressFill");
+const resultMeta = document.getElementById("resultMeta");
+
+function renderQuestions(fieldKey) {
+  const field = fieldData[fieldKey];
+  resultPanel.classList.remove("show");
+
+  if (!field) {
+    questionsContainer.innerHTML = '<p class="field-hint">Choose a field above to load your five relevant assessment questions.</p>';
+    return;
+  }
+
+  questionsContainer.innerHTML = field.questions.map((question, index) => {
+    const name = "skill" + (index + 1);
+    return `
+      <div class="question">
+        <div class="question-top">
+          <div class="question-number">${String(index + 1).padStart(2, "0")}</div>
+          <div class="question-content">
+            <h3>${question[0]}</h3>
+            <p>${question[1]}</p>
+          </div>
+        </div>
+        <div class="level-options">
+          ${[
+            ["1", "Beginner", "Need to learn"],
+            ["2", "Intermediate", "Can do with practice"],
+            ["3", "Advanced", "Confident independently"]
+          ].map(option => `
+            <div class="level-option">
+              <input type="radio" name="${name}" value="${option[0]}" id="${name}_${option[0]}" required>
+              <label for="${name}_${option[0]}"><strong>${option[1]}</strong><span>${option[2]}</span></label>
+            </div>
+          `).join("")}
+        </div>
+      </div>`;
+  }).join("");
+}
+
+fieldSelect.addEventListener("change", () => {
+  renderQuestions(fieldSelect.value);
+  scoreDisplay.textContent = "—";
+  scoreMessage.textContent = "Complete the new field-specific assessment to generate your skill signal.";
+});
+
+function updateScoreMessage(score) {
+  if (score <= 6) {
+    scoreMessage.textContent = "Foundation stage — focus on core concepts, guided learning and regular practice.";
+  } else if (score <= 10) {
+    scoreMessage.textContent = "Developing stage — strengthen your lowest-rated skills with practice and small projects.";
+  } else {
+    scoreMessage.textContent = "Strong self-reported foundation — consider advanced learning and practical experience.";
+  }
+}
+
+/*
+Map the five self-reported answers into the four Career DNA categories.
+The mapping is a useful indicator, not a validated psychological test.
+*/
+function calculateCareerDNA(answers) {
+  const toPercent = value => Math.round((value / 3) * 100);
+
+  return {
+    problemSolving: toPercent((answers[0] + answers[3]) / 2),
+    technology: toPercent(answers[1]),
+    dataThinking: toPercent(answers[2]),
+    communication: toPercent(answers[4])
+  };
+}
+
+function saveCareerDNAScores(scores) {
+  localStorage.setItem("careerDNAScores", JSON.stringify(scores));
+
+  // Refresh the homepage card if the update function is present on this page.
+  if (typeof window.updateCareerDNA === "function") {
+    const overall = Math.round(
+      (scores.problemSolving + scores.technology +
+       scores.dataThinking + scores.communication) / 4
+    );
+
+    window.updateCareerDNA({ ...scores, overall });
+  }
+}
+
+function saveResult(result) {
+  localStorage.setItem("skillScore", String(result.score));
+  localStorage.setItem("skillField", result.field);
+  localStorage.setItem("skillFieldName", result.fieldName);
+  localStorage.setItem("skillAssessmentResult", JSON.stringify(result));
+  localStorage.setItem("skillGaps", JSON.stringify(result.gaps));
+}
+
+function showCareerDNA(scores) {
+  document.getElementById("dnaProblem").textContent = scores.problemSolving + "%";
+  document.getElementById("dnaTechnology").textContent = scores.technology + "%";
+  document.getElementById("dnaData").textContent = scores.dataThinking + "%";
+  document.getElementById("dnaCommunication").textContent = scores.communication + "%";
+}
+
+function restoreResult() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("skillAssessmentResult") || "null");
+    if (!saved || !Number.isFinite(Number(saved.score))) return;
+
+    scoreDisplay.textContent = saved.score;
+    updateScoreMessage(Number(saved.score));
+
+    if (saved.field && fieldData[saved.field]) {
+      fieldSelect.value = saved.field;
+      renderQuestions(saved.field);
+    }
+
+    resultScore.textContent = saved.score + " / 15";
+    resultText.textContent = "Previous result for " + (saved.fieldName || "your selected field") + ". Complete the assessment again to update it.";
+    resultMeta.textContent = "Saved in this browser. Results are self-reported and are not a formal aptitude test.";
+
+    if (Array.isArray(saved.gaps)) {
+      gapList.innerHTML = "";
+      saved.gaps.forEach(gap => {
+        const li = document.createElement("li");
+        li.textContent = gap;
+        gapList.appendChild(li);
+      });
+    }
+
+    if (saved.nextSteps) nextSteps.textContent = saved.nextSteps;
+    progressFill.style.width = (Number(saved.score) / 15 * 100) + "%";
+    resultPanel.classList.add("show");
+
+    const savedDNA = JSON.parse(localStorage.getItem("careerDNAScores") || "null");
+    if (savedDNA) showCareerDNA(savedDNA);
+  } catch (error) {
+    console.warn("Could not restore previous assessment result.", error);
+  }
+}
+
+form.addEventListener("submit", event => {
+  event.preventDefault();
+
+  const fieldKey = fieldSelect.value;
+  const field = fieldData[fieldKey];
+
+  if (!field) {
+    fieldSelect.focus();
+    alert("Please select your course or career field first.");
+    return;
+  }
+
+  const formData = new FormData(form);
+  const answers = [];
+  let total = 0;
+  const gaps = [];
+
+  for (let index = 0; index < 5; index++) {
+    const value = Number(formData.get("skill" + (index + 1)));
+
+    if (![1, 2, 3].includes(value)) {
+      const missing = document.getElementById("skill" + (index + 1) + "_1");
+      if (missing) missing.focus();
+      alert("Please answer all five skill questions.");
+      return;
+    }
+
+    answers.push(value);
+    total += value;
+
+    if (value === 1) {
+      gaps.push(field.questions[index][0] + " — priority for foundational learning");
+    } else if (value === 2) {
+      gaps.push(field.questions[index][0] + " — strengthen with practice");
+    }
+  }
+
+  const lowest = field.questions.map((question, index) => ({
+    name: question[0],
+    score: answers[index]
+  })).sort((a, b) => a.score - b.score).slice(0, 2);
+
+  const goal = document.getElementById("careerGoal").value.trim();
+
+  const message = total <= 6
+    ? "Your responses suggest that foundational learning should come first. Start with beginner-friendly lessons and guided exercises in " + field.title + "."
+    : total <= 10
+      ? "Your responses suggest a developing foundation. Focus on lower-rated skills and apply them through practical exercises or a small project."
+      : "Your responses suggest a strong self-reported foundation. Build practical experience, seek feedback and explore advanced work in " + field.title + ".";
+
+  const dnaScores = calculateCareerDNA(answers);
+  saveCareerDNAScores(dnaScores);
+  showCareerDNA(dnaScores);
+
+  const result = {
+    score: total,
+    maxScore: 15,
+    field: fieldKey,
+    fieldName: field.title,
+    careerGoal: goal,
+    gaps,
+    dnaScores,
+    nextSteps: "Begin with " + lowest.map(item => item.name).join(" and ") + ". Choose a suitable course, practice consistently, and review your progress.",
+    completedAt: new Date().toISOString()
+  };
+
+  saveResult(result);
+
+  scoreDisplay.textContent = total;
+  resultScore.textContent = total + " / 15";
+  resultText.textContent = message + (goal ? " Your stated career goal is: " + goal + "." : "");
+  gapList.innerHTML = "";
+
+  if (gaps.length === 0) {
+    const li = document.createElement("li");
+    li.textContent = "No low-rated areas reported. Continue practicing and seek feedback to validate your confidence.";
+    gapList.appendChild(li);
+  } else {
+    gaps.forEach(gap => {
+      const li = document.createElement("li");
+      li.textContent = gap;
+      gapList.appendChild(li);
+    });
+  }
+
+  nextSteps.textContent = result.nextSteps;
+  resultMeta.textContent = "Field: " + field.title + " · Saved locally · " + new Date().toLocaleString();
+  progressFill.style.width = (total / 15 * 100) + "%";
+  updateScoreMessage(total);
+  resultPanel.classList.add("show");
+
+  if (typeof awardCareerXP === "function") {
+    try {
+      awardCareerXP("assessment", 300, "Completed Skill Assessment");
+    } catch (error) {
+      console.warn("Gamification reward could not be applied.", error);
+    }
+  }
+
+  resultPanel.scrollIntoView({ behavior: "smooth", block: "center" });
+});
+
+restoreResult();
+</script>
+</body>
+</html>

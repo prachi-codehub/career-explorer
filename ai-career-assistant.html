@@ -1,0 +1,2476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="AI Career Assistant - Career Skill Navigator"
+    >
+
+    <title>
+        AI Career Assistant | Career Skill Navigator
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <style>
+
+        /* =========================================
+           AI CAREER ASSISTANT
+        ========================================= */
+
+        .assistant-page {
+            min-height: calc(100vh - 80px);
+            padding: 55px 5% 80px;
+            max-width: 1450px;
+            margin: auto;
+        }
+
+
+        /* =========================================
+           PAGE INTRO
+        ========================================= */
+
+        .assistant-intro {
+            max-width: 900px;
+            margin-bottom: 35px;
+        }
+
+        .assistant-eyebrow {
+            color: #b7ff5a;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 2.5px;
+            margin-bottom: 13px;
+        }
+
+        .assistant-intro h1 {
+            margin: 0 0 18px;
+
+            font-size:
+                clamp(38px, 5vw, 66px);
+
+            line-height: .98;
+
+            letter-spacing: -2px;
+        }
+
+        .assistant-intro h1 span {
+            color: #b7ff5a;
+        }
+
+        .assistant-intro p {
+            margin: 0;
+
+            max-width: 730px;
+
+            color: #89949a;
+
+            font-size: 14px;
+
+            line-height: 1.8;
+        }
+
+
+        /* =========================================
+           PERSONALIZED SIGNAL
+        ========================================= */
+
+        .assistant-signal {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 12px;
+
+            margin-bottom: 25px;
+        }
+
+        .signal-card {
+            padding: 18px 20px;
+
+            border-radius: 17px;
+
+            background:
+                rgba(255,255,255,.035);
+
+            border:
+                1px solid rgba(255,255,255,.07);
+        }
+
+        .signal-card span {
+            display: block;
+
+            color: #68747a;
+
+            font-size: 8px;
+
+            font-weight: 900;
+
+            letter-spacing: 1.5px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 7px;
+        }
+
+        .signal-card strong {
+            color: #dce4df;
+
+            font-size: 13px;
+        }
+
+        .signal-card strong.highlight {
+            color: #b7ff5a;
+        }
+
+
+        /* =========================================
+           MAIN ASSISTANT LAYOUT
+        ========================================= */
+
+        .assistant-layout {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.5fr)
+                minmax(280px, .5fr);
+
+            gap: 20px;
+
+            align-items: start;
+        }
+
+
+        /* =========================================
+           CHAT CONTAINER
+        ========================================= */
+
+        .chat-panel {
+            min-height: 620px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            border-radius: 25px;
+
+            overflow: hidden;
+
+            background:
+                rgba(255,255,255,.025);
+
+            border:
+                1px solid rgba(255,255,255,.08);
+
+            box-shadow:
+                0 25px 70px rgba(0,0,0,.18);
+        }
+
+
+        /* =========================================
+           CHAT HEADER
+        ========================================= */
+
+        .chat-header {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 20px 22px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.07);
+
+            background:
+                rgba(255,255,255,.02);
+        }
+
+        .assistant-identity {
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+        }
+
+        .assistant-avatar {
+            width: 44px;
+            height: 44px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 14px;
+
+            color: #101411;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #b7ff5a,
+                    #7dffce
+                );
+
+            font-size: 14px;
+
+            font-weight: 950;
+
+            box-shadow:
+                0 0 25px rgba(183,255,90,.12);
+        }
+
+        .assistant-identity strong {
+            display: block;
+
+            color: #e6ece8;
+
+            font-size: 13px;
+
+            margin-bottom: 4px;
+        }
+
+        .assistant-status {
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            color: #68747a;
+
+            font-size: 9px;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: #7dffce;
+
+            box-shadow:
+                0 0 10px rgba(125,255,206,.5);
+        }
+
+        .clear-chat {
+            border: 0;
+
+            background: transparent;
+
+            color: #68747a;
+
+            font-family: inherit;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: .2s ease;
+        }
+
+        .clear-chat:hover {
+            color: #b7ff5a;
+        }
+
+
+        /* =========================================
+           CHAT MESSAGES
+        ========================================= */
+
+        .chat-messages {
+            flex: 1;
+
+            min-height: 400px;
+
+            max-height: 470px;
+
+            overflow-y: auto;
+
+            padding: 25px;
+
+            scroll-behavior: smooth;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,.08);
+
+            border-radius: 20px;
+        }
+
+        .message {
+            display: flex;
+
+            gap: 11px;
+
+            margin-bottom: 20px;
+
+            animation:
+                messageIn .25s ease;
+        }
+
+        @keyframes messageIn {
+
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-icon {
+            width: 30px;
+            height: 30px;
+
+            flex: 0 0 30px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 10px;
+
+            background:
+                rgba(183,255,90,.08);
+
+            color: #b7ff5a;
+
+            font-size: 9px;
+
+            font-weight: 900;
+        }
+
+        .message.user .message-icon {
+            order: 2;
+
+            background:
+                rgba(255,255,255,.07);
+
+            color: #aeb8b4;
+        }
+
+        .message-content {
+            max-width: 75%;
+        }
+
+        .message-label {
+            color: #5f6a70;
+
+            font-size: 8px;
+
+            font-weight: 900;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 6px;
+
+            text-transform: uppercase;
+        }
+
+        .message-bubble {
+            padding: 13px 15px;
+
+            border-radius: 14px 14px 14px 4px;
+
+            background:
+                rgba(255,255,255,.045);
+
+            border:
+                1px solid rgba(255,255,255,.06);
+
+            color: #aab4b0;
+
+            font-size: 11px;
+
+            line-height: 1.75;
+        }
+
+        .message.user .message-bubble {
+            border-radius:
+                14px 14px 4px 14px;
+
+            background:
+                rgba(183,255,90,.09);
+
+            border-color:
+                rgba(183,255,90,.12);
+
+            color: #cbd5d0;
+        }
+
+        .message-bubble strong {
+            color: #dce4df;
+        }
+
+        .message-bubble .accent {
+            color: #b7ff5a;
+            font-weight: 800;
+        }
+
+
+        /* =========================================
+           CHAT INPUT
+        ========================================= */
+
+        .chat-input-area {
+            padding: 18px;
+
+            border-top:
+                1px solid rgba(255,255,255,.07);
+
+            background:
+                rgba(0,0,0,.08);
+        }
+
+        .chat-input-row {
+            display: flex;
+
+            gap: 9px;
+
+            align-items: flex-end;
+        }
+
+        .chat-input {
+            flex: 1;
+
+            min-height: 46px;
+            max-height: 120px;
+
+            resize: vertical;
+
+            padding: 13px 15px;
+
+            border-radius: 13px;
+
+            border:
+                1px solid rgba(255,255,255,.08);
+
+            background:
+                rgba(255,255,255,.035);
+
+            color: #dbe3df;
+
+            outline: none;
+
+            font-family: inherit;
+
+            font-size: 11px;
+
+            line-height: 1.5;
+
+            transition: .2s ease;
+        }
+
+        .chat-input::placeholder {
+            color: #59646a;
+        }
+
+        .chat-input:focus {
+            border-color:
+                rgba(183,255,90,.28);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(183,255,90,.035);
+        }
+
+        .send-btn {
+            width: 46px;
+            height: 46px;
+
+            flex: 0 0 46px;
+
+            border: 0;
+
+            border-radius: 13px;
+
+            background: #b7ff5a;
+
+            color: #101411;
+
+            font-size: 17px;
+
+            font-weight: 900;
+
+            cursor: pointer;
+
+            transition: .2s ease;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 25px
+                rgba(183,255,90,.18);
+        }
+
+        .input-hint {
+            margin-top: 8px;
+
+            color: #505b61;
+
+            font-size: 8px;
+        }
+
+
+        /* =========================================
+           QUICK QUESTIONS
+        ========================================= */
+
+        .quick-section {
+            padding: 0 25px 20px;
+        }
+
+        .quick-label {
+            color: #59646a;
+
+            font-size: 8px;
+
+            font-weight: 900;
+
+            letter-spacing: 1.5px;
+
+            margin-bottom: 10px;
+
+            text-transform: uppercase;
+        }
+
+        .quick-questions {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 7px;
+        }
+
+        .quick-btn {
+            padding: 8px 11px;
+
+            border-radius: 9px;
+
+            border:
+                1px solid rgba(255,255,255,.07);
+
+            background:
+                rgba(255,255,255,.025);
+
+            color: #7d888e;
+
+            font-family: inherit;
+
+            font-size: 9px;
+
+            cursor: pointer;
+
+            transition: .2s ease;
+        }
+
+        .quick-btn:hover {
+            color: #b7ff5a;
+
+            border-color:
+                rgba(183,255,90,.18);
+
+            background:
+                rgba(183,255,90,.04);
+        }
+
+
+        /* =========================================
+           RIGHT SIDEBAR
+        ========================================= */
+
+        .assistant-sidebar {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 15px;
+        }
+
+        .side-card {
+            padding: 22px;
+
+            border-radius: 21px;
+
+            background:
+                rgba(255,255,255,.025);
+
+            border:
+                1px solid rgba(255,255,255,.07);
+        }
+
+        .side-eyebrow {
+            color: #b7ff5a;
+
+            font-size: 8px;
+
+            font-weight: 900;
+
+            letter-spacing: 1.8px;
+
+            margin-bottom: 8px;
+        }
+
+        .side-card h3 {
+            margin: 0 0 8px;
+
+            color: #dce4df;
+
+            font-size: 15px;
+        }
+
+        .side-card p {
+            margin: 0;
+
+            color: #747f85;
+
+            font-size: 10px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================================
+           CAREER CONTEXT
+        ========================================= */
+
+        .context-list {
+            margin-top: 17px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 9px;
+        }
+
+        .context-row {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding: 10px 11px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,.025);
+        }
+
+        .context-row span {
+            color: #626d73;
+
+            font-size: 9px;
+        }
+
+        .context-row strong {
+            color: #aeb8b4;
+
+            font-size: 9px;
+
+            text-align: right;
+        }
+
+
+        /* =========================================
+           ACTION LINKS
+        ========================================= */
+
+        .action-list {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 8px;
+
+            margin-top: 15px;
+        }
+
+        .action-link {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 10px;
+
+            padding: 12px 13px;
+
+            border-radius: 11px;
+
+            background:
+                rgba(255,255,255,.025);
+
+            border:
+                1px solid rgba(255,255,255,.055);
+
+            color: #8c969b;
+
+            text-decoration: none;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            transition: .2s ease;
+        }
+
+        .action-link span {
+            color: #b7ff5a;
+
+            font-size: 13px;
+        }
+
+        .action-link:hover {
+            color: #b7ff5a;
+
+            border-color:
+                rgba(183,255,90,.15);
+
+            transform: translateX(2px);
+        }
+
+
+        /* =========================================
+           NOTE
+        ========================================= */
+
+        .assistant-note {
+            padding: 17px;
+
+            border-radius: 15px;
+
+            background:
+                rgba(183,255,90,.035);
+
+            border:
+                1px solid rgba(183,255,90,.08);
+        }
+
+        .assistant-note strong {
+            display: block;
+
+            color: #b7ff5a;
+
+            font-size: 9px;
+
+            margin-bottom: 6px;
+        }
+
+        .assistant-note p {
+            color: #68747a;
+
+            font-size: 9px;
+
+            line-height: 1.7;
+
+            margin: 0;
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        .assistant-footer {
+            margin-top: 70px;
+
+            padding-top: 30px;
+
+            border-top:
+                1px solid rgba(255,255,255,.07);
+
+            display: flex;
+
+            align-items: flex-end;
+
+            justify-content: space-between;
+
+            gap: 30px;
+        }
+
+        .assistant-footer-brand strong {
+            display: block;
+
+            color: #dce4df;
+
+            font-size: 14px;
+
+            margin-bottom: 6px;
+        }
+
+        .assistant-footer-brand span {
+            color: #68747a;
+
+            font-size: 9px;
+
+            letter-spacing: 1px;
+        }
+
+        .assistant-footer-links {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            justify-content: flex-end;
+
+            gap: 20px;
+        }
+
+        .assistant-footer-links a {
+            color: #707b81;
+
+            text-decoration: none;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            transition: .2s ease;
+        }
+
+        .assistant-footer-links a:hover {
+            color: #b7ff5a;
+        }
+
+        .assistant-footer-copy {
+            margin-top: 25px;
+
+            padding-top: 18px;
+
+            border-top:
+                1px solid rgba(255,255,255,.045);
+
+            color: #4f5a60;
+
+            font-size: 9px;
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 1000px) {
+
+            .assistant-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .assistant-sidebar {
+                display: grid;
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .assistant-page {
+                padding:
+                    35px 4% 60px;
+            }
+
+            .assistant-signal {
+                grid-template-columns: 1fr;
+            }
+
+            .assistant-sidebar {
+                display: flex;
+            }
+
+            .chat-panel {
+                min-height: 600px;
+            }
+
+            .chat-messages {
+                padding: 18px;
+
+                min-height: 380px;
+            }
+
+            .quick-section {
+                padding:
+                    0 18px 18px;
+            }
+
+            .message-content {
+                max-width: 84%;
+            }
+
+            .assistant-footer {
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                margin-top: 50px;
+            }
+
+            .assistant-footer-links {
+                justify-content: flex-start;
+            }
+
+        }
+
+
+        @media (max-width: 450px) {
+
+            .chat-header {
+                padding: 16px;
+            }
+
+            .assistant-avatar {
+                width: 38px;
+                height: 38px;
+            }
+
+            .clear-chat {
+                font-size: 8px;
+            }
+
+            .chat-input-row {
+                align-items: stretch;
+            }
+
+            .send-btn {
+                width: 44px;
+                flex-basis: 44px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header class="site-header">
+
+    <div class="brand">
+
+        <div class="brand-mark">
+            CS
+        </div>
+
+        <div>
+
+            <strong>
+                Career Skill Navigator
+            </strong>
+
+            <span>
+                Career Intelligence Platform
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="career-recommendation.html">
+            Careers
+        </a>
+
+        <a href="skill-assessment.html">
+            Assessment
+        </a>
+
+        <a href="learning-roadmap.html">
+            Roadmap
+        </a>
+
+        <a href="internship.html">
+            Opportunities
+        </a>
+
+        <a href="progress.html">
+            Progress
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =========================================
+     MAIN
+========================================= -->
+
+<main class="assistant-page">
+
+
+    <!-- INTRO -->
+
+    <section class="assistant-intro">
+
+        <div class="assistant-eyebrow">
+            AI CAREER ASSISTANT
+        </div>
+
+        <h1>
+
+            Your career questions,
+            <span>one conversation away.</span>
+
+        </h1>
+
+        <p>
+
+            Get personalized guidance based on your career direction,
+            skill assessment and learning roadmap. Ask about skills,
+            careers, projects, courses, portfolios or your next step.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- =========================================
+         PERSONALIZED SIGNALS
+    ========================================= -->
+
+    <section class="assistant-signal">
+
+
+        <div class="signal-card">
+
+            <span>
+                Career Direction
+            </span>
+
+            <strong
+                id="careerDirection">
+                Exploring careers
+            </strong>
+
+        </div>
+
+
+        <div class="signal-card">
+
+            <span>
+                Skill Readiness
+            </span>
+
+            <strong
+                id="skillReadiness"
+                class="highlight">
+                Not assessed
+            </strong>
+
+        </div>
+
+
+        <div class="signal-card">
+
+            <span>
+                Profile
+            </span>
+
+            <strong
+                id="studentName">
+                Career learner
+            </strong>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         ASSISTANT LAYOUT
+    ========================================= -->
+
+    <section class="assistant-layout">
+
+
+        <!-- =====================================
+             CHAT
+        ===================================== -->
+
+        <div class="chat-panel">
+
+
+            <!-- CHAT HEADER -->
+
+            <div class="chat-header">
+
+                <div class="assistant-identity">
+
+                    <div class="assistant-avatar">
+                        AI
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Career Intelligence Assistant
+                        </strong>
+
+                        <div class="assistant-status">
+
+                            <span
+                                class="status-dot">
+                            </span>
+
+                            Ready to guide you
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="clear-chat"
+                    type="button"
+                    onclick="clearChat()">
+
+                    Clear conversation
+
+                </button>
+
+            </div>
+
+
+
+            <!-- CHAT MESSAGES -->
+
+            <div
+                class="chat-messages"
+                id="chatMessages">
+
+
+                <div class="message">
+
+                    <div class="message-icon">
+                        AI
+                    </div>
+
+                    <div class="message-content">
+
+                        <div class="message-label">
+                            Career Assistant
+                        </div>
+
+                        <div class="message-bubble">
+
+                            Hi! I'm your
+                            <strong>
+                                Career Intelligence Assistant.
+                            </strong>
+
+                            <br><br>
+
+                            I can help you understand your
+                            career direction, identify skill gaps,
+                            plan projects, choose courses and prepare
+                            for opportunities.
+
+                            <br><br>
+
+                            Tell me what you're trying to figure out,
+                            or choose one of the suggested questions
+                            below.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- QUICK QUESTIONS -->
+
+            <div class="quick-section">
+
+                <div class="quick-label">
+                    Suggested questions
+                </div>
+
+
+                <div class="quick-questions">
+
+                    <button
+                        class="quick-btn"
+                        type="button"
+                        onclick="askQuickQuestion(
+                            'What skills should I learn for my career?'
+                        )">
+
+                        Skills I should learn
+
+                    </button>
+
+
+                    <button
+                        class="quick-btn"
+                        type="button"
+                        onclick="askQuickQuestion(
+                            'What project should I build?'
+                        )">
+
+                        Project ideas
+
+                    </button>
+
+
+                    <button
+                        class="quick-btn"
+                        type="button"
+                        onclick="askQuickQuestion(
+                            'How can I improve my career readiness?'
+                        )">
+
+                        Improve readiness
+
+                    </button>
+
+
+                    <button
+                        class="quick-btn"
+                        type="button"
+                        onclick="askQuickQuestion(
+                            'What should I learn next?'
+                        )">
+
+                        What next?
+
+                    </button>
+
+
+                    <button
+                        class="quick-btn"
+                        type="button"
+                        onclick="askQuickQuestion(
+                            'How can I build my portfolio?'
+                        )">
+
+                        Build portfolio
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- INPUT -->
+
+            <div class="chat-input-area">
+
+                <div class="chat-input-row">
+
+                    <textarea
+                        id="chatInput"
+                        class="chat-input"
+                        rows="1"
+                        placeholder="Ask about your career, skills, projects or roadmap..."
+                    ></textarea>
+
+
+                    <button
+                        class="send-btn"
+                        type="button"
+                        onclick="sendMessage()"
+                        aria-label="Send">
+
+                        ↑
+
+                    </button>
+
+                </div>
+
+
+                <div class="input-hint">
+
+                    Press Enter to send · Shift + Enter for a new line
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================
+             SIDEBAR
+        ===================================== -->
+
+        <aside class="assistant-sidebar">
+
+
+            <!-- CAREER CONTEXT -->
+
+            <div class="side-card">
+
+                <div class="side-eyebrow">
+                    YOUR CONTEXT
+                </div>
+
+                <h3>
+                    Career profile
+                </h3>
+
+                <p>
+                    The assistant uses your saved Career Skill
+                    Navigator profile to make its guidance relevant.
+                </p>
+
+
+                <div class="context-list">
+
+
+                    <div class="context-row">
+
+                        <span>
+                            Direction
+                        </span>
+
+                        <strong
+                            id="sideCareer">
+                            Not selected
+                        </strong>
+
+                    </div>
+
+
+                    <div class="context-row">
+
+                        <span>
+                            Skill score
+                        </span>
+
+                        <strong
+                            id="sideScore">
+                            Not assessed
+                        </strong>
+
+                    </div>
+
+
+                    <div class="context-row">
+
+                        <span>
+                            Roadmap
+                        </span>
+
+                        <strong>
+                            Available
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CAREER ACTIONS -->
+
+            <div class="side-card">
+
+                <div class="side-eyebrow">
+                    CAREER SYSTEM
+                </div>
+
+                <h3>
+                    Continue your journey
+                </h3>
+
+                <p>
+                    Move from conversation to action using
+                    your Career Skill Navigator tools.
+                </p>
+
+
+                <div class="action-list">
+
+
+                    <a
+                        class="action-link"
+                        href="career-recommendation.html">
+
+                        Career Match
+
+                        <span>
+                            →
+                        </span>
+
+                    </a>
+
+
+                    <a
+                        class="action-link"
+                        href="skill-gap.html">
+
+                        Skill Gap Radar
+
+                        <span>
+                            →
+                        </span>
+
+                    </a>
+
+
+                    <a
+                        class="action-link"
+                        href="learning-roadmap.html">
+
+                        Learning Roadmap
+
+                        <span>
+                            →
+                        </span>
+
+                    </a>
+
+
+                    <a
+                        class="action-link"
+                        href="course-recommendations.html">
+
+                        Course Explorer
+
+                        <span>
+                            →
+                        </span>
+
+                    </a>
+
+
+                    <a
+                        class="action-link"
+                        href="resume-builder.html">
+
+                        Portfolio Builder
+
+                        <span>
+                            →
+                        </span>
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- NOTE -->
+
+            <div class="assistant-note">
+
+                <strong>
+                    CAREER INTELLIGENCE
+                </strong>
+
+                <p>
+
+                    This assistant provides guidance based on
+                    your profile and the information available
+                    inside this project. Use it as a planning
+                    companion rather than a guaranteed career outcome.
+
+                </p>
+
+            </div>
+
+
+        </aside>
+
+
+    </section>
+
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================= -->
+
+    <footer class="assistant-footer">
+
+
+        <div class="assistant-footer-brand">
+
+            <strong>
+                Career Skill Navigator
+            </strong>
+
+            <span>
+                CAREER INTELLIGENCE PLATFORM
+            </span>
+
+        </div>
+
+
+        <div class="assistant-footer-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="profile.html">
+                Profile
+            </a>
+
+            <a href="career-recommendation.html">
+                Careers
+            </a>
+
+            <a href="skill-assessment.html">
+                Assessment
+            </a>
+
+            <a href="learning-roadmap.html">
+                Roadmap
+            </a>
+
+            <a href="internship.html">
+                Opportunities
+            </a>
+
+        </div>
+
+    </footer>
+
+
+    <div class="assistant-footer-copy">
+
+        © 2026 Career Skill Navigator ·
+        Discover skills. Explore careers. Build your future.
+
+    </div>
+
+
+</main>
+
+
+
+<script>
+
+
+/* =========================================
+   PROFILE DATA
+========================================= */
+
+const career =
+    localStorage.getItem("selectedCareer") ||
+    localStorage.getItem("studentInterest") ||
+    "";
+
+const skillScore =
+    Number(
+        localStorage.getItem("skillScore") || 0
+    );
+
+const studentName =
+    localStorage.getItem("studentName") ||
+    "Career learner";
+
+
+
+/* =========================================
+   DISPLAY PROFILE
+========================================= */
+
+document.getElementById(
+    "careerDirection"
+).textContent =
+    career ||
+    "Exploring careers";
+
+
+document.getElementById(
+    "studentName"
+).textContent =
+    studentName;
+
+
+document.getElementById(
+    "sideCareer"
+).textContent =
+    career ||
+    "Not selected";
+
+
+document.getElementById(
+    "sideScore"
+).textContent =
+    skillScore > 0
+        ? skillScore + " / 15"
+        : "Not assessed";
+
+
+document.getElementById(
+    "skillReadiness"
+).textContent =
+    skillScore > 0
+        ? getReadinessLabel(skillScore)
+        : "Not assessed";
+
+
+
+/* =========================================
+   READINESS LABEL
+========================================= */
+
+function getReadinessLabel(score) {
+
+    if (score >= 13) {
+        return "Advanced";
+    }
+
+    if (score >= 9) {
+        return "Developing";
+    }
+
+    if (score >= 5) {
+        return "Building";
+    }
+
+    if (score > 0) {
+        return "Getting started";
+    }
+
+    return "Not assessed";
+
+}
+
+
+
+/* =========================================
+   INPUT
+========================================= */
+
+const chatInput =
+    document.getElementById(
+        "chatInput"
+    );
+
+
+chatInput.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Enter" &&
+            !event.shiftKey
+        ) {
+
+            event.preventDefault();
+
+            sendMessage();
+
+        }
+
+    }
+);
+
+
+
+/* =========================================
+   SEND MESSAGE
+========================================= */
+
+function sendMessage() {
+
+    const message =
+        chatInput.value.trim();
+
+
+    if (!message) {
+        return;
+    }
+
+
+    addUserMessage(
+        message
+    );
+
+
+    chatInput.value = "";
+
+
+    setTimeout(
+        function() {
+
+            const response =
+                generateCareerResponse(
+                    message
+                );
+
+
+            addAssistantMessage(
+                response
+            );
+
+        },
+        450
+    );
+
+}
+
+
+
+/* =========================================
+   QUICK QUESTION
+========================================= */
+
+function askQuickQuestion(
+    question
+) {
+
+    chatInput.value =
+        question;
+
+
+    sendMessage();
+
+}
+
+
+
+/* =========================================
+   ADD USER MESSAGE
+========================================= */
+
+function addUserMessage(
+    message
+) {
+
+    const container =
+        document.getElementById(
+            "chatMessages"
+        );
+
+
+    const wrapper =
+        document.createElement(
+            "div"
+        );
+
+
+    wrapper.className =
+        "message user";
+
+
+    wrapper.innerHTML = `
+
+        <div class="message-icon">
+            You
+        </div>
+
+        <div class="message-content">
+
+            <div class="message-label">
+                You
+            </div>
+
+            <div class="message-bubble">
+                ${escapeHTML(message)}
+            </div>
+
+        </div>
+
+    `;
+
+
+    container.appendChild(
+        wrapper
+    );
+
+
+    scrollChat();
+
+}
+
+
+
+/* =========================================
+   ADD ASSISTANT MESSAGE
+========================================= */
+
+function addAssistantMessage(
+    message
+) {
+
+    const container =
+        document.getElementById(
+            "chatMessages"
+        );
+
+
+    const wrapper =
+        document.createElement(
+            "div"
+        );
+
+
+    wrapper.className =
+        "message";
+
+
+    wrapper.innerHTML = `
+
+        <div class="message-icon">
+            AI
+        </div>
+
+        <div class="message-content">
+
+            <div class="message-label">
+                Career Assistant
+            </div>
+
+            <div class="message-bubble">
+                ${message}
+            </div>
+
+        </div>
+
+    `;
+
+
+    container.appendChild(
+        wrapper
+    );
+
+
+    scrollChat();
+
+}
+
+
+
+/* =========================================
+   CHAT SCROLL
+========================================= */
+
+function scrollChat() {
+
+    const container =
+        document.getElementById(
+            "chatMessages"
+        );
+
+
+    container.scrollTop =
+        container.scrollHeight;
+
+}
+
+
+
+/* =========================================
+   CAREER RESPONSE ENGINE
+========================================= */
+
+function generateCareerResponse(
+    question
+) {
+
+    const text =
+        question.toLowerCase();
+
+
+    const careerName =
+        career ||
+        "your selected career direction";
+
+
+    const scoreText =
+        skillScore > 0
+            ? skillScore + " / 15"
+            : "not assessed yet";
+
+
+    /* -------------------------------
+       SKILLS
+    ------------------------------- */
+
+    if (
+        text.includes("skill") ||
+        text.includes("learn")
+    ) {
+
+        return `
+
+            For
+            <span class="accent">
+                ${escapeHTML(careerName)}
+            </span>,
+            I would recommend building a combination of
+            technical skills, practical problem-solving and
+            communication skills.
+
+            <br><br>
+
+            Your current assessment signal is
+            <span class="accent">
+                ${scoreText}
+            </span>.
+
+            <br><br>
+
+            Focus first on the skills connected to your
+            <strong>
+                Skill Gap Radar
+            </strong>,
+            then reinforce them through small projects.
+
+            <br><br>
+
+            A useful sequence is:
+            <span class="accent">
+                fundamentals → guided practice → project →
+                portfolio evidence.
+            </span>
+
+        `;
+
+    }
+
+
+
+    /* -------------------------------
+       PROJECT
+    ------------------------------- */
+
+    if (
+        text.includes("project") ||
+        text.includes("build")
+    ) {
+
+        return `
+
+            A strong project should demonstrate the skills
+            you want employers or evaluators to see.
+
+            <br><br>
+
+            For
+            <span class="accent">
+                ${escapeHTML(careerName)}
+            </span>,
+            choose a project that solves a clear problem and
+            produces something you can demonstrate.
+
+            <br><br>
+
+            I recommend this structure:
+
+            <br>
+
+            <strong>1.</strong>
+            Identify a real problem.
+
+            <br>
+
+            <strong>2.</strong>
+            Choose the tools and skills required.
+
+            <br>
+
+            <strong>3.</strong>
+            Build a working prototype.
+
+            <br>
+
+            <strong>4.</strong>
+            Document your decisions and results.
+
+            <br>
+
+            <strong>5.</strong>
+            Add the project to your portfolio.
+
+        `;
+
+    }
+
+
+
+    /* -------------------------------
+       ROADMAP / NEXT
+    ------------------------------- */
+
+    if (
+        text.includes("next") ||
+        text.includes("roadmap") ||
+        text.includes("what should")
+    ) {
+
+        return `
+
+            Your next step should depend on the gap between
+            your current skills and the requirements of your
+            target direction.
+
+            <br><br>
+
+            Since your current skill signal is
+            <span class="accent">
+                ${scoreText}
+            </span>,
+            open your
+            <strong>
+                Learning Roadmap
+            </strong>
+            and complete the earliest unfinished milestone.
+
+            <br><br>
+
+            The recommended sequence is:
+
+            <span class="accent">
+                strengthen fundamentals →
+                practice →
+                build a project →
+                document it →
+                prepare for opportunities.
+            </span>
+
+        `;
+
+    }
+
+
+
+    /* -------------------------------
+       PORTFOLIO
+    ------------------------------- */
+
+    if (
+        text.includes("portfolio") ||
+        text.includes("resume") ||
+        text.includes("cv")
+    ) {
+
+        return `
+
+            Your portfolio should provide evidence of what
+            you can actually do.
+
+            <br><br>
+
+            Include:
+
+            <br>
+
+            <strong>•</strong>
+            A concise professional introduction.
+
+            <br>
+
+            <strong>•</strong>
+            Your strongest technical and transferable skills.
+
+            <br>
+
+            <strong>•</strong>
+            Two or three meaningful projects.
+
+            <br>
+
+            <strong>•</strong>
+            The problem, approach and result for each project.
+
+            <br>
+
+            <strong>•</strong>
+            Relevant education or experience.
+
+            <br><br>
+
+            Use the
+            <span class="accent">
+                Portfolio Builder
+            </span>
+            to structure your profile.
+
+        `;
+
+    }
+
+
+
+    /* -------------------------------
+       READINESS
+    ------------------------------- */
+
+    if (
+        text.includes("ready") ||
+        text.includes("readiness") ||
+        text.includes("improve")
+    ) {
+
+        return `
+
+            Career readiness is broader than one assessment
+            score.
+
+            <br><br>
+
+            Your current skill signal is
+            <span class="accent">
+                ${scoreText}
+            </span>.
+
+            <br><br>
+
+            To improve your readiness, work on four areas:
+
+            <br>
+
+            <strong>01 · Skills</strong>
+            — strengthen your highest-priority gaps.
+
+            <br>
+
+            <strong>02 · Projects</strong>
+            — create evidence of applied skills.
+
+            <br>
+
+            <strong>03 · Portfolio</strong>
+            — communicate your work clearly.
+
+            <br>
+
+            <strong>04 · Opportunities</strong>
+            — track internships and relevant openings.
+
+        `;
+
+    }
+
+
+
+    /* -------------------------------
+       CAREER
+    ------------------------------- */
+
+    if (
+        text.includes("career") ||
+        text.includes("job") ||
+        text.includes("role")
+    ) {
+
+        return `
+
+            Your current career direction is:
+
+            <br><br>
+
+            <span class="accent">
+                ${escapeHTML(careerName)}
+            </span>
+
+            <br><br>
+
+            Rather than treating one career as a guaranteed
+            answer, compare the role with your interests,
+            strengths, preferred work style and the skills you
+            are willing to develop.
+
+            <br><br>
+
+            You can use
+            <strong>
+                Career Match
+            </strong>
+            to explore related paths and compare them.
+
+        `;
+
+    }
+
+
+
+    /* -------------------------------
+       COURSE
+    ------------------------------- */
+
+    if (
+        text.includes("course") ||
+        text.includes("study") ||
+        text.includes("learn next")
+    ) {
+
+        return `
+
+            Choose courses based on the skill gap you are
+            trying to close rather than collecting certificates.
+
+            <br><br>
+
+            Start with the earliest missing foundation,
+            practise it, and then connect it to a project.
+
+            <br><br>
+
+            Open
+            <span class="accent">
+                Course Explorer
+            </span>
+            to add relevant courses directly to your roadmap.
+
+        `;
+
+    }
+
+
+
+    /* -------------------------------
+       HELLO
+    ------------------------------- */
+
+    if (
+        text.includes("hello") ||
+        text.includes("hi") ||
+        text.includes("hey")
+    ) {
+
+        return `
+
+            Hello
+            <span class="accent">
+                ${escapeHTML(studentName)}
+            </span>!
+
+            <br><br>
+
+            I'm ready to help with your career planning.
+
+            <br><br>
+
+            You can ask me about
+            <strong>
+                skills, projects, courses, careers,
+                portfolios, readiness or your next step.
+            </strong>
+
+        `;
+
+    }
+
+
+
+    /* -------------------------------
+       DEFAULT
+    ------------------------------- */
+
+    return `
+
+        That's a useful career question.
+
+        <br><br>
+
+        Based on your current profile, your direction is
+        <span class="accent">
+            ${escapeHTML(careerName)}
+        </span>
+        and your skill assessment signal is
+        <span class="accent">
+            ${scoreText}
+        </span>.
+
+        <br><br>
+
+        Try asking me something more specific, such as:
+
+        <br>
+
+        <strong>
+            • What skills should I learn?
+        </strong>
+
+        <br>
+
+        <strong>
+            • What project should I build?
+        </strong>
+
+        <br>
+
+        <strong>
+            • What should I learn next?
+        </strong>
+
+        <br>
+
+        <strong>
+            • How can I improve my readiness?
+        </strong>
+
+        <br>
+
+        <strong>
+            • How should I build my portfolio?
+        </strong>
+
+    `;
+
+}
+
+
+
+/* =========================================
+   CLEAR CHAT
+========================================= */
+
+function clearChat() {
+
+    const container =
+        document.getElementById(
+            "chatMessages"
+        );
+
+
+    container.innerHTML = `
+
+        <div class="message">
+
+            <div class="message-icon">
+                AI
+            </div>
+
+            <div class="message-content">
+
+                <div class="message-label">
+                    Career Assistant
+                </div>
+
+                <div class="message-bubble">
+
+                    Conversation cleared.
+
+                    <br><br>
+
+                    I'm ready for your next career question.
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHTML(
+    value
+) {
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>

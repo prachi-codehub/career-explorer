@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Course Recommendations | Career Skill Navigator</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #101512;
+            color: #ffffff;
+        }
+
+        header {
+            min-height: 70px;
+            padding: 0 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #29332d;
+            background: #111713;
+        }
+
+        header h2 {
+            margin: 0;
+            color: #b7ff4a;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #c1cac5;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #b7ff4a;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 60px 0;
+        }
+
+        .eyebrow {
+            color: #b7ff4a;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin: 12px 0;
+        }
+
+        .intro {
+            max-width: 700px;
+            color: #9da8a2;
+            line-height: 1.7;
+        }
+
+        .career-box {
+            margin-top: 30px;
+            padding: 22px;
+            border-radius: 18px;
+            border: 1px solid #344238;
+            background: #171e19;
+        }
+
+        .career-box span {
+            color: #8e9993;
+            font-size: 12px;
+        }
+
+        .career-box strong {
+            display: block;
+            margin-top: 7px;
+            color: #b7ff4a;
+            font-size: 24px;
+        }
+
+        .filters {
+            margin-top: 35px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            border: 1px solid #39453e;
+            background: #171e19;
+            color: #b9c2bd;
+            padding: 10px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: #b7ff4a;
+            color: #101512;
+            border-color: #b7ff4a;
+        }
+
+        .search {
+            width: 100%;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #39453e;
+            background: #171e19;
+            color: white;
+            outline: none;
+        }
+
+        .course-grid {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .course-card {
+            padding: 24px;
+            background: #171e19;
+            border: 1px solid #303b34;
+            border-radius: 20px;
+            transition: 0.2s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-4px);
+            border-color: #63755c;
+        }
+
+        .course-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .level {
+            color: #b7ff4a;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .duration {
+            color: #89938e;
+            font-size: 12px;
+        }
+
+        .course-card h2 {
+            margin: 20px 0 10px;
+            font-size: 21px;
+        }
+
+        .course-card p {
+            color: #929d97;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin: 18px 0;
+        }
+
+        .skill {
+            padding: 6px 9px;
+            border-radius: 8px;
+            background: #202a23;
+            color: #aeb8b2;
+            font-size: 11px;
+        }
+
+        .add-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: #b7ff4a;
+            color: #101512;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .add-btn:hover {
+            background: #d0ff8c;
+        }
+
+        .empty {
+            margin-top: 30px;
+            padding: 40px;
+            text-align: center;
+            color: #8f9994;
+            border: 1px dashed #39453e;
+            border-radius: 18px;
+        }
+
+        .toast {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            padding: 15px 20px;
+            background: #b7ff4a;
+            color: #101512;
+            border-radius: 12px;
+            font-weight: bold;
+            display: none;
+            z-index: 100;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #66716b;
+            border-top: 1px solid #29332d;
+        }
+
+        @media (max-width: 900px) {
+
+            .course-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+                padding: 20px;
+            }
+
+            .container {
+                width: 92%;
+                padding: 40px 0;
+            }
+
+            h1 {
+                font-size: 38px;
+            }
+
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h2>Career Skill Navigator</h2>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+        <a href="profile.html">Profile</a>
+        <a href="career-recommendation.html">Careers</a>
+        <a href="skill-assessment.html">Assessment</a>
+        <a href="learning-roadmap.html">Roadmap</a>
+        <a href="course-recommendations.html">Courses</a>
+        <a href="progress.html">Progress</a>
+
+    </nav>
+
+</header>
+
+
+<main class="container">
+
+
+    <span class="eyebrow">
+        LEARNING DISCOVERY
+    </span>
+
+
+    <h1>Build the skills your career needs.</h1>
+
+
+    <p class="intro">
+
+        Explore courses across technology, engineering,
+        business, creative fields and science. Add as many
+        courses as you want to your personalized roadmap.
+
+    </p>
+
+
+    <!-- CAREER -->
+
+    <div class="career-box">
+
+        <span>
+            YOUR CAREER DIRECTION
+        </span>
+
+        <strong id="careerName">
+            Exploring Careers
+        </strong>
+
+    </div>
+
+
+    <!-- FILTERS -->
+
+    <div class="filters">
+
+        <button class="filter-btn active" data-field="All">
+            All
+        </button>
+
+        <button class="filter-btn" data-field="Programming">
+            Programming
+        </button>
+
+        <button class="filter-btn" data-field="Data & AI">
+            Data & AI
+        </button>
+
+        <button class="filter-btn" data-field="Engineering">
+            Engineering
+        </button>
+
+        <button class="filter-btn" data-field="Business">
+            Business
+        </button>
+
+        <button class="filter-btn" data-field="Creative">
+            Creative
+        </button>
+
+        <button class="filter-btn" data-field="Science">
+            Science
+        </button>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <input
+        type="text"
+        id="searchBox"
+        class="search"
+        placeholder="Search courses..."
+    >
+
+
+    <!-- COURSES -->
+
+    <section
+        id="courseGrid"
+        class="course-grid"
+    ></section>
+
+
+    <div
+        id="emptyMessage"
+        class="empty"
+        style="display:none;"
+    >
+        No courses found.
+    </div>
+
+
+</main>
+
+
+<div
+    id="toast"
+    class="toast"
+>
+    Course added to your roadmap!
+</div>
+
+
+<footer>
+
+    Career Skill Navigator © 2026
+
+</footer>
+
+
+<script>
+
+const courses = [
+
+    {
+        name: "HTML & CSS Foundations",
+        field: "Programming",
+        level: "BEGINNER",
+        duration: "4 weeks",
+        description: "Build strong foundations in web structure, styling and responsive design.",
+        skills: ["HTML", "CSS", "Responsive"]
+    },
+
+    {
+        name: "JavaScript Essentials",
+        field: "Programming",
+        level: "BEGINNER",
+        duration: "5 weeks",
+        description: "Learn JavaScript fundamentals, events, arrays and frontend interactions.",
+        skills: ["JavaScript", "DOM", "Events"]
+    },
+
+    {
+        name: "React & Modern Frontend",
+        field: "Programming",
+        level: "INTERMEDIATE",
+        duration: "6 weeks",
+        description: "Build modern component-based web applications using React.",
+        skills: ["React", "JSX", "Hooks"]
+    },
+
+    {
+        name: "Python Programming",
+        field: "Programming",
+        level: "BEGINNER",
+        duration: "6 weeks",
+        description: "Develop programming logic and practical Python development skills.",
+        skills: ["Python", "Logic", "Programming"]
+    },
+
+    {
+        name: "SQL & Database Fundamentals",
+        field: "Data & AI",
+        level: "INTERMEDIATE",
+        duration: "5 weeks",
+        description: "Learn relational databases, queries, joins and data management.",
+        skills: ["SQL", "MySQL", "Database"]
+    },
+
+    {
+        name: "Data Analysis",
+        field: "Data & AI",
+        level: "INTERMEDIATE",
+        duration: "6 weeks",
+        description: "Turn raw data into meaningful insights using analytical techniques.",
+        skills: ["Python", "Excel", "Analytics"]
+    },
+
+    {
+        name: "Machine Learning Foundations",
+        field: "Data & AI",
+        level: "INTERMEDIATE",
+        duration: "8 weeks",
+        description: "Understand machine learning concepts, models and practical workflows.",
+        skills: ["Python", "ML", "Statistics"]
+    },
+
+    {
+        name: "AI & Data Science",
+        field: "Data & AI",
+        level: "ADVANCED",
+        duration: "10 weeks",
+        description: "Explore artificial intelligence, data science and predictive systems.",
+        skills: ["AI", "Python", "Data"]
+    },
+
+    {
+        name: "IoT & Embedded Systems",
+        field: "Engineering",
+        level: "INTERMEDIATE",
+        duration: "8 weeks",
+        description: "Learn sensors, microcontrollers and connected device development.",
+        skills: ["IoT", "Arduino", "Embedded"]
+    },
+
+    {
+        name: "CAD & Mechanical Design",
+        field: "Engineering",
+        level: "INTERMEDIATE",
+        duration: "7 weeks",
+        description: "Develop practical CAD and mechanical design capabilities.",
+        skills: ["CAD", "Design", "Mechanical"]
+    },
+
+    {
+        name: "Electrical Systems",
+        field: "Engineering",
+        level: "INTERMEDIATE",
+        duration: "7 weeks",
+        description: "Build knowledge of electrical systems, circuits and applications.",
+        skills: ["Circuits", "Electrical", "Systems"]
+    },
+
+    {
+        name: "Civil Design & Planning",
+        field: "Engineering",
+        level: "INTERMEDIATE",
+        duration: "7 weeks",
+        description: "Learn fundamentals of civil design, planning and project development.",
+        skills: ["Civil", "Planning", "Design"]
+    },
+
+    {
+        name: "Business Analytics",
+        field: "Business",
+        level: "INTERMEDIATE",
+        duration: "6 weeks",
+        description: "Use data and analytical thinking to solve business problems.",
+        skills: ["Analytics", "Business", "Excel"]
+    },
+
+    {
+        name: "Financial Analysis",
+        field: "Business",
+        level: "INTERMEDIATE",
+        duration: "6 weeks",
+        description: "Develop financial analysis, reporting and decision-making skills.",
+        skills: ["Finance", "Excel", "Analysis"]
+    },
+
+    {
+        name: "Digital Marketing",
+        field: "Business",
+        level: "BEGINNER",
+        duration: "5 weeks",
+        description: "Learn digital marketing strategy, content and campaign fundamentals.",
+        skills: ["Marketing", "SEO", "Content"]
+    },
+
+    {
+        name: "UI/UX Design",
+        field: "Creative",
+        level: "BEGINNER",
+        duration: "6 weeks",
+        description: "Design intuitive digital experiences using modern UX principles.",
+        skills: ["UX", "UI", "Figma"]
+    },
+
+    {
+        name: "Graphic Design",
+        field: "Creative",
+        level: "BEGINNER",
+        duration: "5 weeks",
+        description: "Develop visual communication and digital design skills.",
+        skills: ["Design", "Branding", "Visual"]
+    },
+
+    {
+        name: "Content & Media",
+        field: "Creative",
+        level: "BEGINNER",
+        duration: "5 weeks",
+        description: "Build content creation, communication and media skills.",
+        skills: ["Content", "Media", "Writing"]
+    },
+
+    {
+        name: "Biotechnology Foundations",
+        field: "Science",
+        level: "INTERMEDIATE",
+        duration: "7 weeks",
+        description: "Explore biotechnology concepts and laboratory applications.",
+        skills: ["Biotech", "Research", "Science"]
+    },
+
+    {
+        name: "Environmental Science",
+        field: "Science",
+        level: "INTERMEDIATE",
+        duration: "6 weeks",
+        description: "Learn environmental systems, sustainability and scientific analysis.",
+        skills: ["Environment", "Research", "Science"]
+    }
+
+];
+
+
+let currentField = "All";
+
+
+/* ---------------------------------
+   CAREER
+--------------------------------- */
+
+const career =
+    localStorage.getItem("selectedCareer") ||
+    localStorage.getItem("studentInterest") ||
+    "Exploring Careers";
+
+document.getElementById("careerName").textContent =
+    career;
+
+
+/* ---------------------------------
+   DISPLAY COURSES
+--------------------------------- */
+
+function displayCourses() {
+
+    const grid =
+        document.getElementById("courseGrid");
+
+    const search =
+        document
+            .getElementById("searchBox")
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    const filtered =
+        courses.filter(function(course) {
+
+            const fieldMatch =
+                currentField === "All" ||
+                course.field === currentField;
+
+            const searchMatch =
+                course.name
+                    .toLowerCase()
+                    .includes(search) ||
+                course.description
+                    .toLowerCase()
+                    .includes(search) ||
+                course.skills.join(" ")
+                    .toLowerCase()
+                    .includes(search);
+
+            return fieldMatch && searchMatch;
+
+        });
+
+
+    grid.innerHTML = "";
+
+
+    document.getElementById(
+        "emptyMessage"
+    ).style.display =
+        filtered.length === 0
+            ? "block"
+            : "none";
+
+
+    filtered.forEach(function(course) {
+
+        const card =
+            document.createElement("article");
+
+        card.className = "course-card";
+
+
+        card.innerHTML = `
+
+            <div class="course-top">
+
+                <span class="level">
+                    ${course.level}
+                </span>
+
+                <span class="duration">
+                    ${course.duration}
+                </span>
+
+            </div>
+
+            <h2>${course.name}</h2>
+
+            <p>${course.description}</p>
+
+            <div class="skills">
+
+                ${course.skills.map(function(skill) {
+
+                    return `
+                        <span class="skill">
+                            ${skill}
+                        </span>
+                    `;
+
+                }).join("")}
+
+            </div>
+
+            <button
+                class="add-btn"
+                type="button"
+            >
+                Add to roadmap →
+            </button>
+
+        `;
+
+
+        card
+            .querySelector(".add-btn")
+            .addEventListener(
+                "click",
+                function() {
+
+                    addCourse(course);
+
+                }
+            );
+
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+/* ---------------------------------
+   ADD MULTIPLE COURSES
+--------------------------------- */
+
+function addCourse(course) {
+
+    let savedCourses = [];
+
+
+    try {
+
+        savedCourses =
+            JSON.parse(
+                localStorage.getItem(
+                    "roadmapCourses"
+                )
+            ) || [];
+
+    } catch (error) {
+
+        savedCourses = [];
+
+    }
+
+
+    /* Check duplicate */
+
+    const alreadyAdded =
+        savedCourses.some(function(item) {
+
+            return item.name === course.name;
+
+        });
+
+
+    if (alreadyAdded) {
+
+        showToast(
+            "This course is already in your roadmap."
+        );
+
+        return;
+
+    }
+
+
+    const newCourse = {
+
+        id:
+            Date.now().toString(),
+
+        name:
+            course.name,
+
+        field:
+            course.field,
+
+        level:
+            course.level,
+
+        duration:
+            course.duration,
+
+        skills:
+            course.skills,
+
+        addedAt:
+            new Date().toISOString(),
+
+        completed:
+            false
+
+    };
+
+
+    savedCourses.push(newCourse);
+
+
+    localStorage.setItem(
+        "roadmapCourses",
+        JSON.stringify(savedCourses)
+    );
+
+
+    /*
+       Keep old selectedCourse too
+       for compatibility with the rest
+       of your project.
+    */
+
+    localStorage.setItem(
+        "selectedCourse",
+        course.name
+    );
+
+    localStorage.setItem(
+        "selectedCourseTime",
+        newCourse.addedAt
+    );
+
+
+    showToast(
+        course.name +
+        " added to your roadmap!"
+    );
+
+}
+
+
+/* ---------------------------------
+   FILTERS
+--------------------------------- */
+
+document
+    .querySelectorAll(".filter-btn")
+    .forEach(function(button) {
+
+        button.addEventListener(
+            "click",
+            function() {
+
+                document
+                    .querySelectorAll(".filter-btn")
+                    .forEach(function(btn) {
+
+                        btn.classList.remove(
+                            "active"
+                        );
+
+                    });
+
+
+                button.classList.add("active");
+
+
+                currentField =
+                    button.dataset.field;
+
+
+                displayCourses();
+
+            }
+        );
+
+    });
+
+
+/* ---------------------------------
+   SEARCH
+--------------------------------- */
+
+document
+    .getElementById("searchBox")
+    .addEventListener(
+        "input",
+        displayCourses
+    );
+
+
+/* ---------------------------------
+   TOAST
+--------------------------------- */
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent =
+        message;
+
+    toast.style.display =
+        "block";
+
+
+    setTimeout(function() {
+
+        toast.style.display =
+            "none";
+
+    }, 2500);
+
+}
+
+
+/* ---------------------------------
+   INITIAL LOAD
+--------------------------------- */
+
+displayCourses();
+
+</script>
+
+
+</body>
+</html>
